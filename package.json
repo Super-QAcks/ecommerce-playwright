@@ -1,11 +1,9 @@
 {
-	"name": "sauce-demo-booker",
+	"name": "ecommerce-playwright",
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
 		"tests": "npx playwright test",
-		"tests:ui": "npx playwright test sauce-demo-booker/ui/tests/example.spec.ts",
-		"tests:api": "npx playwright test sauce-demo-booker/api/tests/example.spec.ts",
 		"prettier": "prettier --check .",
 		"prettier:fix": "prettier --write .",
 		"lint": "eslint .",
