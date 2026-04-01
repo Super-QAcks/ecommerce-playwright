@@ -15,11 +15,6 @@ export class CartItemCard {
 		this.deleteButton = root.locator(".cart_quantity_delete");
 	}
 
-	async getQuantity() {
-		const quantityText = await this.productQuantity.textContent();
-		return quantityText;
-	}
-
 	async deleteItem() {
 		await this.deleteButton.click();
 	}

@@ -1,5 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
+import { CartItemCard } from "../component/cartItemCard.component";
 
 export class CartPage extends PageFactory {
 	readonly page: Page;
@@ -15,7 +16,9 @@ export class CartPage extends PageFactory {
 		await this.cartRoot.isVisible();
 	}
 
-	getCartItemByName(name: string): Locator {
-		return this.cartRoot.locator("tr").filter({ hasText: name });
+	async getCartItemByName(name: string) {
+		return new CartItemCard(
+			this.cartRoot.locator("tr").filter({ hasText: name })
+		);
 	}
 }
