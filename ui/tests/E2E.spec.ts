@@ -1,10 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
-import { ProductCard } from "../pom/component/productCard.component";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 import { AddedProductModal } from "../pom/component/addedProductModal.component";
 import { CartPage } from "../pom/pages/CartPage";
-import { CartItemCard } from "../pom/component/cartItemCard.component";
 import { URL_BASE } from "../pom/data/urls";
 import { VALID_PRODUCTS } from "../pom/data/products";
 
@@ -19,17 +17,16 @@ test.describe("E2E Tests", () => {
 		productDetailsPage = new ProductDetailsPage(page);
 		addedProductModal = new AddedProductModal(page);
 		viewCartPage = new CartPage(page);
+		const product = VALID_PRODUCTS.default;
 
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
 		});
 
-		const product = VALID_PRODUCTS.default;
+		const productCard = await homePage.getProductbyName(product.name);
 
-		const root = await homePage.getProductbyName(product.name);
-		const productCard = new ProductCard(root.rootCard);
 		await test.step("Verify that home page is visible successfully", async () => {
-			await expect(page.locator("body")).toBeVisible();
+			await homePage.waitForRoot();
 		});
 
 		await test.step("Click 'View Product' for any product on home page", async () => {
@@ -55,10 +52,10 @@ test.describe("E2E Tests", () => {
 
 		await test.step("Verify that product is displayed in cart page with exact quantity", async () => {
 			await viewCartPage.waitForCart();
-			const rootCartItem = new CartItemCard(
-				viewCartPage.getCartItemByName(product.name)
+			const cartItem = await viewCartPage.getCartItemByName(
+				VALID_PRODUCTS.default.name
 			);
-			await expect(rootCartItem.productQuantity).toHaveText(
+			await expect(cartItem.productQuantity).toHaveText(
 				VALID_PRODUCTS.default.quantity.toString()
 			);
 		});

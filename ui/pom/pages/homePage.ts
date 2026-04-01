@@ -16,7 +16,7 @@ export class HomePage extends PageFactory {
 		this.productCards = page.locator(".product-image-wrapper");
 	}
 
-	async waitForPage() {
+	async waitForRoot() {
 		await this.homeSlider.isVisible();
 	}
 
