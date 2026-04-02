@@ -36,6 +36,10 @@ export default defineConfig({
 		screenshot: "only-on-failure",
 		video: "retain-on-failure",
 		testIdAttribute: "data-qa",
+
+		launchOptions: {
+			slowMo: 50, // 50ms delay between each action
+		},
 	},
 
 	/* Configure projects for major browsers */
