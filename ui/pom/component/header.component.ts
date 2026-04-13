@@ -4,18 +4,26 @@ import { URL_PRODUCTS } from "../data/urls";
 export class HeaderComponent {
 	readonly headerRoot: Locator;
 	readonly contactUs: Locator;
+	readonly cart: Locator;
 	readonly signUpLogin: Locator;
 	readonly productsLink: Locator;
 	readonly testCasesLink: Locator;
 	readonly page: Page;
+	readonly logout: Locator;
+	readonly deleteAccount: Locator;
+	readonly loggedUserName: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.headerRoot = page.locator("#header");
 		this.contactUs = page.getByRole("link", { name: "Contact Us" });
+		this.logout = page.getByRole("link", { name: "Logout" });
+		this.deleteAccount = page.getByRole("link", { name: "Delete Account" });
+		this.cart = page.getByRole("link", { name: "Cart" });
 		this.signUpLogin = page.getByRole("link", { name: "Signup / Login" });
 		this.productsLink = page.getByRole("link", { name: /Products/i });
 		this.testCasesLink = page.getByRole("link", { name: " Test Cases" });
+		this.loggedUserName = page.getByText("Logged in as").locator("b");
 	}
 
 	async waitForRoot() {
@@ -42,5 +50,20 @@ export class HeaderComponent {
 
 	async clickTestCasesLink() {
 		await this.testCasesLink.click({ force: true });
+	}
+
+	async clickCart() {
+		this.waitForRoot();
+		await this.cart.click();
+	}
+
+	async clickLogout() {
+		this.waitForRoot();
+		await this.logout.click();
+	}
+
+	async clickDeleteAccount() {
+		this.waitForRoot();
+		await this.deleteAccount.click();
 	}
 }

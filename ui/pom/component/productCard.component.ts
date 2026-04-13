@@ -20,7 +20,16 @@ export class ProductCard {
 	}
 
 	async addToCart() {
+		await this.addToCartButton.first().click();
+	}
+
+	async addToCartOverlay() {
+		await this.hoverOverCard();
 		await this.addtoCartOverlayButton.click();
+	}
+
+	async hoverOverCard() {
+		await this.rootCard.hover({ force: true });
 	}
 
 	async viewProduct() {
