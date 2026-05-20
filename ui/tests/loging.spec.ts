@@ -18,8 +18,42 @@ LoginFixture.describe("Login Page Tests", () => {
 	});
 });
 
-//need to redo this test with .step('stepDescription') for this test follow the Test Steps (HomePage>ClickHeaderLoginButton>enterIncorrectAddress)
-// //need to merge another branch with homePage file
+test("Test Case 2: Login User with correct email and password", async ({
+	page,
+}) => {
+	const homePage = new HomePage(page);
+	const headercomponent = new HeaderComponent(page);
+	const loginPage = new LoginPage(page);
+
+	await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
+		await homePage.goto(URL_BASE);
+	});
+
+	await test.step("Verify that home page is visible successfully", async () => {
+		await homePage.waitForRoot();
+	});
+
+	await test.step("Click on 'Signup / Login' button", async () => {
+		await headercomponent.clickSignUpLogin();
+	});
+
+	await test.step("Verify 'Login to your account' is visible", async () => {
+		await expect(loginPage.loginFormTitle).toBeVisible();
+	});
+
+	await test.step("Enter correct email address and password and Click 'login' button", async () => {
+		await loginPage.login(
+			LOGIN_CREDENTIALS.STANDARD_USER,
+			LOGIN_CREDENTIALS.PASSWORD
+		);
+	});
+
+	await test.step("Verify that 'Logged in as username' is visible", async () => {
+		await expect(headercomponent.loggedUserName).toContainText(
+			LOGIN_CREDENTIALS.NAME_USER
+		);
+	});
+});
 
 test("Test Case 3: Login User with incorrect email and password: ", async ({
 	page,
