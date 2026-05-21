@@ -1,7 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
 import { AddedProductModal } from "../component/addedProductModal.component";
-import { test, expect } from "@playwright/test";
 
 export class ProductDetailsPage extends PageFactory {
 	readonly page: Page;
@@ -44,14 +43,5 @@ export class ProductDetailsPage extends PageFactory {
 	async changeQuantity(amount: number) {
 		await this.productQuantityInput.clear();
 		await this.productQuantityInput.fill(amount.toString());
-	}
-
-	async validateProductDetails() {
-		await expect(this.productName).not.toBeEmpty();
-		await expect(this.productCategory).toBeVisible();
-		await expect(this.productPrice).toBeVisible();
-		await expect(this.productAvailability).toBeVisible();
-		await expect(this.productCondition).toBeVisible();
-		await expect(this.productBrand).toBeVisible();
 	}
 }
