@@ -1,7 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
 import { Products } from "../pom/pages/productsPage";
-import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 
@@ -12,12 +11,13 @@ test.describe("Products Page Tests", () => {
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
 		productsPage = new Products(page);
-		productDetailsPage = new ProductDetailsPage(page);
 	});
 
-	test.only("Test Case 8: Verify All products and product details page", async ({
+	test("Test Case 8: Verify All products and product details page", async ({
 		page,
 	}) => {
+		productDetailsPage = new ProductDetailsPage(page);
+
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
 		});
