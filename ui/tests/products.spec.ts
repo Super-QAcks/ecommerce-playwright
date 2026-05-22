@@ -15,72 +15,37 @@ test.describe("Products Page Tests", () => {
 		productDetailsPage = new ProductDetailsPage(page);
 	});
 
-<<<<<<< HEAD
-	test("Test Case 8: Verify All products and product details page", async ({
-		page,
-	}) => {
-		await test.step("Navigate to url", async () => {
-			await homePage.goto(URL_BASE);
-		});
-
-		await test.step("Verify that home page is visible successfully", async () => {
-			await homePage.waitForRoot();
-		});
-
-		await test.step("Click on Products page button", async () => {
-			await homePage.clickProductsButton();
-		});
-
-		await test.step("Verify that user navigated to Products page successfully", async () => {
-			await productsPage.validateProductsPage();
-		});
-
-		await test.step("Verify that products list is visible", async () => {
-			await productsPage.validateProductsList();
-		});
-
-		await test.step("Click on first product's 'View Product' button", async () => {
-			await productsPage.clickViewFirstProductButton();
-		});
-
-		await test.step("Verify that user navigated to product details page successfully", async () => {
-			await productDetailsPage.waitForRoot();
-		});
-
-=======
 	test.only("Test Case 8: Verify All products and product details page", async ({
 		page,
 	}) => {
-		
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
 		});
-		
+
 		await test.step("Verify that home page is visible successfully", async () => {
 			await homePage.waitForRoot();
 		});
-		
+
 		await test.step("Click on Products page button", async () => {
 			await homePage.clickProductsButton();
 		});
-		
+
 		await test.step("Verify that user navigated to Products page successfully", async () => {
 			await productsPage.validateProductsPage();
 		});
-		
+
 		await test.step("Verify that products list is visible", async () => {
 			await productsPage.validateProductsList();
 		});
-		
+
 		await test.step("Click on first product's 'View Product' button", async () => {
 			await productsPage.clickViewFirstProductButton();
 		});
-		
+
 		await test.step("Verify that user navigated to product details page successfully", async () => {
 			await productDetailsPage.waitForRoot();
 		});
-		
->>>>>>> fd74976b2f8d2461d74565ca7fa970a8b7b6032d
+
 		await test.step("Verify that product details are visible", async () => {
 			await productDetailsPage.validateProductDetails();
 		});
