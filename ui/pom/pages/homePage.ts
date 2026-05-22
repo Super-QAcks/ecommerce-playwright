@@ -11,7 +11,6 @@ export class HomePage extends PageFactory {
 	readonly activeSliderH2: Locator;
 	readonly productCards: Locator;
 	readonly addedProductModal: AddedProductModal;
-	readonly productsButton: Locator;
 
 	constructor(page: Page) {
 		super(page);
@@ -26,7 +25,6 @@ export class HomePage extends PageFactory {
 		this.homeFeaturesProducts = page.locator(".features_items");
 		this.productCards = page.locator(".product-image-wrapper");
 		this.addedProductModal = new AddedProductModal(page);
-		this.productsButton = page.locator("a[href='/products']");
 	}
 
 	async waitForRoot() {
@@ -44,9 +42,5 @@ export class HomePage extends PageFactory {
 			await this.addedProductModal.waitForModal();
 			await this.addedProductModal.clickContinueShopping();
 		}
-	}
-
-	async clickProductsButton() {
-		await this.productsButton.click();
 	}
 }

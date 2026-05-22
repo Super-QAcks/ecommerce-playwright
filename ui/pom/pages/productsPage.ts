@@ -17,10 +17,6 @@ export class Products extends PageFactory {
 		await this.productsHeading.isVisible();
 	}
 
-	async validateProductsList() {
-		await this.productsList.isVisible();
-	}
-
 	async clickViewFirstProductButton() {
 		await this.viewFirstProductButton.scrollIntoViewIfNeeded();
 		await this.viewFirstProductButton.click();

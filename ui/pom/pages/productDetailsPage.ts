@@ -45,13 +45,4 @@ export class ProductDetailsPage extends PageFactory {
 		await this.productQuantityInput.clear();
 		await this.productQuantityInput.fill(amount.toString());
 	}
-
-	async validateProductDetails() {
-		await expect(this.productName).not.toBeEmpty();
-		await expect(this.productCategory).toBeVisible();
-		await expect(this.productPrice).toBeVisible();
-		await expect(this.productAvailability).toBeVisible();
-		await expect(this.productCondition).toBeVisible();
-		await expect(this.productBrand).toBeVisible();
-	}
 }

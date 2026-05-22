@@ -1,13 +1,15 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
 import { Products } from "../pom/pages/productsPage";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
+import { HeaderComponent } from "../pom/component/header.component";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
 	let productsPage: Products;
 	let productDetailsPage: ProductDetailsPage;
+	let headerComponent: HeaderComponent;
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
 		productsPage = new Products(page);
@@ -17,6 +19,7 @@ test.describe("Products Page Tests", () => {
 		page,
 	}) => {
 		productDetailsPage = new ProductDetailsPage(page);
+		headerComponent = new HeaderComponent(page);
 
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
@@ -27,7 +30,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Click on Products page button", async () => {
-			await homePage.clickProductsButton();
+			await headerComponent.clickProductsLink();
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {
@@ -35,7 +38,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that products list is visible", async () => {
-			await productsPage.validateProductsList();
+			await expect(productsPage.productsList).toBeVisible();
 		});
 
 		await test.step("Click on first product's 'View Product' button", async () => {
@@ -47,7 +50,12 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that product details are visible", async () => {
-			await productDetailsPage.validateProductDetails();
+			await expect(productDetailsPage.productName).not.toBeEmpty();
+			await expect(productDetailsPage.productCategory).toBeVisible();
+			await expect(productDetailsPage.productPrice).toBeVisible();
+			await expect(productDetailsPage.productAvailability).toBeVisible();
+			await expect(productDetailsPage.productCondition).toBeVisible();
+			await expect(productDetailsPage.productBrand).toBeVisible();
 		});
 	});
 });
