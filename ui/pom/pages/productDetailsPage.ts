@@ -1,7 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
 import { AddedProductModal } from "../component/addedProductModal.component";
-import { expect } from "@playwright/test";
 
 export class ProductDetailsPage extends PageFactory {
 	readonly page: Page;
