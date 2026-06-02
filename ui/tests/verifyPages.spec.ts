@@ -1,7 +1,7 @@
 import { URL_BASE } from "../pom/data/urls";
 import { expect, test } from "@playwright/test";
 import { TestCases } from "../pom/pages/testCasesPage";
-import { Products } from "../pom/pages/productsPage";
+import { ProductsPage } from "../pom/pages/productsPage";
 import { HomePage } from "../pom/pages/homePage";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 import { PRODUCT_DETAILS } from "../pom/data/products";
@@ -9,14 +9,14 @@ import { HeaderComponent } from "../pom/component/header.component";
 
 test.describe("Login tests", () => {
 	let testCases: TestCases;
-	let products: Products;
+	let products: ProductsPage;
 	let homePage: HomePage;
 	let productDetailsPage: ProductDetailsPage;
 	let headerComponent: HeaderComponent;
 
 	test.beforeEach(async ({ page }) => {
 		testCases = new TestCases(page);
-		products = new Products(page);
+		products = new ProductsPage(page);
 		homePage = new HomePage(page);
 		headerComponent = new HeaderComponent(homePage.page);
 		productDetailsPage = new ProductDetailsPage(page);
@@ -46,7 +46,7 @@ test.describe("Login tests", () => {
 		});
 
 		await test.step("Validate the Products page", async () => {
-			await products.validateProductsPage();
+			await products.waitForProductsPage();
 		});
 
 		await test.step("Click on first product's 'View Product' link", async () => {
