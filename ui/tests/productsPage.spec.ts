@@ -32,7 +32,7 @@ test("Test Case 09: Search Product", async ({ page }) => {
 
 	// 6. Enter product name in search input and click search button
 	await test.step("Enter product name in search input and click search button", async () => {
-		await productsPage.fillSearchProduct("PRODUCT_DETAILS.default.name");
+		await productsPage.fillSearchProduct(PRODUCT_DETAILS.default.name);
 		await productsPage.clickSearchButton();
 	});
 
