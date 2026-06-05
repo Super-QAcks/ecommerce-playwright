@@ -28,6 +28,11 @@ export class HomePage extends PageFactory {
 	}
 
 	async waitForRoot() {
+		await this.homeSlider.waitFor({ state: "visible" });
+	}
+
+	async validateHomePage() {
+		await this.waitForRoot();
 		await this.homeSlider.isVisible();
 	}
 
