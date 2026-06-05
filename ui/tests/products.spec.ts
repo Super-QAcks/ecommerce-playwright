@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
-import { Products } from "../pom/pages/productsPage";
+import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
@@ -8,13 +8,13 @@ import { PRODUCT_DETAILS } from "../pom/data/products";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
-	let productsPage: Products;
+	let productsPage: ProductsPage;
 	let productDetailsPage: ProductDetailsPage;
 	let headerComponent: HeaderComponent;
 
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
-		productsPage = new Products(page);
+		productsPage = new ProductsPage(page);
 		productDetailsPage = new ProductDetailsPage(page);
 		headerComponent = new HeaderComponent(homePage.page);
 		await homePage.addBlocker();
@@ -32,7 +32,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {
-			await productsPage.validateProductsPage();
+			await productsPage.validateProductsList();
 		});
 
 		await test.step("Verify that products list is visible", async () => {
