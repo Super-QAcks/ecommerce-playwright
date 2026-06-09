@@ -11,6 +11,11 @@ export const VALID_PRODUCTS = {
 		quantity: 2,
 		price: 50,
 	} as Product,
+	fancyGreenTop: {
+		name: "Fancy Green Top",
+		quantity: 1,
+		price: 700,
+	} as Product,
 };
 
 export const PRODUCT_DETAILS = {
