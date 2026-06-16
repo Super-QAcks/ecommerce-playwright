@@ -34,6 +34,75 @@ test.describe("E2E Tests", () => {
 		cartPage = new CartPage(page);
 	});
 
+	test("Test Case 1: Register User", async ({ page }) => {
+		const headerComponent = new HeaderComponent(page);
+		const loginPage = new LoginPage(page);
+		const signUpPage = new SignUpPage(page);
+		const accounCreatedPage = new AccountCreatedPage(page);
+		const deletedAccountPage = new DeletedAccountPage(page);
+
+		await test.step("Navigate to url", async () => {
+			await homePage.goto(URL_BASE);
+		});
+
+		await test.step("Verify that home page is visible successfully", async () => {
+			await homePage.waitForRoot();
+		});
+
+		await test.step("Click on 'Signup / Login' button", async () => {
+			await headerComponent.clickSignUpLogin();
+		});
+
+		await test.step(" Verify 'New User Signup!' is visible", async () => {
+			await loginPage.waitForSignUpRoot();
+			await expect(loginPage.signUpFormTitle).toBeVisible();
+		});
+
+		await test.step("Enter name and email address and click 'Signup' button", async () => {
+			await loginPage.signUp(USER_SIGNUP.name, USER_SIGNUP.email);
+		});
+
+		await test.step("Verify that 'ENTER ACCOUNT INFORMATION' is visible", async () => {
+			await signUpPage.signUpFormTitle.waitFor({ state: "visible" });
+			await expect(signUpPage.signUpFormTitle).toBeVisible();
+		});
+
+		await test.step("Fill details: Title, Name, Email, Password, Date of birth", async () => {
+			await signUpPage.signUpForNews.click();
+			await expect(signUpPage.signUpForNews).toBeChecked();
+			await signUpPage.receiveSpecialOffers.click();
+			await expect(signUpPage.receiveSpecialOffers).toBeChecked();
+			await signUpPage.fillForm(USER_SIGNUP);
+		});
+
+		await test.step("Verify that 'ACCOUNT CREATED!' is visible", async () => {
+			await accounCreatedPage.waitForRoot();
+			await expect(accounCreatedPage.successMessage).toContainText(
+				"Account Created!"
+			);
+		});
+
+		await test.step("Click 'Continue' button", async () => {
+			await accounCreatedPage.clickContinueButton();
+		});
+
+		await test.step("Verify that 'Logged in as username' is visible", async () => {
+			await expect(headerComponent.loggedUserName).toHaveText(USER_SIGNUP.name);
+		});
+
+		await test.step("Click 'Delete Account' button", async () => {
+			await headerComponent.clickDeleteAccount();
+		});
+
+		await test.step("Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button", async () => {
+			await deletedAccountPage.waitForRoot();
+			await expect(deletedAccountPage.accountDeletedTitle).toContainText(
+				"Account Deleted!"
+			);
+			await deletedAccountPage.clickContinue();
+		});
+	});
+
 	test("Test Case 13: Verify Product quantity in Cart", async ({ page }) => {
 		productDetailsPage = new ProductDetailsPage(page);
 		addedProductModal = new AddedProductModal(page);
