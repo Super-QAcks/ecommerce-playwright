@@ -4,6 +4,7 @@ import { SignupForm } from "../data/interfaces";
 
 export class SignUpPage extends PageFactory {
 	public readonly signUpFormRoot: Locator;
+	readonly signUpFormTitle: Locator;
 	public readonly titleMr: Locator;
 	public readonly titleMrs: Locator;
 	public readonly password: Locator;
@@ -27,6 +28,9 @@ export class SignUpPage extends PageFactory {
 	constructor(page: Page) {
 		super(page);
 		this.signUpFormRoot = page.locator("#form");
+		this.signUpFormTitle = page.getByRole("heading", {
+			name: "Enter Account Information",
+		});
 		this.titleMr = page.locator("#id_gender1");
 		this.titleMrs = page.locator("#id_gender2");
 		this.password = page.getByTestId("password");
