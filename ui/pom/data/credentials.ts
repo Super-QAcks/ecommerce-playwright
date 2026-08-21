@@ -1,4 +1,4 @@
-import { SignupForm, CardDetails } from "../data/interfaces";
+import { SignupForm, CardDetails } from "./interfaces";
 
 export const LOGIN_CREDENTIALS = {
 	STANDARD_USER: process.env.STANDARD_USER || "default user",
