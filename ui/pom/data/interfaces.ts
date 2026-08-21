@@ -41,3 +41,9 @@ export interface CardDetails {
 	expirationMonth: string;
 	expirationYear: string;
 }
+
+export interface ReviewForm {
+	name: string;
+	email: string;
+	review: string;
+}

@@ -53,4 +53,8 @@ export class ProductsPage extends PageFactory {
 	async validateProductsList() {
 		await this.productsList.isVisible();
 	}
+
+	async getProductbyName(name: string) {
+		return new ProductCard(this.productCards.filter({ hasText: name }).first());
+	}
 }
