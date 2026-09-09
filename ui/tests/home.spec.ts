@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
+import { CartPage } from "../pom/pages/CartPage";
 import { FooterComponent } from "../pom/component/footeer.component";
 import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
+import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
 
 test.describe("Home Page Tests.", async () => {
 	let homePage: HomePage;
@@ -39,6 +41,43 @@ test.describe("Home Page Tests.", async () => {
 
 		await test.step("Verify success message 'You have been successfully subscribed!' is visible", async () => {
 			await expect(footerComponent.successSubscribeMessage).toBeVisible();
+		});
+	});
+
+	test("Test Case 22: Add to cart from Recommended items", async ({ page }) => {
+		const cartPage = new CartPage(page);
+		const recommendedProduct = RECOMMENDED_PRODUCTS.default;
+
+		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
+			await homePage.goto(URL_BASE);
+		});
+
+		await test.step("Scroll to bottom of page", async () => {
+			await page.evaluate(() => {
+				window.scrollTo(0, document.body.scrollHeight);
+			});
+		});
+
+		await test.step("Verify 'RECOMMENDED ITEMS' are visible", async () => {
+			await expect(homePage.recommendedItemsCarousel).toBeVisible();
+		});
+
+		await test.step("Click on 'Add To Cart' on Recommended product", async () => {
+			await homePage.clickRecommendedProductButtonAddToCart(
+				recommendedProduct.name
+			);
+		});
+
+		await test.step("Click on 'View Cart' button", async () => {
+			await homePage.clickViewCartFromModal();
+		});
+
+		await test.step("Verify that product is displayed in cart page", async () => {
+			await cartPage.waitForCart();
+			const cartItem = await cartPage.getCartItemByName(
+				recommendedProduct.name
+			);
+			await expect(cartItem.rootCard).toBeVisible();
 		});
 	});
 
