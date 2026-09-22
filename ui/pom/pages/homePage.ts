@@ -12,6 +12,7 @@ export class HomePage extends PageFactory {
 	readonly productCards: Locator;
 	readonly addedProductModal: AddedProductModal;
 	readonly productsButton: Locator;
+	readonly recommendedItemsCarousel: Locator;
 
 	constructor(page: Page) {
 		super(page);
@@ -23,7 +24,8 @@ export class HomePage extends PageFactory {
 		this.activeSliderH2 = this.activeSlider.getByRole("heading", {
 			name: "Full-Fledged practice website for Automation Engineers",
 		});
-		this.homeFeaturesProducts = page.locator(".features_items");
+		this.homeFeaturesProducts = page.locator("div.features_items");
+		this.recommendedItemsCarousel = page.locator("div.recommended_items");
 		this.productCards = page.locator(".product-image-wrapper");
 		this.addedProductModal = new AddedProductModal(page);
 		this.productsButton = page.locator("a[href='/products']");
@@ -39,7 +41,15 @@ export class HomePage extends PageFactory {
 	}
 
 	async getProductbyName(name: string) {
+		//Future enhancement: This method can be enhanced to search for products in both the main product list and the recommended items carousel.
 		return new ProductCard(this.productCards.filter({ hasText: name }).first());
+	}
+
+	async getProductByNameFromRecommendedItems(name: string) {
+		const recommendedItems = this.recommendedItemsCarousel.locator(
+			".product-image-wrapper"
+		);
+		return new ProductCard(recommendedItems.filter({ hasText: name }).first());
 	}
 
 	async addProductsToCart(products: Record<string, Product>) {
@@ -51,7 +61,24 @@ export class HomePage extends PageFactory {
 		}
 	}
 
+	async clickRecommendedProductButtonAddToCart(productName: string) {
+		const productCard =
+			await this.getProductByNameFromRecommendedItems(productName);
+		await productCard.addToCart();
+	}
+
+	async clickViewCartFromModal() {
+		await this.addedProductModal.waitForModal();
+		await this.addedProductModal.clickViewCart();
+	}
+
+	async clickContinueShoppingFromModal() {
+		await this.addedProductModal.waitForModal();
+		await this.addedProductModal.clickContinueShopping();
+	}
+
 	async clickProductsButton() {
+		// this should be removed and added to the header component
 		await this.productsButton.click();
 	}
 }
