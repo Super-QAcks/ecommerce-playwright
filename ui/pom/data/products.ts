@@ -29,3 +29,52 @@ export const PRODUCT_DETAILS = {
 		brand: "Polo",
 	} as Product,
 };
+
+export const PRODUCT_CATEGORIES = {
+	women: {
+		id: "Women",
+		heading: "WOMEN",
+		subCategories: {
+			dress: {
+				id: "Dress",
+				heading: "DRESS",
+			},
+			tops: {
+				id: "Tops",
+				heading: "TOPS",
+			},
+			saree: {
+				id: "SAREE",
+				heading: "SAREE",
+			},
+		},
+	},
+	men: {
+		id: "Men",
+		heading: "MEN",
+		subCategories: {
+			tshirts: {
+				id: "TSHIRTS",
+				heading: "TSHIRTS",
+			},
+			jeans: {
+				id: "JEANS",
+				heading: "JEANS",
+			},
+		},
+	},
+	kids: {
+		id: "Kids",
+		heading: "KIDS",
+		subCategories: {
+			dress: {
+				id: "DRESS",
+				heading: "DRESS",
+			},
+			topsAndShirts: {
+				id: "TOPS & SHIRTS",
+				heading: "TOPS & SHIRTS",
+			},
+		},
+	},
+};
