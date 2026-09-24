@@ -3,7 +3,8 @@ import { HomePage } from "../pom/pages/homePage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { ProductsPage } from "../pom/pages/productsPage";
 import { URL_BASE } from "../pom/data/urls";
-import { PRODUCT_DETAILS } from "../pom/data/products";
+import { PRODUCT_DETAILS, PRODUCT_CATEGORIES } from "../pom/data/products";
+import { SideBarComponent } from "../pom/component/sideBar.component";
 
 test("Test Case 09: Search Product", async ({ page }) => {
 	const homePage = new HomePage(page);
@@ -49,5 +50,48 @@ test("Test Case 09: Search Product", async ({ page }) => {
 				ignoreCase: true,
 			});
 		}
+	});
+});
+
+test("Test Case 18: View Category Products", async ({ page }) => {
+	const homePage = new HomePage(page);
+	const sideBarComponent = new SideBarComponent(page);
+
+	await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
+		await homePage.goto(URL_BASE);
+	});
+
+	await test.step("Verify that categories are visible on left side bar", async () => {
+		await sideBarComponent.waitForSideBar();
+	});
+
+	await test.step("Click on 'Women' category", async () => {
+		await sideBarComponent.expandCategory(PRODUCT_CATEGORIES.women.id);
+	});
+
+	await test.step("Click on any category link under 'Women' category, for example: Tops", async () => {
+		await sideBarComponent.selectSubCategory(
+			PRODUCT_CATEGORIES.women.id,
+			PRODUCT_CATEGORIES.women.subCategories.tops.id
+		);
+	});
+
+	await test.step("Verify category page heading", async () => {
+		await expect(page.locator("h2.title.text-center")).toContainText(
+			PRODUCT_CATEGORIES.women.id
+		);
+	});
+
+	await test.step("On left side bar, click on any sub-category link of 'Men' category", async () => {
+		await sideBarComponent.selectSubCategory(
+			PRODUCT_CATEGORIES.men.id,
+			PRODUCT_CATEGORIES.men.subCategories.jeans.id
+		);
+	});
+
+	await test.step("Verify that user is navigated to that category page", async () => {
+		await expect(page.locator("h2.title.text-center")).toContainText(
+			PRODUCT_CATEGORIES.men.id
+		);
 	});
 });
