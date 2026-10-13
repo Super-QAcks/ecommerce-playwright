@@ -17,6 +17,11 @@ export class SideBarComponent extends ComponentFactory {
 	// CATEGORY SECTION
 	// =========================================================
 
+	async waitForSideBar() {
+		await await this.sideBarCategoryTitle.waitFor({ state: "visible" });
+		await this.root.locator("#accordian").waitFor({ state: "visible" });
+	}
+
 	// ---- Locators ----
 	private categoryToggle(category: string): Locator {
 		return this.root.locator(`a[href="#${category}"]`);
@@ -33,32 +38,30 @@ export class SideBarComponent extends ComponentFactory {
 	}
 
 	// ---- Actions ----
-	async expandCategory(category: string) {
-		if (!(await this.isCategoryExpanded(category))) {
-			await this.categoryToggle(category).click();
-			await this.categoryPanel(category).waitFor({ state: "visible" });
-		}
-	}
-
-	async collapseCategory(category: string) {
-		if (await this.isCategoryExpanded(category)) {
-			await this.categoryToggle(category).click();
-		}
+	async toggleCategory(category: string) {
+		await this.categoryToggle(category).click();
 	}
 
 	async selectSubCategory(category: string, subCategory: string) {
-		await this.expandCategory(category);
+		// no expand check here — click() auto-waits for the link to be
+		// visible/stable, which only happens once the accordion animation
+		// finishes opening it
 		await this.subCategoryLink(category, subCategory).click();
 	}
 
 	// ---- Queries ----
-	async waitForSideBar() {
-		await this.sideBarCategoryTitle.waitFor({ state: "visible" });
+	async getCategoryNames(): Promise<string[]> {
+		const raw = await this.root
+			.locator("#accordian .panel-title a")
+			.allTextContents();
+		return raw.map((t) => t.trim());
 	}
 
-	async isCategoryExpanded(category: string): Promise<boolean> {
-		const classAttr = await this.categoryPanel(category).getAttribute("class");
-		return classAttr?.includes("in") ?? false;
+	async getSubCategoryNames(category: string): Promise<string[]> {
+		const raw = await this.categoryPanel(category)
+			.locator("ul li a")
+			.allTextContents();
+		return raw.map((t) => t.trim());
 	}
 
 	// =========================================================
