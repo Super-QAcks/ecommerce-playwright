@@ -10,6 +10,6 @@ export class ComponentFactory {
 	}
 
 	async isVisible() {
-		return this.root.isVisible();
+		return await this.root.isVisible();
 	}
 }

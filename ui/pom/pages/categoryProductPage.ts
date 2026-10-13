@@ -13,7 +13,7 @@ export class CategoryProductPage extends PageFactory {
 	constructor(page: Page) {
 		super(page);
 		this.sideBar = new SideBarComponent(page);
-		this.categoryHeading = page.getByRole("heading", { name: /.* PRODUCTS/ });
+		this.categoryHeading = page.locator("h2.title.text-center");
 		this.productsList = page.locator(".features_items");
 		this.productCards = page.locator(".product-image-wrapper");
 	}
