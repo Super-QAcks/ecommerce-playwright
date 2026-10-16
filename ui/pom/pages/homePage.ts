@@ -37,7 +37,7 @@ export class HomePage extends PageFactory {
 
 	async validateHomePage() {
 		await this.waitForRoot();
-		await this.homeSlider.isVisible();
+		return this.homeSlider.isVisible();
 	}
 
 	async getProductbyName(name: string) {
