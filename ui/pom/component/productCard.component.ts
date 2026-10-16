@@ -1,4 +1,5 @@
 import { Locator } from "@playwright/test";
+import { parsePrice } from "../utils/price";
 
 export class ProductCard {
 	readonly rootCard: Locator;
@@ -35,5 +36,18 @@ export class ProductCard {
 	async viewProduct() {
 		await this.viewProductButton.scrollIntoViewIfNeeded();
 		await this.viewProductButton.click({ force: true });
+	}
+
+	async getProductByListNumber(listNumber: number) {
+		const productCard = new ProductCard(this.rootCard.nth(listNumber - 1));
+		return productCard;
+	}
+
+	async getProductName() {
+		return (await this.productName.innerText()).trim();
+	}
+
+	async getProductPrice() {
+		return parsePrice((await this.productPrice.innerText()).trim());
 	}
 }

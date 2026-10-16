@@ -1,6 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
 import { ProductCard } from "../component/productCard.component";
+import { AddedProductModal } from "../component/addedProductModal.component";
 import { SideBarComponent } from "../component/sideBar.component";
 
 export class ProductsPage extends PageFactory {
@@ -10,6 +11,7 @@ export class ProductsPage extends PageFactory {
 	readonly searchInput: Locator;
 	readonly searchButton: Locator;
 	readonly productCards: Locator;
+	readonly addedProductModal: AddedProductModal;
 	readonly sideBar: SideBarComponent;
 
 	constructor(page: Page) {
@@ -23,6 +25,7 @@ export class ProductsPage extends PageFactory {
 		this.searchInput = page.getByRole("textbox", { name: "Search Product" });
 		this.searchButton = page.locator("#submit_search");
 		this.productCards = page.locator(".product-image-wrapper");
+		this.addedProductModal = new AddedProductModal(page);
 	}
 
 	async waitForProductsPage() {
@@ -59,5 +62,29 @@ export class ProductsPage extends PageFactory {
 
 	async getProductbyName(name: string) {
 		return new ProductCard(this.productCards.filter({ hasText: name }).first());
+	}
+
+	async clickAddToCartOnProductCardbyListNumber(listNumber: number) {
+		const productCard = new ProductCard(this.productCards.nth(listNumber - 1));
+		await productCard.addToCart();
+	}
+
+	async clickContinueShoppingOverModal() {
+		await this.addedProductModal.waitForModal();
+		await this.addedProductModal.clickContinueShopping();
+	}
+
+	async clickViewCartOverModal() {
+		await this.addedProductModal.waitForModal();
+		await this.addedProductModal.clickViewCart();
+	}
+
+	async getProductDataFromProductCardbyListNumber(listNumber: number) {
+		const productCard = new ProductCard(this.productCards.nth(listNumber - 1));
+
+		return {
+			name: await productCard.getProductName(),
+			price: await productCard.getProductPrice(),
+		};
 	}
 }
