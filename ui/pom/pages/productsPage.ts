@@ -2,6 +2,7 @@ import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
 import { ProductCard } from "../component/productCard.component";
 import { AddedProductModal } from "../component/addedProductModal.component";
+import { SideBarComponent } from "../component/sideBar.component";
 
 export class ProductsPage extends PageFactory {
 	readonly productsHeading: Locator;
@@ -11,9 +12,11 @@ export class ProductsPage extends PageFactory {
 	readonly searchButton: Locator;
 	readonly productCards: Locator;
 	readonly addedProductModal: AddedProductModal;
+	readonly sideBar: SideBarComponent;
 
 	constructor(page: Page) {
 		super(page);
+		this.sideBar = new SideBarComponent(page);
 		this.productsHeading = page.getByRole("heading", { name: "All Products" });
 		this.productsList = page.locator(".features_items");
 		this.searchedProductsHeading = page.getByRole("heading", {
