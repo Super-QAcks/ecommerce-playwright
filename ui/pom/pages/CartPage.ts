@@ -6,6 +6,7 @@ export class CartPage extends PageFactory {
 	readonly page: Page;
 	readonly cartRoot: Locator;
 	readonly checkoutButton: Locator;
+	readonly cartRowsCountLocator: Locator;
 	readonly modalCheckoutRoot: Locator;
 	readonly modalRegisterLoginLink: Locator;
 	readonly modalContinueOnCartButton: Locator;
@@ -15,6 +16,7 @@ export class CartPage extends PageFactory {
 		this.page = page;
 		this.cartRoot = page.locator("#cart_info");
 		this.checkoutButton = page.getByText("Proceed To Checkout");
+		this.cartRowsCountLocator = page.locator("#cart_info tbody tr");
 		this.modalCheckoutRoot = page.locator(".modal-content");
 		this.modalRegisterLoginLink = page.getByRole("link", {
 			name: "Register / Login",
@@ -44,5 +46,9 @@ export class CartPage extends PageFactory {
 
 	async clickModalRegisterLogin() {
 		await this.modalRegisterLoginLink.click();
+	}
+
+	async getRowCount() {
+		return await this.cartRowsCountLocator.count();
 	}
 }
