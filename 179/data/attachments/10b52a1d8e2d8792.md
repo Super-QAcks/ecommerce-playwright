@@ -1,0 +1,295 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ui/tests/cart.spec.ts >> Cart Test Cases >> Test Case 12: Add Products in Cart
+- Location: ui/tests/cart.spec.ts:53:6
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: "Men  Tshirt"
+Received: "Men Tshirt"
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "Website for automation practice" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Website for automation practice" [ref=e9]
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link " Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e15]: 
+            - text: Home
+        - listitem [ref=e16]:
+          - link " Products" [ref=e17] [cursor=pointer]:
+            - /url: /products
+            - generic [ref=e18]: 
+            - text: Products
+        - listitem [ref=e19]:
+          - link " Cart" [ref=e20] [cursor=pointer]:
+            - /url: /view_cart
+            - generic [ref=e21]: 
+            - text: Cart
+        - listitem [ref=e22]:
+          - link " Signup / Login" [ref=e23] [cursor=pointer]:
+            - /url: /login
+            - generic [ref=e24]: 
+            - text: Signup / Login
+        - listitem [ref=e25]:
+          - link " Test Cases" [ref=e26] [cursor=pointer]:
+            - /url: /test_cases
+            - generic [ref=e27]: 
+            - text: Test Cases
+        - listitem [ref=e28]:
+          - link " API Testing" [ref=e29] [cursor=pointer]:
+            - /url: /api_list
+            - generic [ref=e30]: 
+            - text: API Testing
+        - listitem [ref=e31]:
+          - link " Video Tutorials" [ref=e32] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/AutomationExercise
+            - generic [ref=e33]: 
+            - text: Video Tutorials
+        - listitem [ref=e34]:
+          - link " Contact us" [ref=e35] [cursor=pointer]:
+            - /url: /contact_us
+            - generic [ref=e36]: 
+            - text: Contact us
+  - generic [ref=e38]:
+    - list [ref=e40]:
+      - listitem [ref=e41]:
+        - link "Home" [ref=e42] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e43]: Shopping Cart
+    - generic [ref=e48] [cursor=pointer]: Proceed To Checkout
+    - table [ref=e50]:
+      - rowgroup [ref=e51]:
+        - row "Item Description Price Quantity Total" [ref=e52]:
+          - cell "Item" [ref=e53]
+          - cell "Description" [ref=e54]
+          - cell "Price" [ref=e55]
+          - cell "Quantity" [ref=e56]
+          - cell "Total" [ref=e57]
+          - cell [ref=e58]
+      - rowgroup [ref=e59]:
+        - row "Product Image Blue Top Women > Tops Rs. 500 1 Rs. 500 " [ref=e60]:
+          - cell "Product Image" [ref=e61]:
+            - link "Product Image" [ref=e62] [cursor=pointer]:
+              - /url: ""
+              - img "Product Image" [ref=e63]
+          - cell "Blue Top Women > Tops" [ref=e64]:
+            - heading "Blue Top" [level=4] [ref=e65]:
+              - link "Blue Top" [ref=e66] [cursor=pointer]:
+                - /url: /product_details/1
+            - paragraph [ref=e67]: Women > Tops
+          - cell "Rs. 500" [ref=e68]:
+            - paragraph [ref=e69]: Rs. 500
+          - cell "1" [ref=e70]:
+            - button "1" [ref=e71] [cursor=pointer]
+          - cell "Rs. 500" [ref=e72]:
+            - paragraph [ref=e73]: Rs. 500
+          - cell "" [ref=e74]:
+            - generic [ref=e76] [cursor=pointer]: 
+        - row "Product Image Men Tshirt Men > Tshirts Rs. 400 1 Rs. 400 " [ref=e77]:
+          - cell "Product Image" [ref=e78]:
+            - link "Product Image" [ref=e79] [cursor=pointer]:
+              - /url: ""
+              - img "Product Image" [ref=e80]
+          - cell "Men Tshirt Men > Tshirts" [ref=e81]:
+            - heading "Men Tshirt" [level=4] [ref=e82]:
+              - link "Men Tshirt" [ref=e83] [cursor=pointer]:
+                - /url: /product_details/2
+            - paragraph [ref=e84]: Men > Tshirts
+          - cell "Rs. 400" [ref=e85]:
+            - paragraph [ref=e86]: Rs. 400
+          - cell "1" [ref=e87]:
+            - button "1" [ref=e88] [cursor=pointer]
+          - cell "Rs. 400" [ref=e89]:
+            - paragraph [ref=e90]: Rs. 400
+          - cell "" [ref=e91]:
+            - generic [ref=e93] [cursor=pointer]: 
+  - contentinfo [ref=e94]:
+    - generic [ref=e99]:
+      - heading "Subscription" [level=2] [ref=e100]
+      - generic [ref=e101]:
+        - textbox "Your email address" [ref=e102]
+        - button "" [ref=e103] [cursor=pointer]:
+          - generic [ref=e104]: 
+        - paragraph [ref=e105]:
+          - text: Get the most recent updates from
+          - text: our site and be updated your self...
+    - paragraph [ref=e109]: Copyright © 2021 All rights reserved
+  - text: 
+```
+
+# Test source
+
+```ts
+  3   | import { URL_BASE } from "../pom/data/urls";
+  4   | import { HomePage } from "../pom/pages/homePage";
+  5   | import { CartPage } from "../pom/pages/CartPage";
+  6   | import { HeaderComponent } from "../pom/component/header.component";
+  7   | import { FooterComponent } from "../pom/component/footeer.component";
+  8   | import { AddedProductModal } from "../pom/component/addedProductModal.component";
+  9   | import { USER_SIGNUP } from "../pom/data/credentials";
+  10  | import { ProductsPage } from "../pom/pages/productsPage";
+  11  | import { Product } from "../pom/data/interfaces";
+  12  | 
+  13  | test.describe("Cart Test Cases", async () => {
+  14  | 	test("Test Case 11: Verify Subscription in Cart page", async ({ page }) => {
+  15  | 		const homePage = new HomePage(page);
+  16  | 		const cartPage = new CartPage(page);
+  17  | 		const headerComponent = new HeaderComponent(page);
+  18  | 		const footerComponent = new FooterComponent(page);
+  19  | 
+  20  | 		await test.step("Launch browser and navigate to url", async () => {
+  21  | 			await homePage.goto(URL_BASE);
+  22  | 		});
+  23  | 
+  24  | 		await test.step("Verify that home page is visible successfully", async () => {
+  25  | 			await homePage.waitForRoot();
+  26  | 		});
+  27  | 
+  28  | 		await test.step("Click 'Cart' button", async () => {
+  29  | 			await headerComponent.clickCart();
+  30  | 			await cartPage.waitForCart();
+  31  | 		});
+  32  | 
+  33  | 		await test.step("Scroll down to footer", async () => {
+  34  | 			await page.evaluate(() => {
+  35  | 				window.scrollTo(0, document.body.scrollHeight);
+  36  | 			});
+  37  | 		});
+  38  | 
+  39  | 		await test.step("Verify text 'SUBSCRIPTION", async () => {
+  40  | 			await expect(footerComponent.susbcriptionTitle).toBeVisible();
+  41  | 		});
+  42  | 
+  43  | 		await test.step("Enter email address in input and click arrow button", async () => {
+  44  | 			await footerComponent.fillSubscription(USER_SIGNUP.email);
+  45  | 			await footerComponent.clickSubscriptionButton();
+  46  | 		});
+  47  | 
+  48  | 		await test.step("Verify success message 'You have been successfully subscribed!' is visible", async () => {
+  49  | 			await expect(footerComponent.successSubscribeMessage).toBeVisible();
+  50  | 		});
+  51  | 	});
+  52  | 
+  53  | 	test("Test Case 12: Add Products in Cart", async ({ page }) => {
+  54  | 		const homePage = new HomePage(page);
+  55  | 		const cartPage = new CartPage(page);
+  56  | 		const headerComponent = new HeaderComponent(page);
+  57  | 		const productsPage = new ProductsPage(page);
+  58  | 		const expectedProducts: Product[] = [];
+  59  | 
+  60  | 		await test.step("Navigate to url", async () => {
+  61  | 			await homePage.goto(URL_BASE);
+  62  | 		});
+  63  | 
+  64  | 		await test.step("Verify that home page is visible successfully", async () => {
+  65  | 			await homePage.waitForRoot();
+  66  | 		});
+  67  | 
+  68  | 		await test.step("Click 'Products' button", async () => {
+  69  | 			await headerComponent.clickProductsLink();
+  70  | 			await productsPage.waitForProductsPage();
+  71  | 		});
+  72  | 
+  73  | 		await test.step("Hover over first product and click 'Add to cart'", async () => {
+  74  | 			const firstProduct =
+  75  | 				await productsPage.getProductDataFromProductCardbyListNumber(1);
+  76  | 			expectedProducts.push(firstProduct);
+  77  | 
+  78  | 			await productsPage.clickAddToCartOnProductCardbyListNumber(1);
+  79  | 		});
+  80  | 
+  81  | 		await test.step("Click 'Continue Shopping' button", async () => {
+  82  | 			await productsPage.clickContinueShoppingOverModal();
+  83  | 		});
+  84  | 
+  85  | 		await test.step("Hover over second product and click 'Add to cart'", async () => {
+  86  | 			const secondProduct =
+  87  | 				await productsPage.getProductDataFromProductCardbyListNumber(2);
+  88  | 			expectedProducts.push(secondProduct);
+  89  | 
+  90  | 			await productsPage.clickAddToCartOnProductCardbyListNumber(2);
+  91  | 		});
+  92  | 
+  93  | 		await test.step("Click 'View Cart' button", async () => {
+  94  | 			await productsPage.clickViewCartOverModal();
+  95  | 		});
+  96  | 
+  97  | 		await test.step("Verify both products are added to Cart", async () => {
+  98  | 			const rowCount = await cartPage.getRowCount();
+  99  | 			expect(await rowCount).toBe(expectedProducts.length);
+  100 | 
+  101 | 			for (const expected of expectedProducts) {
+  102 | 				const row = await cartPage.getCartItemByName(expected.name);
+> 103 | 				expect(await row.getProductName()).toBe(expected.name);
+      |                                        ^ Error: expect(received).toBe(expected) // Object.is equality
+  104 | 			}
+  105 | 		});
+  106 | 
+  107 | 		await test.step("Verify their prices, quantity and total price", async () => {
+  108 | 			for (const expected of expectedProducts) {
+  109 | 				const row = await cartPage.getCartItemByName(expected.name);
+  110 | 				expect(await row.getProductPrice()).toBe(expected.price);
+  111 | 				expect(await row.getProductQuantity()).toBe(1);
+  112 | 				expect(await row.getTotalPrice()).toBe(expected.price);
+  113 | 			}
+  114 | 		});
+  115 | 	});
+  116 | 
+  117 | 	test("Test Case 17: Remove Products From Cart", async ({ page }) => {
+  118 | 		const homePage = new HomePage(page);
+  119 | 		const cartPage = new CartPage(page);
+  120 | 		const addedProductModal = new AddedProductModal(page);
+  121 | 		const product = VALID_PRODUCTS.greenTshirt;
+  122 | 		const productCard = await homePage.getProductbyName(product.name);
+  123 | 		const cartItem = await cartPage.getCartItemByName(product.name);
+  124 | 
+  125 | 		await test.step("Navigate to url", async () => {
+  126 | 			await homePage.goto(URL_BASE);
+  127 | 		});
+  128 | 
+  129 | 		await test.step("Verify that home page is visible successfully", async () => {
+  130 | 			await homePage.waitForRoot();
+  131 | 		});
+  132 | 
+  133 | 		await test.step("Add products to cart", async () => {
+  134 | 			await productCard.addToCart();
+  135 | 		});
+  136 | 
+  137 | 		await test.step("Click 'Cart' button", async () => {
+  138 | 			await addedProductModal.waitForModal();
+  139 | 			await addedProductModal.clickViewCart();
+  140 | 		});
+  141 | 
+  142 | 		await test.step("Verify that cart page is displayed", async () => {
+  143 | 			await cartPage.waitForCart();
+  144 | 		});
+  145 | 
+  146 | 		await test.step("Click 'X' button corresponding to particular product", async () => {
+  147 | 			await cartItem.deleteItem();
+  148 | 		});
+  149 | 
+  150 | 		await test.step("Verify that product is removed from the cart", async () => {
+  151 | 			await expect(cartItem.rootCard).toBeHidden();
+  152 | 		});
+  153 | 	});
+  154 | });
+  155 | 
+```
