@@ -72,10 +72,10 @@ test.describe("Cart Test Cases", async () => {
 
 		await test.step("Hover over first product and click 'Add to cart'", async () => {
 			const firstProduct =
-				await productsPage.getProductDataFromProductCardbyListNumber(1);
+				await productsPage.getProductDataFromProductCardbyListNumber(4);
 			expectedProducts.push(firstProduct);
 
-			await productsPage.clickAddToCartOnProductCardbyListNumber(1);
+			await productsPage.clickAddToCartOnProductCardbyListNumber(4);
 		});
 
 		await test.step("Click 'Continue Shopping' button", async () => {
@@ -84,10 +84,10 @@ test.describe("Cart Test Cases", async () => {
 
 		await test.step("Hover over second product and click 'Add to cart'", async () => {
 			const secondProduct =
-				await productsPage.getProductDataFromProductCardbyListNumber(2);
+				await productsPage.getProductDataFromProductCardbyListNumber(5);
 			expectedProducts.push(secondProduct);
 
-			await productsPage.clickAddToCartOnProductCardbyListNumber(2);
+			await productsPage.clickAddToCartOnProductCardbyListNumber(5);
 		});
 
 		await test.step("Click 'View Cart' button", async () => {
