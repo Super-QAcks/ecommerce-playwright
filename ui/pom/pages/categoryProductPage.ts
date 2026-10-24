@@ -4,9 +4,7 @@ import { SideBarComponent } from "../component/sideBar.component";
 
 export class CategoryProductPage extends PageFactory {
 	readonly categoryHeading: Locator;
-
 	readonly productsList: Locator;
-
 	readonly productCards: Locator;
 	readonly sideBar: SideBarComponent;
 

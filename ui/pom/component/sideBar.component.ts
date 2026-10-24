@@ -4,6 +4,7 @@ import { ComponentFactory } from "./componentFactory";
 export class SideBarComponent extends ComponentFactory {
 	readonly page: Page;
 	readonly sideBarCategoryTitle: Locator;
+	readonly sideBarBrandsTitle: Locator;
 
 	constructor(page: Page) {
 		super(page, page.locator(".left-sidebar"));
@@ -11,14 +12,17 @@ export class SideBarComponent extends ComponentFactory {
 		this.sideBarCategoryTitle = this.page.getByRole("heading", {
 			name: "Category",
 		});
+		this.sideBarBrandsTitle = this.page.getByRole("heading", {
+			name: "Brands",
+		});
 	}
 
 	// =========================================================
 	// CATEGORY SECTION
 	// =========================================================
 
-	async waitForSideBar() {
-		await await this.sideBarCategoryTitle.waitFor({ state: "visible" });
+	async waitForCategorySideBar() {
+		await this.sideBarCategoryTitle.waitFor({ state: "visible" });
 		await this.root.locator("#accordian").waitFor({ state: "visible" });
 	}
 
@@ -69,4 +73,20 @@ export class SideBarComponent extends ComponentFactory {
 	// =========================================================
 	// TODO: brands locators/actions/queries g
 	//
+
+	async waitForBrandsSideBar() {
+		await this.sideBarBrandsTitle.waitFor({ state: "visible" });
+		await this.root.locator(".brands_products").waitFor({ state: "visible" });
+	}
+
+	// ---- Locators ----
+
+	private brandPanel(brand: string): Locator {
+		return this.root.locator(`.brands-name a:has-text("${brand}")`);
+	}
+
+	// ---- Actions ----
+	async clickBrand(brand: string) {
+		await this.brandPanel(brand).click();
+	}
 }
