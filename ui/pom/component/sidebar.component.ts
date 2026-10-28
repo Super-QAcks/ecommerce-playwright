@@ -68,7 +68,7 @@ export class SidebarComponent extends BaseComponent {
 
 	// ---- Waits ----
 
-	async waitForCategoryReady() {
+	async waitForCategoriesReady() {
 		await this.categoryTitle.waitFor({ state: "visible" });
 		await this.categoryAccordion.waitFor({ state: "visible" });
 	}

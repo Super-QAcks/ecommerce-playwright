@@ -65,7 +65,7 @@ test.describe("Products Page Tests", () => {
 		const categoryProductPage = new CategoryProductPage(page);
 
 		await test.step("Verify that categories are visible on left side bar", async () => {
-			await sidebarComponent.waitForCategoryReady();
+			await sidebarComponent.waitForCategoriesReady();
 		});
 
 		await test.step("Click on 'Women' category", async () => {
