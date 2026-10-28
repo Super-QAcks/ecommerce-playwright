@@ -9,7 +9,9 @@ export class SideBarComponent extends BaseComponent {
 	readonly sideBarCategoryTitle: Locator;
 	readonly sideBarBrandsTitle: Locator;
 	private readonly categoryAccordion: Locator;
+	private readonly categoryLinks: Locator;
 	private readonly brandsList: Locator;
+	private readonly brandItems: Locator;
 
 	constructor(page: Page) {
 		super(page.locator(".left-sidebar"));
@@ -20,23 +22,24 @@ export class SideBarComponent extends BaseComponent {
 			name: "Brands",
 		});
 		this.categoryAccordion = this.root.locator("#accordian");
+		this.categoryLinks = this.categoryAccordion.locator(".panel-title a");
 		this.brandsList = this.root.locator(".brands_products");
+		this.brandItems = this.root.locator(".brands-name");
 	}
 
 	// =========================================================
-	// CATEGORY SECTION
+	// COMPONENT READINESS
 	// =========================================================
-
-	async waitForCategorySideBar() {
-		await this.sideBarCategoryTitle.waitFor({ state: "visible" });
-		await this.categoryAccordion.waitFor({ state: "visible" });
-	}
 
 	override async waitForReady(): Promise<void> {
 		await super.waitForReady();
 		await this.categoryAccordion.waitFor({ state: "visible" });
 		await this.brandsList.waitFor({ state: "visible" });
 	}
+
+	// =========================================================
+	// CATEGORY SECTION
+	// =========================================================
 
 	// ---- Locators ----
 	private categoryToggle(category: string): Locator {
@@ -52,6 +55,17 @@ export class SideBarComponent extends BaseComponent {
 			name: subCategory,
 			exact: true,
 		});
+	}
+
+	private subCategoryItems(category: string): Locator {
+		return this.categoryPanel(category).locator("ul li a");
+	}
+
+	// ---- Waits ----
+
+	async waitForCategorySideBar() {
+		await this.sideBarCategoryTitle.waitFor({ state: "visible" });
+		await this.categoryAccordion.waitFor({ state: "visible" });
 	}
 
 	// ---- Actions ----
@@ -92,16 +106,12 @@ export class SideBarComponent extends BaseComponent {
 	}
 
 	async getCategoryNames(): Promise<string[]> {
-		const raw = await this.categoryAccordion
-			.locator(".panel-title a")
-			.allTextContents();
+		const raw = await this.categoryLinks.allTextContents();
 		return raw.map((t) => t.trim());
 	}
 
 	async getSubCategoryNames(category: string): Promise<string[]> {
-		const raw = await this.categoryPanel(category)
-			.locator("ul li a")
-			.allTextContents();
+		const raw = await this.subCategoryItems(category).allTextContents();
 		return raw.map((t) => t.trim());
 	}
 
@@ -109,29 +119,31 @@ export class SideBarComponent extends BaseComponent {
 	// BRANDS SECTION
 	// =========================================================
 
+	// ---- Locators ----
+
+	private brandLink(brand: string): Locator {
+		return this.brandItems.getByRole("link", {
+			name: nameWithOptionalCount(brand),
+		});
+	}
+
+	// ---- Waits ----
+
 	async waitForBrandsSideBar() {
 		await this.sideBarBrandsTitle.waitFor({ state: "visible" });
 		await this.brandsList.waitFor({ state: "visible" });
 	}
 
-	// ---- Locators ----
-
-	private brandPanel(brand: string): Locator {
-		return this.root
-			.locator(".brands-name")
-			.getByRole("link", { name: nameWithOptionalCount(brand) });
-	}
-
 	// ---- Actions ----
 	async clickBrand(brand: string) {
-		await this.brandPanel(brand).click();
+		await this.brandLink(brand).click();
 	}
 
 	// ---- Queries ----
 
 	/** Brand names without the product count, e.g. "Polo (6)" becomes "Polo". */
 	async getBrandNames(): Promise<string[]> {
-		const raw = await this.root.locator(".brands-name a").allTextContents();
+		const raw = await this.brandItems.locator("a").allTextContents();
 		return raw.map((t) => t.replace(/\(\d+\)/g, "").trim()).filter(Boolean);
 	}
 }
