@@ -8,6 +8,7 @@ import { PRODUCT_CATEGORIES, PRODUCT_DETAILS } from "../pom/data/products";
 import { VALID_PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
 import { SideBarComponent } from "../pom/component/sideBar.component";
+import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
@@ -22,7 +23,7 @@ test.describe("Products Page Tests", () => {
 		productDetailsPage = new ProductDetailsPage(page);
 		headerComponent = new HeaderComponent(page);
 		sidebar = new SideBarComponent(page);
-		await homePage.addBlocker();
+		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {
 			await page.goto(URL_BASE);
 		});
@@ -33,7 +34,6 @@ test.describe("Products Page Tests", () => {
 		const productCard = await homePage.getProductbyName(product.name);
 		await test.step("Click on Products page header link", async () => {
 			await headerComponent.clickProductsLink();
-			await homePage.closeAdds();
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {

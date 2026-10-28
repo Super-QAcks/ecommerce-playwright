@@ -288,7 +288,6 @@ test.describe("E2E Tests", () => {
 
 		await test.step("Click 'Cart' button", async () => {
 			await homePage.clickScrollUp();
-			//await homePage.closeAdds();
 			await header.clickCart();
 		});
 
