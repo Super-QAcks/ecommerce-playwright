@@ -5,7 +5,7 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { CategoryProductPage } from "../pom/pages/categoryProductPage";
 import { URL_BASE } from "../pom/data/urls";
 import { PRODUCT_DETAILS, PRODUCT_CATEGORIES } from "../pom/data/products";
-import { SideBarComponent } from "../pom/component/sideBar.component";
+import { SidebarComponent } from "../pom/component/sidebar.component";
 import { BrandProductPage } from "../pom/pages/brandProductPage";
 
 test.describe("Products Page Tests", () => {
@@ -61,19 +61,19 @@ test.describe("Products Page Tests", () => {
 	});
 
 	test("Test Case 18: View Category Products", async ({ page }) => {
-		const sideBarComponent = new SideBarComponent(page);
+		const sidebarComponent = new SidebarComponent(page);
 		const categoryProductPage = new CategoryProductPage(page);
 
 		await test.step("Verify that categories are visible on left side bar", async () => {
-			await sideBarComponent.waitForCategorySideBar();
+			await sidebarComponent.waitForCategoryReady();
 		});
 
 		await test.step("Click on 'Women' category", async () => {
-			await sideBarComponent.expandCategory(PRODUCT_CATEGORIES.women.id);
+			await sidebarComponent.expandCategory(PRODUCT_CATEGORIES.women.id);
 		});
 
 		await test.step("Click on any category link under 'Women' category, for example: Tops", async () => {
-			await sideBarComponent.selectSubCategory(
+			await sidebarComponent.selectSubCategory(
 				PRODUCT_CATEGORIES.women.id,
 				PRODUCT_CATEGORIES.women.subCategories.tops.id
 			);
@@ -86,8 +86,8 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("On left side bar, click on any sub-category link of 'Men' category", async () => {
-			await sideBarComponent.expandCategory(PRODUCT_CATEGORIES.men.id);
-			await sideBarComponent.selectSubCategory(
+			await sidebarComponent.expandCategory(PRODUCT_CATEGORIES.men.id);
+			await sidebarComponent.selectSubCategory(
 				PRODUCT_CATEGORIES.men.id,
 				PRODUCT_CATEGORIES.men.subCategories.jeans.id
 			);
@@ -102,7 +102,7 @@ test.describe("Products Page Tests", () => {
 
 	test("Test Case 19: View & Cart Brand Products", async ({ page }) => {
 		const headerComponent = new HeaderComponent(page);
-		const sideBarComponent = new SideBarComponent(page);
+		const sidebarComponent = new SidebarComponent(page);
 		const brandProductPage = new BrandProductPage(page);
 
 		await test.step("Click on 'Products' button", async () => {
@@ -110,7 +110,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that Brands are visible on left side bar", async () => {
-			await sideBarComponent.waitForBrandsSideBar();
+			await sidebarComponent.waitForBrandsReady();
 		});
 
 		await test.step("Click on any brand name", async () => {
@@ -118,7 +118,7 @@ test.describe("Products Page Tests", () => {
 			if (brand === undefined) {
 				throw new Error("A brand must be configured for this test");
 			}
-			await sideBarComponent.clickBrand(brand);
+			await sidebarComponent.clickBrand(brand);
 		});
 
 		await test.step("Verify that user is navigated to brand page and brand products are displayed", async () => {
@@ -133,7 +133,7 @@ test.describe("Products Page Tests", () => {
 
 		await test.step("On left side bar, click on any other brand link", async () => {
 			const otherBrand = "H&M"; // Replace with another brand name
-			await sideBarComponent.clickBrand(otherBrand);
+			await sidebarComponent.clickBrand(otherBrand);
 		});
 
 		await test.step("Verify that user is navigated to that brand page and can see products", async () => {

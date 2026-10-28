@@ -7,7 +7,7 @@ import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 import { PRODUCT_CATEGORIES, PRODUCT_DETAILS } from "../pom/data/products";
 import { VALID_PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
-import { SideBarComponent } from "../pom/component/sideBar.component";
+import { SidebarComponent } from "../pom/component/sidebar.component";
 import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Products Page Tests", () => {
@@ -15,14 +15,14 @@ test.describe("Products Page Tests", () => {
 	let productsPage: ProductsPage;
 	let productDetailsPage: ProductDetailsPage;
 	let headerComponent: HeaderComponent;
-	let sidebar: SideBarComponent;
+	let sidebar: SidebarComponent;
 
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
 		productsPage = new ProductsPage(page);
 		productDetailsPage = new ProductDetailsPage(page);
 		headerComponent = new HeaderComponent(page);
-		sidebar = new SideBarComponent(page);
+		sidebar = new SidebarComponent(page);
 		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {
 			await page.goto(URL_BASE);
