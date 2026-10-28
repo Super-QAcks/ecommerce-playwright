@@ -16,14 +16,24 @@ export class HeaderComponent {
 	constructor(page: Page) {
 		this.page = page;
 		this.headerRoot = page.locator("#header");
-		this.contactUs = page.getByRole("link", { name: "Contact Us" });
-		this.logout = page.getByRole("link", { name: "Logout" });
-		this.deleteAccount = page.getByRole("link", { name: "Delete Account" });
-		this.cart = page.getByRole("link", { name: "Cart" });
-		this.signUpLogin = page.getByRole("link", { name: "Signup / Login" });
-		this.productsLink = page.getByRole("link", { name: /Products/i });
-		this.testCasesLink = page.getByRole("link", { name: " Test Cases" });
-		this.loggedUserName = page.getByText("Logged in as").locator("b");
+		this.contactUs = this.headerRoot.getByRole("link", { name: "Contact Us" });
+		this.logout = this.headerRoot.getByRole("link", { name: "Logout" });
+		this.deleteAccount = this.headerRoot.getByRole("link", {
+			name: "Delete Account",
+		});
+		this.cart = this.headerRoot.getByRole("link", { name: "Cart" });
+		this.signUpLogin = this.headerRoot.getByRole("link", {
+			name: "Signup / Login",
+		});
+		this.productsLink = this.headerRoot.getByRole("link", {
+			name: /Products/i,
+		});
+		this.testCasesLink = this.headerRoot.getByRole("link", {
+			name: "Test Cases",
+		});
+		this.loggedUserName = this.headerRoot
+			.getByText("Logged in as")
+			.locator("b");
 	}
 
 	async waitForRoot() {
@@ -31,12 +41,12 @@ export class HeaderComponent {
 	}
 
 	async clickContactUs() {
-		this.waitForRoot();
+		await this.waitForRoot();
 		await this.contactUs.click();
 	}
 
 	async clickSignUpLogin() {
-		this.waitForRoot();
+		await this.waitForRoot();
 		await this.signUpLogin.click();
 	}
 
@@ -53,7 +63,7 @@ export class HeaderComponent {
 	}
 
 	async clickCart() {
-		this.waitForRoot();
+		await this.waitForRoot();
 		await this.cart.click();
 	}
 
@@ -63,7 +73,7 @@ export class HeaderComponent {
 	}
 
 	async clickDeleteAccount() {
-		this.waitForRoot();
+		await this.waitForRoot();
 		await this.deleteAccount.click();
 	}
 }

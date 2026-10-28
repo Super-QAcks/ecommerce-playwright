@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"tests": "npx playwright test --reporter=html",
+		"tests": "npx playwright test --reporter=html --trace on",
 		"tests:ui": "npx playwright test --ui",
 		"tests:debug": "npx playwright test --debug",
 		"prettier": "prettier --check .",

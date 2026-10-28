@@ -12,7 +12,10 @@ export class PageFactory {
 
 	async goto(url: string) {
 		await setupAdHandling(this.page);
-		await this.page.goto(url, { waitUntil: "commit", timeout: 60000 });
+		await this.page.goto(url, {
+			waitUntil: "domcontentloaded",
+			timeout: 60000,
+		});
 	}
 
 	async clickScrollUp() {
