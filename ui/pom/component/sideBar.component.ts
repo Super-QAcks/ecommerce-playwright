@@ -37,6 +37,11 @@ export class SideBarComponent extends BaseComponent {
 		await this.brandsList.waitFor({ state: "visible" });
 	}
 
+	/** Bootstrap's click handler is attached by a script that runs before DOMContentLoaded. */
+	private async waitForPageScripts() {
+		await this.root.page().waitForLoadState("domcontentloaded");
+	}
+
 	// =========================================================
 	// CATEGORY SECTION
 	// =========================================================
@@ -76,6 +81,7 @@ export class SideBarComponent extends BaseComponent {
 
 	/** Opens the panel if it is closed, and waits until it is open. Safe to call twice. */
 	async expandCategory(category: string) {
+		await this.waitForPageScripts();
 		if (!(await this.isCategoryExpanded(category))) {
 			await this.categoryToggle(category).click();
 		}
@@ -84,6 +90,7 @@ export class SideBarComponent extends BaseComponent {
 
 	/** Closes the panel if it is open, and waits until it is closed. Safe to call twice. */
 	async collapseCategory(category: string) {
+		await this.waitForPageScripts();
 		if (await this.isCategoryExpanded(category)) {
 			await this.categoryToggle(category).click();
 		}
