@@ -31,6 +31,7 @@ export class HomePage extends BasePage {
 
 	async waitForRoot() {
 		await this.homeSlider.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async getProductbyName(name: string) {
