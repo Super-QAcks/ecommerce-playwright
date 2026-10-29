@@ -103,6 +103,8 @@ test.describe("Products Page Tests", () => {
 		const headerComponent = new HeaderComponent(page);
 		const sidebarComponent = new SidebarComponent(page);
 		const brandProductPage = new FilteredProductsPage(page);
+		const brand = PRODUCT_DETAILS.default.brand;
+		const otherBrand = "H&M";
 
 		await test.step("Click on 'Products' button", async () => {
 			await headerComponent.clickProductsLink();
@@ -114,29 +116,20 @@ test.describe("Products Page Tests", () => {
 
 		await test.step("Click on any brand name", async () => {
 			const brand = PRODUCT_DETAILS.default.brand;
-			if (brand === undefined) {
-				throw new Error("A brand must be configured for this test");
-			}
 			await sidebarComponent.clickBrand(brand);
 		});
 
 		await test.step("Verify that user is navigated to brand page and brand products are displayed", async () => {
-			const brand = PRODUCT_DETAILS.default.brand;
-			if (brand === undefined) {
-				throw new Error("A brand must be configured for this test");
-			}
 			await brandProductPage.waitForHeading();
 			await expect(brandProductPage.heading).toContainText(brand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
 		});
 
 		await test.step("On left side bar, click on any other brand link", async () => {
-			const otherBrand = "H&M"; // Replace with another brand name
 			await sidebarComponent.clickBrand(otherBrand);
 		});
 
 		await test.step("Verify that user is navigated to that brand page and can see products", async () => {
-			const otherBrand = "H&M"; // Replace with another brand name
 			await brandProductPage.waitForHeading();
 			await expect(brandProductPage.heading).toContainText(otherBrand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
