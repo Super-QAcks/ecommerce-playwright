@@ -7,6 +7,18 @@ export interface Product {
 	condition?: string;
 	brand?: string;
 }
+
+export interface ProductSummary {
+	name: string;
+	price: number;
+}
+
+export interface ProductDetails extends ProductSummary {
+	category: string;
+	availability: string;
+	condition: string;
+	brand: string;
+}
 export interface ContactForm {
 	name?: string;
 	email: string;
