@@ -1,15 +1,15 @@
 import { URL_BASE } from "../pom/data/urls";
 import { test, expect } from "@playwright/test";
-import { TestCases } from "../pom/pages/testCasesPage";
+import { TestCasesPage } from "../pom/pages/testCasesPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Test Cases page", () => {
-	let testCases: TestCases;
+	let testCases: TestCasesPage;
 	let headerComponent: HeaderComponent;
 
 	test.beforeEach(async ({ page }) => {
-		testCases = new TestCases(page);
+		testCases = new TestCasesPage(page);
 		headerComponent = new HeaderComponent(page);
 		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {

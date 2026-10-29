@@ -5,7 +5,7 @@ export class CheckoutPage extends BasePage {
 	readonly checkoutRoot: Locator;
 	readonly deliveryAddressForm: Locator;
 	readonly billingAddressForm: Locator;
-	readonly reviewOderSection: Locator;
+	readonly reviewOrderSection: Locator;
 	readonly commentOrderTextArea: Locator;
 	readonly placeOrderButton: Locator;
 
@@ -14,7 +14,7 @@ export class CheckoutPage extends BasePage {
 		this.checkoutRoot = page.locator("#cart_items > .container");
 		this.deliveryAddressForm = page.locator("#address_delivery");
 		this.billingAddressForm = page.locator("#address_invoice");
-		this.reviewOderSection = page.locator("#cart_info");
+		this.reviewOrderSection = page.locator("#cart_info");
 		this.commentOrderTextArea = page.locator('textarea[name="message"]');
 		this.placeOrderButton = page.getByRole("link", { name: "Place Order" });
 	}

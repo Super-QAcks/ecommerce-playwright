@@ -223,7 +223,7 @@ test.describe("E2E Suite", () => {
 				USER_SIGNUP.zipcode
 			);
 			//review order
-			await expect(checkoutPage.reviewOderSection).toContainText(
+			await expect(checkoutPage.reviewOrderSection).toContainText(
 				VALID_PRODUCTS.default.name
 			);
 		});
@@ -336,7 +336,7 @@ test.describe("E2E Suite", () => {
 				USER_SIGNUP.zipcode
 			);
 
-			await expect(checkoutPage.reviewOderSection).toContainText(
+			await expect(checkoutPage.reviewOrderSection).toContainText(
 				VALID_PRODUCTS.default.name
 			);
 		});
