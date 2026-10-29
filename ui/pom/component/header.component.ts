@@ -19,18 +19,18 @@ export class HeaderComponent extends BaseComponent {
 		this.contactUs = this.root.getByRole("link", { name: "Contact Us" });
 		this.logout = this.root.getByRole("link", { name: "Logout" });
 		this.deleteAccount = this.root.getByRole("link", {
-	name: "Delete Account",
-});
-this.cart = this.root.getByRole("link", { name: "Cart" });
+			name: "Delete Account",
+		});
+		this.cart = this.root.getByRole("link", { name: "Cart" });
 		this.signUpLogin = this.root.getByRole("link", {
-	name: "Signup / Login",
-});
+			name: "Signup / Login",
+		});
 		this.productsLink = this.root.getByRole("link", {
-	name: /Products/i,
-});
+			name: /Products/i,
+		});
 		this.testCasesLink = this.root.getByRole("link", {
-	name: "Test Cases",
-});
+			name: "Test Cases",
+		});
 		this.loggedUserName = this.root.getByText("Logged in as").locator("b");
 	}
 

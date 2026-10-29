@@ -35,11 +35,6 @@ export class HomePage extends BasePage {
 		await this.homeSlider.waitFor({ state: "visible" });
 	}
 
-	async validateHomePage() {
-		await this.waitForRoot();
-		return this.homeSlider.isVisible();
-	}
-
 	async getProductbyName(name: string) {
 		//Future enhancement: This method can be enhanced to search for products in both the main product list and the recommended items carousel.
 		return new ProductCard(this.productCards.filter({ hasText: name }).first());

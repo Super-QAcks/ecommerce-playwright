@@ -23,7 +23,7 @@ test.describe("Products Page Tests", () => {
 		const productsPage = new ProductsPage(page);
 
 		await test.step("Verify that home page is visible successfully", async () => {
-			expect(homePage.validateHomePage()).toBeTruthy();
+			await expect(homePage.homeSlider).toBeVisible();
 		});
 
 		await test.step("Click on 'Products' button", async () => {
