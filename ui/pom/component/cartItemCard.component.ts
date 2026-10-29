@@ -17,24 +17,29 @@ export class CartItemCard {
 		this.deleteButton = root.locator(".cart_quantity_delete");
 	}
 
+	/** Clicks the delete button and waits until this row disappears from the cart. */
 	async deleteItem() {
 		await this.deleteButton.click();
 		await this.rootCard.waitFor({ state: "hidden" });
 	}
 
+	/** Returns the product name, trimmed. */
 	async getProductName() {
 		return (await this.productName.innerText()).trim();
 	}
 
+	/** Returns the unit price parsed with `parsePrice`. */
 	async getProductPrice() {
 		return parsePrice((await this.productPrice.innerText()).trim());
 	}
 
+	/** Returns the row's quantity as a number. */
 	async getProductQuantity() {
 		const text = await this.productQuantity.innerText();
 		return Number(text.trim());
 	}
 
+	/** Returns the row's total price (price × quantity) parsed with `parsePrice`. */
 	async getTotalPrice() {
 		return parsePrice(await this.productTotalPrice.innerText());
 	}
