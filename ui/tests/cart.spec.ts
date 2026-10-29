@@ -37,7 +37,7 @@ test.describe("Cart Test Cases", () => {
 		});
 
 		await test.step("Verify text 'SUBSCRIPTION", async () => {
-			await expect(footerComponent.susbcriptionTitle).toBeVisible();
+			await expect(footerComponent.subscriptionTitle).toBeVisible();
 		});
 
 		await test.step("Enter email address in input and click arrow button", async () => {
