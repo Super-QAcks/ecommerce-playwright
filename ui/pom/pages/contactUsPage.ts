@@ -26,6 +26,7 @@ export class ContactUsPage extends BasePage {
 		this.homeButton = page.getByRole("link", { name: " Home" });
 	}
 
+	/** Fills the contact form. Only `email` is required; empty fields are skipped. Does not submit. */
 	async fillContactForm(formData: ContactForm) {
 		if (formData.name) {
 			await this.nameInput.fill(formData.name);
@@ -42,10 +43,15 @@ export class ContactUsPage extends BasePage {
 		}
 	}
 
+	/**
+	 * Clicks "Submit". The site shows a confirm dialog, so register a
+	 * `page.on("dialog")` handler before calling it.
+	 */
 	async submitForm() {
 		await this.submitButton.click();
 	}
 
+	/** Clicks the "Home" button shown after a successful submission. */
 	async clickHome() {
 		await this.homeButton.click();
 	}

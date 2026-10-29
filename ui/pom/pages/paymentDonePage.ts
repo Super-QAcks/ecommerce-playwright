@@ -23,14 +23,17 @@ export class PaymentDonePage extends BasePage {
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the order-confirmation block. */
 	async waitForRoot() {
 		await this.paymentDoneRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the order is confirmed. */
 	async clickContinue() {
 		await this.continueButton.click();
 	}
 
+	/** Clicks "Download Invoice". */
 	async clickDownloadInvoice() {
 		await this.downloadInvoiceButton.click();
 	}

@@ -22,10 +22,12 @@ export class PaymentPage extends BasePage {
 		this.payAndConfirmOrderButton = page.getByTestId("pay-button");
 	}
 
+	/** Waits for the payment block. */
 	async waitForRoot() {
 		await this.paymentRoot.waitFor({ state: "visible" });
 	}
 
+	/** Fills the card form (name, number, CVC, expiry). Does not submit it. */
 	async enterCardDetails(cardDetails: CardDetails) {
 		await this.nameOnCardInput.fill(cardDetails.nameOnCard);
 		await this.cardNumberInput.fill(cardDetails.cardNumber);
@@ -34,6 +36,7 @@ export class PaymentPage extends BasePage {
 		await this.expirationYearInput.fill(cardDetails.expirationYear);
 	}
 
+	/** Clicks "Pay and Confirm Order". Fill the card first with `enterCardDetails()`. */
 	async payAndConfirmOrder() {
 		await this.payAndConfirmOrderButton.click();
 	}

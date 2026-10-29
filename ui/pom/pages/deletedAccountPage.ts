@@ -19,10 +19,12 @@ export class DeletedAccountPage extends BasePage {
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the "Account Deleted!" block. */
 	async waitForRoot() {
 		await this.deletedAccountRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the account is deleted. */
 	async clickContinue() {
 		await this.continueButton.click();
 	}

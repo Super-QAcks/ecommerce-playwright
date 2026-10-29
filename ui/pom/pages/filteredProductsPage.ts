@@ -15,6 +15,7 @@ export class FilteredProductsPage extends BasePage {
 		this.productCards = page.locator(".product-image-wrapper");
 	}
 
+	/** Waits for the page title (brand or category name) to be visible. */
 	async waitForHeading() {
 		await this.heading.waitFor({ state: "visible" });
 	}

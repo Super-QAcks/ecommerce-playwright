@@ -13,10 +13,12 @@ export class AccountCreatedPage extends BasePage {
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the "Account Created!" block. */
 	async waitForRoot() {
 		await this.accountCreatedRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the account is created. */
 	async clickContinueButton() {
 		await this.continueButton.click();
 	}
