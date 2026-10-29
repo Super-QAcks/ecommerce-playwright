@@ -3,13 +3,13 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"tests": "npx playwright test --reporter=html --trace on",
+		"tests": "npx playwright test --reporter=html",
 		"tests:ui": "npx playwright test --ui",
 		"tests:debug": "npx playwright test --debug",
 		"prettier": "prettier --check .",
 		"prettier:fix": "prettier --write .",
 		"flaky": "npx playwright test --reporter=html --repeat-each 100",
-		"lint": "eslint .",
+		"lint": "eslint ui",
 		"prepare": "husky"
 	},
 	"keywords": [],
@@ -23,6 +23,7 @@
 		"allure-playwright": "^3.6.0",
 		"dotenv": "^17.3.1",
 		"eslint": "^10.0.3",
+		"eslint-plugin-playwright": "^2.12.1",
 		"husky": "^9.1.7",
 		"prettier": "3.8.1",
 		"typescript": "^5.9.3",
