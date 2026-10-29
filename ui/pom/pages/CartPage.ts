@@ -3,7 +3,6 @@ import { BasePage } from "./basePage";
 import { CartItemCard } from "../component/cartItemCard.component";
 
 export class CartPage extends BasePage {
-	readonly page: Page;
 	readonly cartRoot: Locator;
 	readonly checkoutButton: Locator;
 	readonly cartRowsCountLocator: Locator;
@@ -13,7 +12,6 @@ export class CartPage extends BasePage {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.cartRoot = page.locator("#cart_info");
 		this.checkoutButton = page.getByText("Proceed To Checkout");
 		this.cartRowsCountLocator = page.locator("#cart_info tbody tr");

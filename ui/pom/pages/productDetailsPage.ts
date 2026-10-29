@@ -4,7 +4,6 @@ import { ReviewForm } from "../data/interfaces";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
 export class ProductDetailsPage extends BasePage {
-	readonly page: Page;
 	readonly productDetailsRoot: Locator;
 	readonly productName: Locator;
 	readonly productPrice: Locator;
@@ -25,7 +24,6 @@ export class ProductDetailsPage extends BasePage {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.productDetailsRoot = page.locator(".product-details");
 		this.productName = page.locator(".product-information h2");
 		this.productPrice = page.getByText("Rs.");
