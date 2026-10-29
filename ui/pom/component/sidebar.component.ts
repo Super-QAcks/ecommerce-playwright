@@ -71,6 +71,7 @@ export class SidebarComponent extends BaseComponent {
 
 	// ---- Waits ----
 
+	/** Waits until the "Category" heading and the category accordion are visible. */
 	async waitForCategoriesReady() {
 		await this.categoryTitle.waitFor({ state: "visible" });
 		await this.categoryAccordion.waitFor({ state: "visible" });
@@ -102,6 +103,7 @@ export class SidebarComponent extends BaseComponent {
 		);
 	}
 
+	/** Expands the category if needed, then clicks the sub-category link (exact name match). */
 	async selectSubCategory(category: string, subCategory: string) {
 		await this.expandCategory(category);
 		await this.subCategoryLink(category, subCategory).click();
@@ -120,11 +122,13 @@ export class SidebarComponent extends BaseComponent {
 		return raw.map((t) => t.trim()).filter(Boolean);
 	}
 
+	/** Returns the trimmed names of all top-level categories. */
 	async getCategoryNames(): Promise<string[]> {
 		await this.categoryLinks.first().waitFor({ state: "visible" });
 		return this.cleanNames(await this.categoryLinks.allTextContents());
 	}
 
+	/** Returns the trimmed sub-category names of a category, even if its panel is collapsed. */
 	async getSubCategoryNames(category: string): Promise<string[]> {
 		const items = this.subCategoryItems(category);
 		await items.first().waitFor({ state: "attached" });
@@ -144,13 +148,14 @@ export class SidebarComponent extends BaseComponent {
 	}
 
 	// ---- Waits ----
-
+	/** Waits until the "Brands" heading and the brands list are visible. */
 	async waitForBrandsReady() {
 		await this.brandsTitle.waitFor({ state: "visible" });
 		await this.brandsList.waitFor({ state: "visible" });
 	}
 
 	// ---- Actions ----
+	/** Clicks the brand link. `brand` is the name without the product count, e.g. "Polo". */
 	async clickBrand(brand: string) {
 		await this.brandLink(brand).click();
 	}
