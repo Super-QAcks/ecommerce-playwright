@@ -33,7 +33,7 @@ test("Test Case 5: Register User with existing email: ", async ({ page }) => {
 	});
 
 	await test.step("Verify error 'Email Address already exist!' is visible", async () => {
-		await loginPage.waitForSingUpErrorMessage();
+		await loginPage.waitForSignUpErrorMessage();
 		expect(await loginPage.getSignUpErrorMessage()).toContain(
 			"Email Address already exist!"
 		);
