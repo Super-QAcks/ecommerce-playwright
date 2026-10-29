@@ -1,4 +1,4 @@
-import { test } from "./helpers/loginFixture.ts";
+import { test } from "./helpers/loginFixture";
 
 test.describe("seed for logged in user", () => {
 	test("seed using loginPage fixture", async ({ loginPage }) => {
