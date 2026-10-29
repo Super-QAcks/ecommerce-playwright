@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { ContactUsPage } from "../pom/pages/contactUs";
+import { ContactUsPage } from "../pom/pages/contactUsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { setupAdHandling } from "../pom/utils/ads";

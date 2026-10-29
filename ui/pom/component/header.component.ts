@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { URL_PRODUCTS } from "../data/urls";
-import { BaseComponent } from "./baseComponent";
+import { BaseComponent } from "./base.component";
 
 export class HeaderComponent extends BaseComponent {
 	readonly contactUs: Locator;
