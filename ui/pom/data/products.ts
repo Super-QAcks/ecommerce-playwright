@@ -5,17 +5,17 @@ export const VALID_PRODUCTS = {
 		name: "Blue Top",
 		quantity: 4,
 		price: 500,
-	} as Product,
+	} satisfies Product,
 	greenTshirt: {
 		name: "Pure Cotton Neon Green Tshirt",
 		quantity: 2,
 		price: 50,
-	} as Product,
+	} satisfies Product,
 	fancyGreenTop: {
 		name: "Fancy Green Top",
 		quantity: 1,
 		price: 700,
-	} as Product,
+	} satisfies Product,
 };
 
 export const PRODUCT_DETAILS = {
@@ -27,7 +27,7 @@ export const PRODUCT_DETAILS = {
 		availability: "In Stock",
 		condition: "New",
 		brand: "Polo",
-	} as Product,
+	} satisfies Product,
 };
 
 export const PRODUCT_CATEGORIES = {
@@ -83,25 +83,25 @@ export const RECOMMENDED_PRODUCTS = {
 	default: {
 		name: "Men Tshirt",
 		price: 400,
-	} as Product,
+	} satisfies Product,
 	"1000": {
 		name: "Rs. 1000",
 		price: 1000,
-	} as Product,
+	} satisfies Product,
 	Stylish_Dress: {
 		name: "Stylish Dress",
 		price: 1500,
-	} as Product,
+	} satisfies Product,
 	Winter_Top: {
 		name: "Winter Top",
 		price: 600,
-	} as Product,
+	} satisfies Product,
 	Summer_White_Top: {
 		name: "Summer White Top",
 		price: 400,
-	} as Product,
+	} satisfies Product,
 	Blue_Top: {
 		name: "Blue Top",
 		price: 500,
-	} as Product,
+	} satisfies Product,
 };
