@@ -19,14 +19,17 @@ export class CheckoutPage extends BasePage {
 		this.placeOrderButton = page.getByRole("link", { name: "Place Order" });
 	}
 
+	/** Waits for the checkout block (addresses and order review). */
 	async waitForRoot() {
 		await this.checkoutRoot.waitFor({ state: "visible" });
 	}
 
+	/** Types `comment` in the order comment box. */
 	async commentOrder(comment: string) {
 		await this.commentOrderTextArea.fill(comment);
 	}
 
+	/** Clicks "Place Order" and goes to the payment page. */
 	async placeOrder() {
 		await this.placeOrderButton.click();
 	}
