@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class TestCases extends PageFactory {
+export class TestCases extends BasePage {
 	private readonly testCasesHeading: Locator;
 
 	constructor(page: Page) {

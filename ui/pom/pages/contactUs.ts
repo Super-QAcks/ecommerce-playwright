@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ContactForm } from "../data/interfaces";
 
-export class ContactUsPage extends PageFactory {
+export class ContactUsPage extends BasePage {
 	private readonly contactUsFormRoot: Locator;
 	private readonly nameInput: Locator;
 	private readonly emailInput: Locator;

@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { CardDetails } from "../data/interfaces";
 
-export class PaymentPage extends PageFactory {
+export class PaymentPage extends BasePage {
 	readonly page: Page;
 	readonly paymentRoot: Locator;
 	readonly nameOnCardInput: Locator;

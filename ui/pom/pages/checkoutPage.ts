@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class CheckoutPage extends PageFactory {
+export class CheckoutPage extends BasePage {
 	readonly page: Page;
 	readonly checkoutRoot: Locator;
 	readonly deliveryAddressForm: Locator;

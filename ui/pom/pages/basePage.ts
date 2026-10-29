@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import { setupAdHandling } from "../utils/ads";
 
-export class PageFactory {
+export class BasePage {
 	protected page: Page;
 	readonly scrollUpButton: Locator;
 

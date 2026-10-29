@@ -1,10 +1,10 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ProductCard } from "../component/productCard.component";
 import { SidebarComponent } from "../component/sidebar.component";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
-export class ProductsPage extends PageFactory {
+export class ProductsPage extends BasePage {
 	readonly productsHeading: Locator;
 	readonly productsList: Locator;
 	readonly searchedProductsHeading: Locator;

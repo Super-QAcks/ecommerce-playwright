@@ -1,9 +1,9 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ReviewForm } from "../data/interfaces";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
-export class ProductDetailsPage extends PageFactory {
+export class ProductDetailsPage extends BasePage {
 	readonly page: Page;
 	readonly productDetailsRoot: Locator;
 	readonly productName: Locator;
@@ -51,7 +51,10 @@ export class ProductDetailsPage extends PageFactory {
 	}
 
 	async waitForRoot() {
-		await this.productDetailsRoot.isVisible();
+		await this.productDetailsRoot.waitFor({ state: "visible" });
+		// The review form relies on page scripts: clicking Submit before they are
+		// attached makes the browser submit the form natively and reload the page.
+		await this.page.waitForLoadState("load");
 	}
 
 	async addToCart() {
@@ -70,6 +73,7 @@ export class ProductDetailsPage extends PageFactory {
 	}
 
 	async submitReview() {
+		await this.page.waitForLoadState("load");
 		await this.reviewSubmitButton.click();
 	}
 }
