@@ -1,5 +1,4 @@
 import { Page, Locator } from "@playwright/test";
-import { URL_PRODUCTS } from "../data/urls";
 import { BaseComponent } from "./base.component";
 
 export class HeaderComponent extends BaseComponent {
@@ -11,11 +10,9 @@ export class HeaderComponent extends BaseComponent {
 	readonly logout: Locator;
 	readonly deleteAccount: Locator;
 	readonly loggedUserName: Locator;
-	private readonly page: Page;
 
 	constructor(page: Page) {
 		super(page.locator("#header"));
-		this.page = page;
 		this.contactUs = this.root.getByRole("link", { name: "Contact Us" });
 		this.logout = this.root.getByRole("link", { name: "Logout" });
 		this.deleteAccount = this.root.getByRole("link", {
@@ -47,9 +44,6 @@ export class HeaderComponent extends BaseComponent {
 	async clickProductsLink() {
 		await this.waitForReady();
 		await this.productsLink.click();
-		if (this.page.url().includes("#google_vignette")) {
-			await this.page.goto(URL_PRODUCTS);
-		}
 	}
 
 	async clickTestCasesLink() {
