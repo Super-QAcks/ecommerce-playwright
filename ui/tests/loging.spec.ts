@@ -7,9 +7,11 @@ import { URL_BASE } from "../pom/data/urls";
 import { LOGIN_CREDENTIALS } from "../pom/data/credentials";
 
 LoginFixture.describe("Login Page Tests", () => {
-	LoginFixture("should log out successfully", async ({ loginPage }) => {
+	LoginFixture("should log out successfully", async ({ loginPage, page }) => {
+		const headerComponent = new HeaderComponent(page);
+
 		await LoginFixture.step("Click on Logout link", async () => {
-			await loginPage.logout();
+			await headerComponent.clickLogout();
 		});
 
 		await LoginFixture.step("Validate successful logout", async () => {
