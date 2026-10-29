@@ -56,10 +56,6 @@ export class ProductsPage extends BasePage {
 		return resultCards;
 	}
 
-	async validateProductsList() {
-		await this.productsList.isVisible();
-	}
-
 	async getProductbyName(name: string) {
 		return new ProductCard(this.productCards.filter({ hasText: name }).first());
 	}

@@ -37,11 +37,11 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {
-			await productsPage.validateProductsList();
+			await expect(productsPage.productsList).toBeVisible();
 		});
 
 		await test.step("Verify that products list is visible", async () => {
-			await productsPage.validateProductsList();
+			await expect(productsPage.productsList).toBeVisible();
 		});
 
 		await test.step("Click on first product's 'View Product' link", async () => {
