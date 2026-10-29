@@ -30,6 +30,7 @@ export class ProductsPage extends BasePage {
 
 	async waitForProductsPage() {
 		await this.productsHeading.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async waitForSearchedProductsHeading() {
