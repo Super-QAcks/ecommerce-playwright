@@ -4,8 +4,7 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
-import { PRODUCT_CATEGORIES, PRODUCT_DETAILS } from "../pom/data/products";
-import { VALID_PRODUCTS } from "../pom/data/products";
+import { PRODUCT_CATEGORIES, PRODUCT_DETAILS, VALID_PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
 import { SidebarComponent } from "../pom/component/sidebar.component";
 import { setupAdHandling } from "../pom/utils/ads";
@@ -75,14 +74,6 @@ test.describe("Products Page Tests", () => {
 	});
 
 	test("Test Case 21: Add review on product", async ({ page }) => {
-		const homePage = new HomePage(page);
-		const productDetailsPage = new ProductDetailsPage(page);
-		const headerComponent = new HeaderComponent(page);
-
-		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
-			await homePage.goto(URL_BASE);
-		});
-
 		await test.step("Click on 'Products' button", async () => {
 			await headerComponent.clickProductsLink();
 		});
