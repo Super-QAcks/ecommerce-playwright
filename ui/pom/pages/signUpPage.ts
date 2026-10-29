@@ -77,10 +77,15 @@ export class SignUpPage extends BasePage {
 		await titleLocator.click();
 	}
 
+	/** Waits for the "Enter Account Information" form. */
 	async waitForRoot() {
 		await this.signUpFormRoot.waitFor({ state: "visible" });
 	}
 
+	/**
+	 * Fills the account form and clicks "Create Account". Fields missing from
+	 * `data` are skipped. The two newsletter checkboxes are not touched.
+	 */
 	async fillForm(data: SignupForm) {
 		await this.selectTitle(data.title);
 		await this.fillField(this.password, data.password);
