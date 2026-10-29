@@ -10,6 +10,7 @@
 		"prettier:fix": "prettier --write .",
 		"flaky": "npx playwright test --reporter=html --repeat-each 100",
 		"lint": "eslint ui",
+		"typecheck": "tsc --noEmit",
 		"prepare": "husky"
 	},
 	"keywords": [],
