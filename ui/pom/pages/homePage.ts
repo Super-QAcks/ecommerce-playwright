@@ -10,7 +10,6 @@ export class HomePage extends BasePage {
 	readonly activeSliderH2: Locator;
 	readonly productCards: Locator;
 	readonly addedProductModal: AddedProductModal;
-	readonly productsButton: Locator;
 	readonly recommendedItemsCarousel: Locator;
 
 	constructor(page: Page) {
@@ -26,7 +25,6 @@ export class HomePage extends BasePage {
 		this.recommendedItemsCarousel = page.locator("div.recommended_items");
 		this.productCards = page.locator(".product-image-wrapper");
 		this.addedProductModal = new AddedProductModal(page);
-		this.productsButton = page.locator("a[href='/products']");
 	}
 
 	async waitForRoot() {
@@ -69,10 +67,5 @@ export class HomePage extends BasePage {
 	async clickContinueShoppingFromModal() {
 		await this.addedProductModal.waitForModal();
 		await this.addedProductModal.clickContinueShopping();
-	}
-
-	async clickProductsButton() {
-		// this should be removed and added to the header component
-		await this.productsButton.click();
 	}
 }
