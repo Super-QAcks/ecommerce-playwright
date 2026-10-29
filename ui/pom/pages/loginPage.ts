@@ -25,7 +25,9 @@ export class LoginPage extends PageFactory {
 		this.emailInput = this.loginFormRoot.getByTestId("login-email");
 		this.passwordInput = this.loginFormRoot.getByTestId("login-password");
 		this.loginButton = this.loginFormRoot.getByTestId("login-button");
-		this.errorMessage = this.loginFormRoot.getByText("Your email or password is incorrect!");
+		this.errorMessage = this.loginFormRoot.getByText(
+			"Your email or password is incorrect!"
+		);
 
 		this.signUpFormRoot = page.locator(".signup-form");
 		this.signUpFormTitle = this.signUpFormRoot.getByRole("heading", {
@@ -34,7 +36,9 @@ export class LoginPage extends PageFactory {
 		this.signUpNameInput = this.signUpFormRoot.getByTestId("signup-name");
 		this.signUpEmailInput = this.signUpFormRoot.getByTestId("signup-email");
 		this.signUpButton = this.signUpFormRoot.getByTestId("signup-button");
-		this.signUpErrorMessage = this.signUpFormRoot.getByText("Email Address already exist!");
+		this.signUpErrorMessage = this.signUpFormRoot.getByText(
+			"Email Address already exist!"
+		);
 	}
 
 	async waitForRoot() {
@@ -73,7 +77,8 @@ export class LoginPage extends PageFactory {
 		return this.errorMessage.textContent();
 	}
 
-	async logout() { // this method doesnt belong here as it is from the header component, but for now it is here until we refactor the test cases that use this page object. The logout method already exists in the header component and should be used from there instead of this method.
+	async logout() {
+		// this method doesnt belong here as it is from the header component, but for now it is here until we refactor the test cases that use this page object. The logout method already exists in the header component and should be used from there instead of this method.
 		await this.page.getByText(/logout/i).click({ force: true });
 	}
 }
