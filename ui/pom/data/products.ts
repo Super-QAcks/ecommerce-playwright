@@ -1,4 +1,44 @@
-import { Product } from "./interfaces";
+import { Product, ProductDetails, ProductSummary } from "./interfaces";
+
+/** One definition per product. Tests pick the products they need from here. */
+export const PRODUCTS = {
+	blueTop: {
+		name: "Blue Top",
+		price: 500,
+		category: "Women > Tops",
+		availability: "In Stock",
+		condition: "New",
+		brand: "Polo",
+	} satisfies ProductDetails,
+	greenTshirt: {
+		name: "Pure Cotton Neon Green Tshirt",
+		price: 50,
+	} satisfies ProductSummary,
+	fancyGreenTop: {
+		name: "Fancy Green Top",
+		price: 700,
+	} satisfies ProductSummary,
+	menTshirt: {
+		name: "Men Tshirt",
+		price: 400,
+	} satisfies ProductSummary,
+	rs1000: {
+		name: "Rs. 1000",
+		price: 1000,
+	} satisfies ProductSummary,
+	stylishDress: {
+		name: "Stylish Dress",
+		price: 1500,
+	} satisfies ProductSummary,
+	winterTop: {
+		name: "Winter Top",
+		price: 600,
+	} satisfies ProductSummary,
+	summerWhiteTop: {
+		name: "Summer White Top",
+		price: 400,
+	} satisfies ProductSummary,
+};
 
 export const VALID_PRODUCTS = {
 	default: {
