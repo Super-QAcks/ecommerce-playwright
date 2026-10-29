@@ -3,7 +3,7 @@ import { Locator } from "@playwright/test";
 export abstract class BaseComponent {
 	constructor(readonly root: Locator) {}
 
-	/*
+	/**
 	 * Snapshot check: returns immediately and does NOT retry.
 	 * In tests prefer `await expect(component.root).toBeVisible()`.
 	 */
