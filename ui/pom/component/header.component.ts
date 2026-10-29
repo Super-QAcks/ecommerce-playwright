@@ -45,15 +45,16 @@ export class HeaderComponent extends BaseComponent {
 	}
 
 	async clickProductsLink() {
-		await this.productsLink.waitFor({ state: "visible", timeout: 10000 });
-		await this.productsLink.click({ force: true });
+		await this.waitForReady();
+		await this.productsLink.click();
 		if (this.page.url().includes("#google_vignette")) {
 			await this.page.goto(URL_PRODUCTS);
 		}
 	}
 
 	async clickTestCasesLink() {
-		await this.testCasesLink.click({ force: true });
+		await this.waitForReady();
+		await this.testCasesLink.click();
 	}
 
 	async clickCart() {
