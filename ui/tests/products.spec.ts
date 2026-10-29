@@ -4,7 +4,11 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
-import { PRODUCT_CATEGORIES, PRODUCT_DETAILS, VALID_PRODUCTS } from "../pom/data/products";
+import {
+	PRODUCT_CATEGORIES,
+	PRODUCT_DETAILS,
+	VALID_PRODUCTS,
+} from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
 import { SidebarComponent } from "../pom/component/sidebar.component";
 import { setupAdHandling } from "../pom/utils/ads";
