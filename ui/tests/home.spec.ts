@@ -6,7 +6,7 @@ import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
 import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
 
-test.describe("Home Page Tests.", async () => {
+test.describe("Home Page Tests.", () => {
 	let homePage: HomePage;
 	let footerComponent: FooterComponent;
 
@@ -81,7 +81,7 @@ test.describe("Home Page Tests.", async () => {
 		});
 	});
 
-	test("Test Case 25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality: ", async ({
+	test("Test Case 25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality:", async ({
 		page,
 	}) => {
 		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {

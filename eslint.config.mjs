@@ -46,5 +46,5 @@ export default defineConfig(
 	{
 		files: ["ui/tests/seed.spec.ts"],
 		rules: { "playwright/expect-expect": "off" },
-	},
+	}
 );

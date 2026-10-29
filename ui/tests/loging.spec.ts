@@ -13,7 +13,7 @@ LoginFixture.describe("Login Page Tests", () => {
 		});
 
 		await LoginFixture.step("Validate successful logout", async () => {
-			await loginPage.waitForRoot();
+			await expect(loginPage.loginFormRoot).toBeVisible();
 		});
 	});
 });
@@ -55,7 +55,7 @@ test("Test Case 2: Login User with correct email and password", async ({
 	});
 });
 
-test("Test Case 3: Login User with incorrect email and password: ", async ({
+test("Test Case 3: Login User with incorrect email and password:", async ({
 	page,
 }) => {
 	const homePage = new HomePage(page);

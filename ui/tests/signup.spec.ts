@@ -5,7 +5,7 @@ import { LoginPage } from "../pom/pages/loginPage";
 import { URL_BASE } from "../pom/data/urls";
 import { LOGIN_CREDENTIALS } from "../pom/data/credentials";
 
-test("Test Case 5: Register User with existing email: ", async ({ page }) => {
+test("Test Case 5: Register User with existing email:", async ({ page }) => {
 	const homePage = new HomePage(page);
 	const headercomponent = new HeaderComponent(page);
 	const loginPage = new LoginPage(page);

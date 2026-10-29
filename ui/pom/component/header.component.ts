@@ -68,7 +68,7 @@ export class HeaderComponent {
 	}
 
 	async clickLogout() {
-		this.waitForRoot();
+		await this.waitForRoot();
 		await this.logout.click();
 	}
 

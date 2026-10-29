@@ -23,7 +23,7 @@ test.describe("Products Page Tests", () => {
 		const productsPage = new ProductsPage(page);
 
 		await test.step("Verify that home page is visible successfully", async () => {
-			await expect(await homePage.validateHomePage()).toBeTruthy();
+			expect(homePage.validateHomePage()).toBeTruthy();
 		});
 
 		await test.step("Click on 'Products' button", async () => {
@@ -49,7 +49,7 @@ test.describe("Products Page Tests", () => {
 			const resultCards =
 				await productsPage.getSearchResultProductCards(searchWord);
 
-			await expect(resultCards.length).toBeGreaterThan(0);
+			expect(resultCards.length).toBeGreaterThan(0);
 
 			for (const productCard of resultCards) {
 				await expect(productCard.rootCard).toBeVisible();
