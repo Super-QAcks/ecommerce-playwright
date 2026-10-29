@@ -16,21 +16,21 @@ export class HeaderComponent extends BaseComponent {
 	constructor(page: Page) {
 		super(page.locator("#header"));
 		this.page = page;
-		this.contactUs = page.getByRole("link", { name: "Contact Us" });
-		this.logout = page.getByRole("link", { name: "Logout" });
-		this.deleteAccount = page.getByRole("link", {
-			name: "Delete Account",
-		});
-		this.cart = page.getByRole("link", { name: "Cart" });
-		this.signUpLogin = page.getByRole("link", {
-			name: "Signup / Login",
-		});
-		this.productsLink = page.getByRole("link", {
-			name: /Products/i,
-		});
-		this.testCasesLink = page.getByRole("link", {
-			name: "Test Cases",
-		});
+		this.contactUs = this.root.getByRole("link", { name: "Contact Us" });
+		this.logout = this.root.getByRole("link", { name: "Logout" });
+		this.deleteAccount = this.root.getByRole("link", {
+	name: "Delete Account",
+});
+this.cart = this.root.getByRole("link", { name: "Cart" });
+		this.signUpLogin = this.root.getByRole("link", {
+	name: "Signup / Login",
+});
+		this.productsLink = this.root.getByRole("link", {
+	name: /Products/i,
+});
+		this.testCasesLink = this.root.getByRole("link", {
+	name: "Test Cases",
+});
 		this.loggedUserName = this.root.getByText("Logged in as").locator("b");
 	}
 
