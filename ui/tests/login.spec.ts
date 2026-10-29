@@ -24,7 +24,7 @@ test("Test Case 2: Login User with correct email and password", async ({
 	page,
 }) => {
 	const homePage = new HomePage(page);
-	const headercomponent = new HeaderComponent(page);
+	const headerComponent = new HeaderComponent(page);
 	const loginPage = new LoginPage(page);
 
 	await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
@@ -36,7 +36,7 @@ test("Test Case 2: Login User with correct email and password", async ({
 	});
 
 	await test.step("Click on 'Signup / Login' button", async () => {
-		await headercomponent.clickSignUpLogin();
+		await headerComponent.clickSignUpLogin();
 	});
 
 	await test.step("Verify 'Login to your account' is visible", async () => {
@@ -51,7 +51,7 @@ test("Test Case 2: Login User with correct email and password", async ({
 	});
 
 	await test.step("Verify that 'Logged in as username' is visible", async () => {
-		await expect(headercomponent.loggedUserName).toContainText(
+		await expect(headerComponent.loggedUserName).toContainText(
 			LOGIN_CREDENTIALS.NAME_USER
 		);
 	});
@@ -61,7 +61,7 @@ test("Test Case 3: Login User with incorrect email and password:", async ({
 	page,
 }) => {
 	const homePage = new HomePage(page);
-	const headercomponent = new HeaderComponent(page);
+	const headerComponent = new HeaderComponent(page);
 	const loginPage = new LoginPage(page);
 	await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
 		await homePage.goto(URL_BASE);
@@ -72,7 +72,7 @@ test("Test Case 3: Login User with incorrect email and password:", async ({
 	});
 
 	await test.step("Click on 'Signup / Login' button", async () => {
-		await headercomponent.clickSignUpLogin();
+		await headerComponent.clickSignUpLogin();
 	});
 
 	await test.step("Verify 'Login to your account' is visible", async () => {
