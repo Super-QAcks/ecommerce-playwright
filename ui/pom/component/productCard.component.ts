@@ -30,12 +30,11 @@ export class ProductCard {
 	}
 
 	async hoverOverCard() {
-		await this.rootCard.hover({ force: true });
+		await this.rootCard.hover();
 	}
 
 	async viewProduct() {
-		await this.viewProductButton.scrollIntoViewIfNeeded();
-		await this.viewProductButton.click({ force: true });
+		await this.viewProductButton.click();
 	}
 
 	async getProductByListNumber(listNumber: number) {
