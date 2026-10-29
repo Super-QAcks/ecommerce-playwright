@@ -8,11 +8,11 @@ import { LOGIN_CREDENTIALS } from "../pom/data/credentials";
 
 LoginFixture.describe("Login Page Tests", () => {
 	LoginFixture("should log out successfully", async ({ loginPage }) => {
-		LoginFixture.step("Click on Logout link", async () => {
+		await LoginFixture.step("Click on Logout link", async () => {
 			await loginPage.logout();
 		});
 
-		LoginFixture.step("Validate successful logout", async () => {
+		await LoginFixture.step("Validate successful logout", async () => {
 			await loginPage.waitForRoot();
 		});
 	});
@@ -85,8 +85,6 @@ test("Test Case 3: Login User with incorrect email and password: ", async ({
 	});
 
 	await test.step("Verify error 'Your email or password is incorrect!' is visible", async () => {
-		expect(await loginPage.getErrorMessage()).toContain(
-			"Your email or password is incorrect!"
-		);
+		await expect(loginPage.errorMessage).toBeVisible();
 	});
 });

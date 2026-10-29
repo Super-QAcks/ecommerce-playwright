@@ -2,12 +2,12 @@ import { Page, Locator } from "@playwright/test";
 import { PageFactory } from "./pageFactory";
 
 export class LoginPage extends PageFactory {
-	public loginFormRoot: Locator;
+	readonly loginFormRoot: Locator;
 	readonly loginFormTitle: Locator;
 	private readonly emailInput: Locator;
 	private readonly passwordInput: Locator;
 	private readonly loginButton: Locator;
-	private readonly errorMessage: Locator;
+	readonly errorMessage: Locator;
 
 	readonly signUpFormRoot: Locator;
 	readonly signUpFormTitle: Locator;
@@ -19,22 +19,22 @@ export class LoginPage extends PageFactory {
 	constructor(page: Page) {
 		super(page);
 		this.loginFormRoot = page.locator(".login-form");
-		this.loginFormTitle = page.getByRole("heading", {
+		this.loginFormTitle = this.loginFormRoot.getByRole("heading", {
 			name: "Login to your account",
 		});
-		this.emailInput = page.getByTestId("login-email");
-		this.passwordInput = page.getByTestId("login-password");
-		this.loginButton = page.getByTestId("login-button");
-		this.errorMessage = page.getByText("Your email or password is incorrect!");
+		this.emailInput = this.loginFormRoot.getByTestId("login-email");
+		this.passwordInput = this.loginFormRoot.getByTestId("login-password");
+		this.loginButton = this.loginFormRoot.getByTestId("login-button");
+		this.errorMessage = this.loginFormRoot.getByText("Your email or password is incorrect!");
 
 		this.signUpFormRoot = page.locator(".signup-form");
-		this.signUpFormTitle = page.getByRole("heading", {
+		this.signUpFormTitle = this.signUpFormRoot.getByRole("heading", {
 			name: "New User Signup!",
 		});
-		this.signUpNameInput = page.getByTestId("signup-name");
-		this.signUpEmailInput = page.getByTestId("signup-email");
-		this.signUpButton = page.getByTestId("signup-button");
-		this.signUpErrorMessage = page.getByText("Email Address already exist!");
+		this.signUpNameInput = this.signUpFormRoot.getByTestId("signup-name");
+		this.signUpEmailInput = this.signUpFormRoot.getByTestId("signup-email");
+		this.signUpButton = this.signUpFormRoot.getByTestId("signup-button");
+		this.signUpErrorMessage = this.signUpFormRoot.getByText("Email Address already exist!");
 	}
 
 	async waitForRoot() {
@@ -57,7 +57,7 @@ export class LoginPage extends PageFactory {
 		await this.signUpButton.click();
 	}
 
-	async waitForSingUpErrorMessage() {
+	async waitForSignUpErrorMessage() {
 		await this.signUpErrorMessage.waitFor({ state: "visible" });
 	}
 
@@ -73,7 +73,7 @@ export class LoginPage extends PageFactory {
 		return this.errorMessage.textContent();
 	}
 
-	async logout() {
+	async logout() { // this method doesnt belong here as it is from the header component, but for now it is here until we refactor the test cases that use this page object. The logout method already exists in the header component and should be used from there instead of this method.
 		await this.page.getByText(/logout/i).click({ force: true });
 	}
 }
