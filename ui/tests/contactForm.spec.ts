@@ -17,8 +17,8 @@ test.describe("Contact Us form tests", () => {
 		await contactUsPage.waitForRoot();
 	});
 
-	//Flaky test, needs to be refactored to avoid the alert dialog
-	test.skip("should submit the contact form successfully", async ({ page }) => {
+	//this test sould be refactored to use the actual structure with steps and assertions, but for now it is a simple test to check the form submission
+	test("should submit the contact form successfully", async ({ page }) => {
 		const formData = {
 			name: "John Doe",
 			email: "john.doe@example.com",
@@ -31,9 +31,8 @@ test.describe("Contact Us form tests", () => {
 			expect(dialog.message()).toContain("Press OK to proceed!");
 			await dialog.accept();
 		});
-		await contactUsPage.submitForm();
 
-		await contactUsPage.waitForRoot();
+		await contactUsPage.submitForm();
 		await expect(contactUsPage.successMessage).toBeVisible();
 		await contactUsPage.clickHome();
 		await expect(page).toHaveURL(URL_BASE);
