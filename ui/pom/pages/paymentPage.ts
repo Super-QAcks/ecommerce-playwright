@@ -3,7 +3,6 @@ import { BasePage } from "./basePage";
 import { CardDetails } from "../data/interfaces";
 
 export class PaymentPage extends BasePage {
-	readonly page: Page;
 	readonly paymentRoot: Locator;
 	readonly nameOnCardInput: Locator;
 	readonly cardNumberInput: Locator;
@@ -14,7 +13,6 @@ export class PaymentPage extends BasePage {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.paymentRoot = page.locator("#cart_items");
 		this.nameOnCardInput = page.getByTestId("name-on-card");
 		this.cardNumberInput = page.getByTestId("card-number");

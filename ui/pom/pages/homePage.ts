@@ -4,7 +4,6 @@ import { ProductCard } from "../component/productCard.component";
 import { AddedProductModal } from "../component/addedProductModal.component";
 import { Product } from "../data/interfaces";
 export class HomePage extends BasePage {
-	readonly page: Page;
 	readonly homeSlider: Locator;
 	readonly homeFeaturesProducts: Locator;
 	readonly activeSlider: Locator;
@@ -16,7 +15,6 @@ export class HomePage extends BasePage {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.homeSlider = page.locator("section#slider");
 		this.activeSlider = page.locator(
 			"#slider-carousel > .carousel-inner > .active"
