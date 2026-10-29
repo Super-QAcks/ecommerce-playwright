@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { SignupForm } from "../data/interfaces";
 
-export class SignUpPage extends PageFactory {
+export class SignUpPage extends BasePage {
 	public readonly signUpFormRoot: Locator;
 	readonly signUpFormTitle: Locator;
 	public readonly titleMr: Locator;

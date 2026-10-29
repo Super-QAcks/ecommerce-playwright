@@ -98,6 +98,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify 'Write Your Review' is visible", async () => {
+			await productDetailsPage.waitForRoot();
 			await expect(productDetailsPage.reviewTitle).toBeVisible();
 		});
 

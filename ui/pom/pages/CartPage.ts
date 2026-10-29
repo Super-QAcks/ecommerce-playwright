@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { CartItemCard } from "../component/cartItemCard.component";
 
-export class CartPage extends PageFactory {
+export class CartPage extends BasePage {
 	readonly page: Page;
 	readonly cartRoot: Locator;
 	readonly checkoutButton: Locator;
