@@ -1,10 +1,10 @@
 import { URL_BASE } from "../pom/data/urls";
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { TestCases } from "../pom/pages/testCasesPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { setupAdHandling } from "../pom/utils/ads";
 
-test.describe("Login tests", () => {
+test.describe("Test Cases page", () => {
 	let testCases: TestCases;
 	let headerComponent: HeaderComponent;
 
@@ -17,14 +17,13 @@ test.describe("Login tests", () => {
 		});
 	});
 
-	//flaky test, needs to be fixed, skipping for now
-	test.skip("TC7 - Verify Test Cases page", async () => {
+	test("TC7 - Verify Test Cases page", async () => {
 		await test.step("Click on Test cases page Link", async () => {
 			await headerComponent.clickTestCasesLink();
 		});
 
 		await test.step("Validate the Test Cases page", async () => {
-			await testCases.validateTestCasesPage();
+			await expect(testCases.testCasesHeading).toBeVisible();
 		});
 	});
 });
