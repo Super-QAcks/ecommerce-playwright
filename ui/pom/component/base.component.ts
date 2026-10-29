@@ -11,6 +11,7 @@ export abstract class BaseComponent {
 		return this.root.isVisible();
 	}
 
+	/** Waits until the component root is visible. `timeout` overrides the default, in milliseconds. */
 	async waitForVisible(timeout?: number): Promise<void> {
 		await this.root.waitFor({ state: "visible", timeout });
 	}

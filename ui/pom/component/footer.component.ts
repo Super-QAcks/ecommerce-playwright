@@ -21,10 +21,12 @@ export class FooterComponent {
 		this.successSubscribeMessage = page.locator("#success-subscribe");
 	}
 
+	/** Types the email into the subscription field. Does not submit it. */
 	async fillSubscription(email: string) {
 		await this.subscriptionInput.fill(email);
 	}
 
+	/** Clicks the subscribe button. The result message is `successSubscribeMessage`. */
 	async clickSubscriptionButton() {
 		await this.subscriptionButton.click();
 	}
