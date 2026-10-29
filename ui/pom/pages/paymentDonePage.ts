@@ -2,7 +2,6 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
 
 export class PaymentDonePage extends BasePage {
-	readonly page: Page;
 	readonly paymentDoneRoot: Locator;
 	readonly orderPlacedMessage: Locator;
 	readonly successMessage: Locator;
@@ -11,7 +10,6 @@ export class PaymentDonePage extends BasePage {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.paymentDoneRoot = page.locator("#form");
 		this.orderPlacedMessage = page.getByRole("heading", {
 			name: "Order Placed!",

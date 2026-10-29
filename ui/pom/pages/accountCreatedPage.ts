@@ -2,14 +2,12 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
 
 export class AccountCreatedPage extends BasePage {
-	readonly page: Page;
 	readonly accountCreatedRoot: Locator;
 	readonly successMessage: Locator;
 	readonly continueButton: Locator;
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.accountCreatedRoot = page.locator("#form");
 		this.successMessage = page.getByTestId("account-created");
 		this.continueButton = page.getByTestId("continue-button");
