@@ -52,9 +52,7 @@ export class ProductDetailsPage extends BasePage {
 
 	async waitForRoot() {
 		await this.productDetailsRoot.waitFor({ state: "visible" });
-		// The review form relies on page scripts: clicking Submit before they are
-		// attached makes the browser submit the form natively and reload the page.
-		await this.page.waitForLoadState("load");
+		await this.waitForPageScripts();
 	}
 
 	async addToCart() {
@@ -73,7 +71,7 @@ export class ProductDetailsPage extends BasePage {
 	}
 
 	async submitReview() {
-		await this.page.waitForLoadState("load");
+		await this.waitForPageScripts();
 		await this.reviewSubmitButton.click();
 	}
 }

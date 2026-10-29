@@ -28,6 +28,7 @@ export class CartPage extends BasePage {
 
 	async waitForCart() {
 		await this.cartRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async getCartItemByName(name: string) {
@@ -37,6 +38,7 @@ export class CartPage extends BasePage {
 	}
 
 	async clickCheckout() {
+		await this.waitForPageScripts();
 		await this.checkoutButton.click();
 	}
 

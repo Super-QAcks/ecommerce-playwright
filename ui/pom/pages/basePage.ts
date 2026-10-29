@@ -18,6 +18,15 @@ export class BasePage {
 		});
 	}
 
+	/**
+	 * Waits until the page has fully loaded, so its scripts have attached their
+	 * handlers. Call it before clicking anything driven by JavaScript (modals,
+	 * AJAX forms, accordions, delete buttons). Returns immediately if already loaded.
+	 */
+	async waitForPageScripts() {
+		await this.page.waitForLoadState("load");
+	}
+
 	async clickScrollUp() {
 		await this.scrollUpButton.click();
 		await this.scrollUpButton.waitFor({ state: "hidden" });
