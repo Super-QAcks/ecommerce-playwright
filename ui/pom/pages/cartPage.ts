@@ -24,26 +24,31 @@ export class CartPage extends BasePage {
 		});
 	}
 
+	/** Waits for the cart table and for the page scripts. */
 	async waitForCart() {
 		await this.cartRoot.waitFor({ state: "visible" });
 		await this.waitForPageScripts();
 	}
 
+	/** Returns the cart row whose text contains `name`. */
 	async getCartItemByName(name: string) {
 		return new CartItemCard(
 			this.cartRoot.locator("tr").filter({ hasText: name })
 		);
 	}
 
+	/** Waits for the page scripts, then clicks "Proceed To Checkout". */
 	async clickCheckout() {
 		await this.waitForPageScripts();
 		await this.checkoutButton.click();
 	}
 
+	/** Waits for the checkout modal shown to guests. */
 	async waitForModalCheckout() {
 		await this.modalCheckoutRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Register / Login" in the checkout modal shown to guests. */
 	async clickModalRegisterLogin() {
 		await this.modalRegisterLoginLink.click();
 	}
