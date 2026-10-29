@@ -38,3 +38,7 @@ npm install -g allure-commandline
 # Run the Tests
 
 npx playwright test
+
+# Conventions
+
+See [Page Object conventions](docs/pom-conventions.md) before adding or changing page objects, components or tests.
