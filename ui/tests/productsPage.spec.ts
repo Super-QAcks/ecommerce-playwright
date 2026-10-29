@@ -2,11 +2,10 @@ import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { ProductsPage } from "../pom/pages/productsPage";
-import { CategoryProductPage } from "../pom/pages/categoryProductPage";
+import { FilteredProductsPage } from "../pom/pages/filteredProductsPage";
 import { URL_BASE } from "../pom/data/urls";
 import { PRODUCT_DETAILS, PRODUCT_CATEGORIES } from "../pom/data/products";
 import { SidebarComponent } from "../pom/component/sidebar.component";
-import { BrandProductPage } from "../pom/pages/brandProductPage";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
@@ -62,7 +61,7 @@ test.describe("Products Page Tests", () => {
 
 	test("Test Case 18: View Category Products", async ({ page }) => {
 		const sidebarComponent = new SidebarComponent(page);
-		const categoryProductPage = new CategoryProductPage(page);
+		const categoryProductPage = new FilteredProductsPage(page);
 
 		await test.step("Verify that categories are visible on left side bar", async () => {
 			await sidebarComponent.waitForCategoriesReady();
@@ -80,7 +79,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify category page heading", async () => {
-			await expect(categoryProductPage.categoryHeading).toContainText(
+			await expect(categoryProductPage.heading).toContainText(
 				PRODUCT_CATEGORIES.women.id
 			);
 		});
@@ -94,7 +93,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify that user is navigated to that category page", async () => {
-			await expect(categoryProductPage.categoryHeading).toContainText(
+			await expect(categoryProductPage.heading).toContainText(
 				PRODUCT_CATEGORIES.men.id
 			);
 		});
@@ -103,7 +102,7 @@ test.describe("Products Page Tests", () => {
 	test("Test Case 19: View & Cart Brand Products", async ({ page }) => {
 		const headerComponent = new HeaderComponent(page);
 		const sidebarComponent = new SidebarComponent(page);
-		const brandProductPage = new BrandProductPage(page);
+		const brandProductPage = new FilteredProductsPage(page);
 
 		await test.step("Click on 'Products' button", async () => {
 			await headerComponent.clickProductsLink();
@@ -126,8 +125,8 @@ test.describe("Products Page Tests", () => {
 			if (brand === undefined) {
 				throw new Error("A brand must be configured for this test");
 			}
-			await brandProductPage.waitForBrandProductPage();
-			await expect(brandProductPage.brandHeading).toContainText(brand);
+			await brandProductPage.waitForHeading();
+			await expect(brandProductPage.heading).toContainText(brand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
 		});
 
@@ -138,8 +137,8 @@ test.describe("Products Page Tests", () => {
 
 		await test.step("Verify that user is navigated to that brand page and can see products", async () => {
 			const otherBrand = "H&M"; // Replace with another brand name
-			await brandProductPage.waitForBrandProductPage();
-			await expect(brandProductPage.brandHeading).toContainText(otherBrand);
+			await brandProductPage.waitForHeading();
+			await expect(brandProductPage.heading).toContainText(otherBrand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
 		});
 	});
