@@ -3,7 +3,7 @@ import { HomePage } from "../pom/pages/homePage";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 import { AddedProductModal } from "../pom/component/addedProductModal.component";
 import { HeaderComponent } from "../pom/component/header.component";
-import { CartPage } from "../pom/pages/CartPage";
+import { CartPage } from "../pom/pages/cartPage";
 import { URL_BASE } from "../pom/data/urls";
 import { VALID_PRODUCTS } from "../pom/data/products";
 import { LoginPage } from "../pom/pages/loginPage";
