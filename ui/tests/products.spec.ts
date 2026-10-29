@@ -125,4 +125,28 @@ test.describe("Products Page Tests", () => {
 		await sidebar.collapseCategory(men.id); // second call must NOT reopen it
 		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
 	});
+
+	test("sidebar queries return the names in PRODUCT_CATEGORIES", async () => {
+		const categories = Object.values(PRODUCT_CATEGORIES);
+
+		expect(await sidebar.getCategoryNames()).toEqual(
+			categories.map((c) => c.id)
+		);
+
+		for (const category of categories) {
+			expect(await sidebar.getSubCategoryNames(category.id)).toEqual(
+				Object.values(category.subCategories).map((s) => s.id)
+			);
+		}
+	});
+
+	test("getSubCategoryNames reads a collapsed panel without opening it", async () => {
+		const { men } = PRODUCT_CATEGORIES;
+
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+		expect(await sidebar.getSubCategoryNames(men.id)).toEqual(
+			Object.values(men.subCategories).map((s) => s.id)
+		);
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+	});
 });

@@ -112,14 +112,20 @@ export class SidebarComponent extends BaseComponent {
 		return OPEN_PANEL_CLASS.test(classes ?? "");
 	}
 
+	/** Trims each text and drops empty entries. */
+	private cleanNames(raw: string[]): string[] {
+		return raw.map((t) => t.trim()).filter(Boolean);
+	}
+
 	async getCategoryNames(): Promise<string[]> {
-		const raw = await this.categoryLinks.allTextContents();
-		return raw.map((t) => t.trim());
+		await this.categoryLinks.first().waitFor({ state: "visible" });
+		return this.cleanNames(await this.categoryLinks.allTextContents());
 	}
 
 	async getSubCategoryNames(category: string): Promise<string[]> {
-		const raw = await this.subCategoryItems(category).allTextContents();
-		return raw.map((t) => t.trim());
+		const items = this.subCategoryItems(category);
+		await items.first().waitFor({ state: "attached" });
+		return this.cleanNames(await items.allTextContents());
 	}
 
 	// =========================================================
@@ -150,7 +156,9 @@ export class SidebarComponent extends BaseComponent {
 
 	/** Brand names without the product count, e.g. "Polo (6)" becomes "Polo". */
 	async getBrandNames(): Promise<string[]> {
-		const raw = await this.brandItems.locator("a").allTextContents();
-		return raw.map((t) => t.replace(/\(\d+\)/g, "").trim()).filter(Boolean);
+		const links = this.brandItems.locator("a");
+		await links.first().waitFor({ state: "visible" });
+		const raw = await links.allTextContents();
+		return this.cleanNames(raw.map((t) => t.replace(/\(\d+\)/g, "")));
 	}
 }
