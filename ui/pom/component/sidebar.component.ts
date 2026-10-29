@@ -39,7 +39,6 @@ export class SidebarComponent extends BaseComponent {
 
 	/** Bootstrap's click handler is attached by a script that runs before DOMContentLoaded. */
 	private async waitForPageScripts() {
-
 		/*Si algún día el sidebar volviera a fallar por un clic temprano, 
 		lo primero que probar es cambiar domcontentloaded por load en esa línea. 
 		Hoy no hay evidencia de que haga falta.*/
