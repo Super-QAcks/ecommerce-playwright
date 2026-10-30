@@ -5,7 +5,7 @@ import { AddedProductModal } from "../pom/component/addedProductModal.component"
 import { HeaderComponent } from "../pom/component/header.component";
 import { CartPage } from "../pom/pages/cartPage";
 import { URL_BASE } from "../pom/data/urls";
-import { VALID_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 import { LoginPage } from "../pom/pages/loginPage";
 import { USER_SIGNUP, CARD_DETAILS } from "../pom/data/credentials";
 import { SignUpPage } from "../pom/pages/signUpPage";
@@ -106,11 +106,10 @@ test.describe("E2E Suite", () => {
 	test("Test Case 13: Verify Product quantity in Cart", async ({ page }) => {
 		productDetailsPage = new ProductDetailsPage(page);
 		addedProductModal = new AddedProductModal(page);
-		const product = VALID_PRODUCTS.default;
+		const product = PRODUCTS.blueTop;
+		const quantity = 4;
 		const productCard = await homePage.getProductbyName(product.name);
-		const cartItem = await cartPage.getCartItemByName(
-			VALID_PRODUCTS.default.name
-		);
+		const cartItem = await cartPage.getCartItemByName(product.name);
 
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
@@ -129,7 +128,7 @@ test.describe("E2E Suite", () => {
 		});
 
 		await test.step("Increase quantity to 4", async () => {
-			await productDetailsPage.changeQuantity(product.quantity);
+			await productDetailsPage.changeQuantity(quantity);
 		});
 
 		await test.step("Click 'Add to cart' button", async () => {
@@ -144,9 +143,7 @@ test.describe("E2E Suite", () => {
 		await test.step("Verify that product is displayed in cart page with exact quantity", async () => {
 			await cartPage.waitForCart();
 
-			await expect(cartItem.productQuantity).toHaveText(
-				VALID_PRODUCTS.default.quantity.toString()
-			);
+			await expect(cartItem.productQuantity).toHaveText(quantity.toString());
 		});
 	});
 
@@ -170,7 +167,11 @@ test.describe("E2E Suite", () => {
 			await homePage.waitForRoot();
 		});
 		await test.step("Add products to cart", async () => {
-			await homePage.addProductsToCart(VALID_PRODUCTS);
+			await homePage.addProductsToCart([
+				PRODUCTS.blueTop,
+				PRODUCTS.greenTshirt,
+				PRODUCTS.fancyGreenTop,
+			]);
 		});
 
 		await test.step("Click 'Cart' button", async () => {
@@ -224,7 +225,7 @@ test.describe("E2E Suite", () => {
 			);
 			//review order
 			await expect(checkoutPage.reviewOrderSection).toContainText(
-				VALID_PRODUCTS.default.name
+				PRODUCTS.blueTop.name
 			);
 		});
 
@@ -283,7 +284,11 @@ test.describe("E2E Suite", () => {
 		});
 
 		await test.step("Add products to cart", async () => {
-			await homePage.addProductsToCart(VALID_PRODUCTS);
+			await homePage.addProductsToCart([
+				PRODUCTS.blueTop,
+				PRODUCTS.greenTshirt,
+				PRODUCTS.fancyGreenTop,
+			]);
 		});
 
 		await test.step("Click 'Cart' button", async () => {
@@ -337,7 +342,7 @@ test.describe("E2E Suite", () => {
 			);
 
 			await expect(checkoutPage.reviewOrderSection).toContainText(
-				VALID_PRODUCTS.default.name
+				PRODUCTS.blueTop.name
 			);
 		});
 

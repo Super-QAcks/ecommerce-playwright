@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { VALID_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 import { URL_BASE } from "../pom/data/urls";
 import { HomePage } from "../pom/pages/homePage";
 import { CartPage } from "../pom/pages/cartPage";
@@ -8,7 +8,7 @@ import { FooterComponent } from "../pom/component/footer.component";
 import { AddedProductModal } from "../pom/component/addedProductModal.component";
 import { USER_SIGNUP } from "../pom/data/credentials";
 import { ProductsPage } from "../pom/pages/productsPage";
-import { Product } from "../pom/data/interfaces";
+import { ProductSummary } from "../pom/data/interfaces";
 
 test.describe("Cart Test Cases", () => {
 	test("Test Case 11: Verify Subscription in Cart page", async ({ page }) => {
@@ -55,7 +55,7 @@ test.describe("Cart Test Cases", () => {
 		const cartPage = new CartPage(page);
 		const headerComponent = new HeaderComponent(page);
 		const productsPage = new ProductsPage(page);
-		const expectedProducts: Product[] = [];
+		const expectedProducts: ProductSummary[] = [];
 
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
@@ -118,7 +118,7 @@ test.describe("Cart Test Cases", () => {
 		const homePage = new HomePage(page);
 		const cartPage = new CartPage(page);
 		const addedProductModal = new AddedProductModal(page);
-		const product = VALID_PRODUCTS.greenTshirt;
+		const product = PRODUCTS.greenTshirt;
 		const productCard = await homePage.getProductbyName(product.name);
 		const cartItem = await cartPage.getCartItemByName(product.name);
 

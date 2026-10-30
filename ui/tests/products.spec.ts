@@ -4,11 +4,7 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
-import {
-	PRODUCT_CATEGORIES,
-	PRODUCT_DETAILS,
-	VALID_PRODUCTS,
-} from "../pom/data/products";
+import { PRODUCT_CATEGORIES, PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
 import { SidebarComponent } from "../pom/component/sidebar.component";
 import { setupAdHandling } from "../pom/utils/ads";
@@ -33,7 +29,7 @@ test.describe("Products Page Tests", () => {
 	});
 
 	test("Test Case 8: Verify All products and product details page", async () => {
-		const product = PRODUCT_DETAILS.default;
+		const product = PRODUCTS.blueTop;
 		const productCard = await homePage.getProductbyName(product.name);
 		await test.step("Click on Products page header link", async () => {
 			await headerComponent.clickProductsLink();
@@ -57,22 +53,22 @@ test.describe("Products Page Tests", () => {
 
 		await test.step("Verify that product details are visible", async () => {
 			await expect(productDetailsPage.productInformation).toContainText(
-				PRODUCT_DETAILS.default.name
+				product.name
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Rs. ${PRODUCT_DETAILS.default.price}`
+				`Rs. ${product.price}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Availability: ${PRODUCT_DETAILS.default.availability}`
+				`Availability: ${product.availability}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Condition: ${PRODUCT_DETAILS.default.condition}`
+				`Condition: ${product.condition}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Brand: ${PRODUCT_DETAILS.default.brand}`
+				`Brand: ${product.brand}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Category: ${PRODUCT_DETAILS.default.category}`
+				`Category: ${product.category}`
 			);
 		});
 	});
@@ -87,7 +83,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Click on 'View Product' button", async () => {
-			const product = VALID_PRODUCTS.fancyGreenTop;
+			const product = PRODUCTS.fancyGreenTop;
 			const productCard = await homePage.getProductbyName(product.name);
 			await productCard.viewProduct();
 		});

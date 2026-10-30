@@ -4,7 +4,7 @@ import { CartPage } from "../pom/pages/cartPage";
 import { FooterComponent } from "../pom/component/footer.component";
 import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
-import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 
 test.describe("Home Page Tests", () => {
 	let homePage: HomePage;
@@ -46,7 +46,7 @@ test.describe("Home Page Tests", () => {
 
 	test("Test Case 22: Add to cart from Recommended items", async ({ page }) => {
 		const cartPage = new CartPage(page);
-		const recommendedProduct = RECOMMENDED_PRODUCTS.default;
+		const recommendedProduct = PRODUCTS.menTshirt;
 
 		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
 			await homePage.goto(URL_BASE);

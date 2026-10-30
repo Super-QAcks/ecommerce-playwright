@@ -2,7 +2,7 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
 import { ProductCard } from "../component/productCard.component";
 import { AddedProductModal } from "../component/addedProductModal.component";
-import { Product } from "../data/interfaces";
+import { ProductSummary } from "../data/interfaces";
 export class HomePage extends BasePage {
 	readonly homeSlider: Locator;
 	readonly homeFeaturesProducts: Locator;
@@ -47,8 +47,8 @@ export class HomePage extends BasePage {
 	}
 
 	/** Adds each product to the cart through the card overlay, closing the modal with "Continue Shopping" every time. */
-	async addProductsToCart(products: Record<string, Product>) {
-		for (const product of Object.values(products)) {
+	async addProductsToCart(products: ProductSummary[]) {
+		for (const product of products) {
 			const productCard = await this.getProductbyName(product.name);
 			await productCard.addToCartOverlay();
 			await this.addedProductModal.waitForModal();
