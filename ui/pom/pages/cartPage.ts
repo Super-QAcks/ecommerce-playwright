@@ -52,8 +52,4 @@ export class CartPage extends BasePage {
 	async clickModalRegisterLogin() {
 		await this.modalRegisterLoginLink.click();
 	}
-
-	async getRowCount() {
-		return await this.cartRowsCountLocator.count();
-	}
 }
