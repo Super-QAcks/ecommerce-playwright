@@ -39,12 +39,6 @@ export class ProductCard extends BaseComponent {
 		await this.viewProductButton.click();
 	}
 
-	/** Returns the card at position `listNumber` (1-based) of the list this card's root points to. */
-	async getProductByListNumber(listNumber: number) {
-		const productCard = new ProductCard(this.root.nth(listNumber - 1));
-		return productCard;
-	}
-
 	/** Returns the card's product name, trimmed. */
 	async getProductName() {
 		return (await this.productName.innerText()).trim();
