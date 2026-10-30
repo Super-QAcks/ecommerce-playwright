@@ -95,8 +95,9 @@ test.describe("Cart Test Cases", () => {
 		});
 
 		await test.step("Verify both products are added to Cart", async () => {
-			const rowCount = await cartPage.getRowCount();
-			expect(rowCount).toBe(expectedProducts.length);
+			await expect(cartPage.cartRowsCountLocator).toHaveCount(
+				expectedProducts.length
+			);
 
 			for (const expected of expectedProducts) {
 				const row = await cartPage.getCartItemByName(expected.name);
