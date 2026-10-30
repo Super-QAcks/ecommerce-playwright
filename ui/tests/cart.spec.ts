@@ -148,7 +148,7 @@ test.describe("Cart Test Cases", () => {
 		});
 
 		await test.step("Verify that product is removed from the cart", async () => {
-			await expect(cartItem.rootCard).toBeHidden();
+			await expect(cartItem.root).toBeHidden();
 		});
 	});
 });

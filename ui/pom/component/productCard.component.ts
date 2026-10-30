@@ -1,8 +1,8 @@
 import { Locator } from "@playwright/test";
 import { parsePrice } from "../utils/price";
+import { BaseComponent } from "./base.component";
 
-export class ProductCard {
-	readonly rootCard: Locator;
+export class ProductCard extends BaseComponent {
 	readonly productName: Locator;
 	readonly productPrice: Locator;
 	readonly addToCartButton: Locator;
@@ -10,7 +10,7 @@ export class ProductCard {
 	readonly viewProductButton: Locator;
 
 	constructor(root: Locator) {
-		this.rootCard = root;
+		super(root);
 		this.productName = root.locator(".single-products>div>p");
 		this.productPrice = root.locator(".single-products>div>h2");
 		this.addToCartButton = root.locator(".productinfo .add-to-cart");
@@ -32,7 +32,7 @@ export class ProductCard {
 	}
 
 	async hoverOverCard() {
-		await this.rootCard.hover();
+		await this.root.hover();
 	}
 
 	async viewProduct() {
@@ -41,7 +41,7 @@ export class ProductCard {
 
 	/** Returns the card at position `listNumber` (1-based) of the list this card's root points to. */
 	async getProductByListNumber(listNumber: number) {
-		const productCard = new ProductCard(this.rootCard.nth(listNumber - 1));
+		const productCard = new ProductCard(this.root.nth(listNumber - 1));
 		return productCard;
 	}
 
