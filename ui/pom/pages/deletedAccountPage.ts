@@ -1,8 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class DeletedAccountPage extends PageFactory {
-	readonly page: Page;
+export class DeletedAccountPage extends BasePage {
 	readonly deletedAccountRoot: Locator;
 	readonly accountDeletedTitle: Locator;
 	readonly accountDeletedMessage: Locator;
@@ -10,7 +9,6 @@ export class DeletedAccountPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.deletedAccountRoot = page.locator("#form");
 		this.accountDeletedTitle = page.getByRole("heading", {
 			name: "Account Deleted!",
@@ -21,10 +19,12 @@ export class DeletedAccountPage extends PageFactory {
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the "Account Deleted!" block. */
 	async waitForRoot() {
 		await this.deletedAccountRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the account is deleted. */
 	async clickContinue() {
 		await this.continueButton.click();
 	}

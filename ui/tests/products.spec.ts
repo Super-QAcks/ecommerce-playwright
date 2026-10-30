@@ -4,41 +4,43 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
-import { PRODUCT_DETAILS } from "../pom/data/products";
-import { VALID_PRODUCTS } from "../pom/data/products";
+import { PRODUCT_CATEGORIES, PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
+import { SidebarComponent } from "../pom/component/sidebar.component";
+import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
 	let productsPage: ProductsPage;
 	let productDetailsPage: ProductDetailsPage;
 	let headerComponent: HeaderComponent;
+	let sidebar: SidebarComponent;
 
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
 		productsPage = new ProductsPage(page);
 		productDetailsPage = new ProductDetailsPage(page);
-		headerComponent = new HeaderComponent(homePage.page);
-		await homePage.addBlocker();
+		headerComponent = new HeaderComponent(page);
+		sidebar = new SidebarComponent(page);
+		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {
 			await page.goto(URL_BASE);
 		});
 	});
 
 	test("Test Case 8: Verify All products and product details page", async () => {
-		const product = PRODUCT_DETAILS.default;
+		const product = PRODUCTS.blueTop;
 		const productCard = await homePage.getProductbyName(product.name);
 		await test.step("Click on Products page header link", async () => {
 			await headerComponent.clickProductsLink();
-			await homePage.closeAdds();
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {
-			await productsPage.validateProductsList();
+			await expect(productsPage.productsList).toBeVisible();
 		});
 
 		await test.step("Verify that products list is visible", async () => {
-			await productsPage.validateProductsList();
+			await expect(productsPage.productsList).toBeVisible();
 		});
 
 		await test.step("Click on first product's 'View Product' link", async () => {
@@ -51,35 +53,27 @@ test.describe("Products Page Tests", () => {
 
 		await test.step("Verify that product details are visible", async () => {
 			await expect(productDetailsPage.productInformation).toContainText(
-				PRODUCT_DETAILS.default.name
+				product.name
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Rs. ${PRODUCT_DETAILS.default.price}`
+				`Rs. ${product.price}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Availability: ${PRODUCT_DETAILS.default.availability}`
+				`Availability: ${product.availability}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Condition: ${PRODUCT_DETAILS.default.condition}`
+				`Condition: ${product.condition}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Brand: ${PRODUCT_DETAILS.default.brand}`
+				`Brand: ${product.brand}`
 			);
 			await expect(productDetailsPage.productInformation).toContainText(
-				`Category: ${PRODUCT_DETAILS.default.category}`
+				`Category: ${product.category}`
 			);
 		});
 	});
 
 	test("Test Case 21: Add review on product", async ({ page }) => {
-		const homePage = new HomePage(page);
-		const productDetailsPage = new ProductDetailsPage(page);
-		const headerComponent = new HeaderComponent(page);
-
-		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
-			await homePage.goto(URL_BASE);
-		});
-
 		await test.step("Click on 'Products' button", async () => {
 			await headerComponent.clickProductsLink();
 		});
@@ -89,12 +83,13 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Click on 'View Product' button", async () => {
-			const product = VALID_PRODUCTS.fancyGreenTop;
+			const product = PRODUCTS.fancyGreenTop;
 			const productCard = await homePage.getProductbyName(product.name);
 			await productCard.viewProduct();
 		});
 
 		await test.step("Verify 'Write Your Review' is visible", async () => {
+			await productDetailsPage.waitForRoot();
 			await expect(productDetailsPage.reviewTitle).toBeVisible();
 		});
 
@@ -109,5 +104,41 @@ test.describe("Products Page Tests", () => {
 		await test.step("Verify success message 'Thank you for your review.'", async () => {
 			await expect(productDetailsPage.reviewSuccessMessage).toBeVisible();
 		});
+	});
+
+	test("expandCategory and collapseCategory are idempotent", async () => {
+		const { men } = PRODUCT_CATEGORIES;
+
+		await sidebar.expandCategory(men.id);
+		await sidebar.expandCategory(men.id); // second call must NOT close it
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(true);
+
+		await sidebar.collapseCategory(men.id);
+		await sidebar.collapseCategory(men.id); // second call must NOT reopen it
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+	});
+
+	test("sidebar queries return the names in PRODUCT_CATEGORIES", async () => {
+		const categories = Object.values(PRODUCT_CATEGORIES);
+
+		expect(await sidebar.getCategoryNames()).toEqual(
+			categories.map((c) => c.id)
+		);
+
+		for (const category of categories) {
+			expect(await sidebar.getSubCategoryNames(category.id)).toEqual(
+				Object.values(category.subCategories).map((s) => s.id)
+			);
+		}
+	});
+
+	test("getSubCategoryNames reads a collapsed panel without opening it", async () => {
+		const { men } = PRODUCT_CATEGORIES;
+
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+		expect(await sidebar.getSubCategoryNames(men.id)).toEqual(
+			Object.values(men.subCategories).map((s) => s.id)
+		);
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
 	});
 });

@@ -1,16 +1,16 @@
 import { test, expect } from "@playwright/test";
-import { VALID_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 import { URL_BASE } from "../pom/data/urls";
 import { HomePage } from "../pom/pages/homePage";
-import { CartPage } from "../pom/pages/CartPage";
+import { CartPage } from "../pom/pages/cartPage";
 import { HeaderComponent } from "../pom/component/header.component";
-import { FooterComponent } from "../pom/component/footeer.component";
+import { FooterComponent } from "../pom/component/footer.component";
 import { AddedProductModal } from "../pom/component/addedProductModal.component";
 import { USER_SIGNUP } from "../pom/data/credentials";
 import { ProductsPage } from "../pom/pages/productsPage";
-import { Product } from "../pom/data/interfaces";
+import { ProductSummary } from "../pom/data/interfaces";
 
-test.describe("Cart Test Cases", async () => {
+test.describe("Cart Test Cases", () => {
 	test("Test Case 11: Verify Subscription in Cart page", async ({ page }) => {
 		const homePage = new HomePage(page);
 		const cartPage = new CartPage(page);
@@ -37,7 +37,7 @@ test.describe("Cart Test Cases", async () => {
 		});
 
 		await test.step("Verify text 'SUBSCRIPTION", async () => {
-			await expect(footerComponent.susbcriptionTitle).toBeVisible();
+			await expect(footerComponent.subscriptionTitle).toBeVisible();
 		});
 
 		await test.step("Enter email address in input and click arrow button", async () => {
@@ -55,7 +55,7 @@ test.describe("Cart Test Cases", async () => {
 		const cartPage = new CartPage(page);
 		const headerComponent = new HeaderComponent(page);
 		const productsPage = new ProductsPage(page);
-		const expectedProducts: Product[] = [];
+		const expectedProducts: ProductSummary[] = [];
 
 		await test.step("Navigate to url", async () => {
 			await homePage.goto(URL_BASE);
@@ -95,8 +95,9 @@ test.describe("Cart Test Cases", async () => {
 		});
 
 		await test.step("Verify both products are added to Cart", async () => {
-			const rowCount = await cartPage.getRowCount();
-			expect(await rowCount).toBe(expectedProducts.length);
+			await expect(cartPage.cartRowsCountLocator).toHaveCount(
+				expectedProducts.length
+			);
 
 			for (const expected of expectedProducts) {
 				const row = await cartPage.getCartItemByName(expected.name);
@@ -118,7 +119,7 @@ test.describe("Cart Test Cases", async () => {
 		const homePage = new HomePage(page);
 		const cartPage = new CartPage(page);
 		const addedProductModal = new AddedProductModal(page);
-		const product = VALID_PRODUCTS.greenTshirt;
+		const product = PRODUCTS.greenTshirt;
 		const productCard = await homePage.getProductbyName(product.name);
 		const cartItem = await cartPage.getCartItemByName(product.name);
 
@@ -148,7 +149,7 @@ test.describe("Cart Test Cases", async () => {
 		});
 
 		await test.step("Verify that product is removed from the cart", async () => {
-			await expect(cartItem.rootCard).toBeHidden();
+			await expect(cartItem.root).toBeHidden();
 		});
 	});
 });

@@ -1,15 +1,14 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class TestCases extends PageFactory {
-	private readonly testCasesHeading: Locator;
+export class TestCasesPage extends BasePage {
+	readonly testCasesHeading: Locator;
 
 	constructor(page: Page) {
 		super(page);
-		this.testCasesHeading = page.getByRole("heading", { name: "Test Cases" });
-	}
-
-	async validateTestCasesPage() {
-		await this.testCasesHeading.isVisible();
+		this.testCasesHeading = page.getByRole("heading", {
+			name: "Test Cases",
+			exact: true,
+		});
 	}
 }

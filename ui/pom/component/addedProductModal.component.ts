@@ -1,30 +1,31 @@
 import { Locator, Page } from "@playwright/test";
+import { BaseComponent } from "./base.component";
 
-export class AddedProductModal {
-	readonly page: Page;
-	readonly modalRoot: Locator;
+export class AddedProductModal extends BaseComponent {
 	readonly viewCartButton: Locator;
 	readonly continueShoppingButton: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-		this.modalRoot = this.page.locator("#cartModal");
-		this.viewCartButton = this.modalRoot.getByRole("link", {
+		super(page.locator("#cartModal"));
+		this.viewCartButton = this.root.getByRole("link", {
 			name: "View Cart",
 		});
-		this.continueShoppingButton = this.modalRoot.getByRole("button", {
+		this.continueShoppingButton = this.root.getByRole("button", {
 			name: "Continue Shopping",
 		});
 	}
 
+	/** Waits until the "product added" modal is visible. Call it before clicking its buttons. */
 	async waitForModal() {
-		await this.modalRoot.waitFor({ state: "visible" });
+		await this.waitForVisible();
 	}
 
+	/** Clicks "View Cart" and navigates to the cart page. */
 	async clickViewCart() {
 		await this.viewCartButton.click();
 	}
 
+	/** Clicks "Continue Shopping" and returns to the page behind the modal. */
 	async clickContinueShopping() {
 		await this.continueShoppingButton.click();
 	}

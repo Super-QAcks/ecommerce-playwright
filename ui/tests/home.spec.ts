@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
-import { CartPage } from "../pom/pages/CartPage";
-import { FooterComponent } from "../pom/component/footeer.component";
+import { CartPage } from "../pom/pages/cartPage";
+import { FooterComponent } from "../pom/component/footer.component";
 import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
-import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 
-test.describe("Home Page Tests.", async () => {
+test.describe("Home Page Tests", () => {
 	let homePage: HomePage;
 	let footerComponent: FooterComponent;
 
@@ -31,7 +31,7 @@ test.describe("Home Page Tests.", async () => {
 		});
 
 		await test.step("Verify text 'SUBSCRIPTION'", async () => {
-			await expect(footerComponent.susbcriptionTitle).toBeVisible();
+			await expect(footerComponent.subscriptionTitle).toBeVisible();
 		});
 
 		await test.step("Enter email address in input and click arrow button", async () => {
@@ -46,7 +46,7 @@ test.describe("Home Page Tests.", async () => {
 
 	test("Test Case 22: Add to cart from Recommended items", async ({ page }) => {
 		const cartPage = new CartPage(page);
-		const recommendedProduct = RECOMMENDED_PRODUCTS.default;
+		const recommendedProduct = PRODUCTS.menTshirt;
 
 		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
 			await homePage.goto(URL_BASE);
@@ -77,11 +77,11 @@ test.describe("Home Page Tests.", async () => {
 			const cartItem = await cartPage.getCartItemByName(
 				recommendedProduct.name
 			);
-			await expect(cartItem.rootCard).toBeVisible();
+			await expect(cartItem.root).toBeVisible();
 		});
 	});
 
-	test("Test Case 25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality: ", async ({
+	test("Test Case 25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality:", async ({
 		page,
 	}) => {
 		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {

@@ -1,9 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { CardDetails } from "../data/interfaces";
 
-export class PaymentPage extends PageFactory {
-	readonly page: Page;
+export class PaymentPage extends BasePage {
 	readonly paymentRoot: Locator;
 	readonly nameOnCardInput: Locator;
 	readonly cardNumberInput: Locator;
@@ -14,7 +13,6 @@ export class PaymentPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.paymentRoot = page.locator("#cart_items");
 		this.nameOnCardInput = page.getByTestId("name-on-card");
 		this.cardNumberInput = page.getByTestId("card-number");
@@ -24,10 +22,12 @@ export class PaymentPage extends PageFactory {
 		this.payAndConfirmOrderButton = page.getByTestId("pay-button");
 	}
 
+	/** Waits for the payment block. */
 	async waitForRoot() {
 		await this.paymentRoot.waitFor({ state: "visible" });
 	}
 
+	/** Fills the card form (name, number, CVC, expiry). Does not submit it. */
 	async enterCardDetails(cardDetails: CardDetails) {
 		await this.nameOnCardInput.fill(cardDetails.nameOnCard);
 		await this.cardNumberInput.fill(cardDetails.cardNumber);
@@ -36,6 +36,7 @@ export class PaymentPage extends PageFactory {
 		await this.expirationYearInput.fill(cardDetails.expirationYear);
 	}
 
+	/** Clicks "Pay and Confirm Order". Fill the card first with `enterCardDetails()`. */
 	async payAndConfirmOrder() {
 		await this.payAndConfirmOrderButton.click();
 	}

@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { ContactUsPage } from "../pom/pages/contactUs";
+import { ContactUsPage } from "../pom/pages/contactUsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
+import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Contact Us form tests", () => {
 	let contactUsPage: ContactUsPage;
@@ -10,13 +11,14 @@ test.describe("Contact Us form tests", () => {
 	test.beforeEach(async ({ page }) => {
 		contactUsPage = new ContactUsPage(page);
 		headerComponent = new HeaderComponent(page);
+		await setupAdHandling(page);
 		await page.goto(URL_BASE);
 		await headerComponent.clickContactUs();
 		await contactUsPage.waitForRoot();
 	});
 
-	//Flaky test, needs to be refactored to avoid the alert dialog
-	test.skip("should submit the contact form successfully", async ({ page }) => {
+	//this test sould be refactored to use the actual structure with steps and assertions, but for now it is a simple test to check the form submission
+	test("should submit the contact form successfully", async ({ page }) => {
 		const formData = {
 			name: "John Doe",
 			email: "john.doe@example.com",
@@ -29,9 +31,8 @@ test.describe("Contact Us form tests", () => {
 			expect(dialog.message()).toContain("Press OK to proceed!");
 			await dialog.accept();
 		});
-		await contactUsPage.submitForm();
 
-		await contactUsPage.waitForRoot();
+		await contactUsPage.submitForm();
 		await expect(contactUsPage.successMessage).toBeVisible();
 		await contactUsPage.clickHome();
 		await expect(page).toHaveURL(URL_BASE);

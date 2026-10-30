@@ -1,33 +1,43 @@
-import { Product } from "./interfaces";
+import { ProductDetails, ProductSummary } from "./interfaces";
 
-export const VALID_PRODUCTS = {
-	default: {
+/** One definition per product. Tests pick the products they need from here. */
+export const PRODUCTS = {
+	blueTop: {
 		name: "Blue Top",
-		quantity: 4,
-		price: 500,
-	} as Product,
-	greenTshirt: {
-		name: "Pure Cotton Neon Green Tshirt",
-		quantity: 2,
-		price: 50,
-	} as Product,
-	fancyGreenTop: {
-		name: "Fancy Green Top",
-		quantity: 1,
-		price: 700,
-	} as Product,
-};
-
-export const PRODUCT_DETAILS = {
-	default: {
-		name: "Blue Top",
-		quantity: 4,
 		price: 500,
 		category: "Women > Tops",
 		availability: "In Stock",
 		condition: "New",
 		brand: "Polo",
-	} as Product,
+	} satisfies ProductDetails,
+	greenTshirt: {
+		name: "Pure Cotton Neon Green Tshirt",
+		price: 50,
+	} satisfies ProductSummary,
+	fancyGreenTop: {
+		name: "Fancy Green Top",
+		price: 700,
+	} satisfies ProductSummary,
+	menTshirt: {
+		name: "Men Tshirt",
+		price: 400,
+	} satisfies ProductSummary,
+	rs1000: {
+		name: "Rs. 1000",
+		price: 1000,
+	} satisfies ProductSummary,
+	stylishDress: {
+		name: "Stylish Dress",
+		price: 1500,
+	} satisfies ProductSummary,
+	winterTop: {
+		name: "Winter Top",
+		price: 600,
+	} satisfies ProductSummary,
+	summerWhiteTop: {
+		name: "Summer White Top",
+		price: 400,
+	} satisfies ProductSummary,
 };
 
 export const PRODUCT_CATEGORIES = {
@@ -44,7 +54,7 @@ export const PRODUCT_CATEGORIES = {
 				heading: "TOPS",
 			},
 			saree: {
-				id: "SAREE",
+				id: "Saree",
 				heading: "SAREE",
 			},
 		},
@@ -54,11 +64,11 @@ export const PRODUCT_CATEGORIES = {
 		heading: "MEN",
 		subCategories: {
 			tshirts: {
-				id: "TSHIRTS",
+				id: "Tshirts",
 				heading: "TSHIRTS",
 			},
 			jeans: {
-				id: "JEANS",
+				id: "Jeans",
 				heading: "JEANS",
 			},
 		},
@@ -68,40 +78,13 @@ export const PRODUCT_CATEGORIES = {
 		heading: "KIDS",
 		subCategories: {
 			dress: {
-				id: "DRESS",
+				id: "Dress",
 				heading: "DRESS",
 			},
 			topsAndShirts: {
-				id: "TOPS & SHIRTS",
+				id: "Tops & Shirts",
 				heading: "TOPS & SHIRTS",
 			},
 		},
 	},
-};
-
-export const RECOMMENDED_PRODUCTS = {
-	default: {
-		name: "Men Tshirt",
-		price: 400,
-	} as Product,
-	"1000": {
-		name: "Rs. 1000",
-		price: 1000,
-	} as Product,
-	Stylish_Dress: {
-		name: "Stylish Dress",
-		price: 1500,
-	} as Product,
-	Winter_Top: {
-		name: "Winter Top",
-		price: 600,
-	} as Product,
-	Summer_White_Top: {
-		name: "Summer White Top",
-		price: 400,
-	} as Product,
-	Blue_Top: {
-		name: "Blue Top",
-		price: 500,
-	} as Product,
-};
+} as const;

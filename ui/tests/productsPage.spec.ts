@@ -2,11 +2,10 @@ import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { ProductsPage } from "../pom/pages/productsPage";
-import { CategoryProductPage } from "../pom/pages/categoryProductPage";
+import { FilteredProductsPage } from "../pom/pages/filteredProductsPage";
 import { URL_BASE } from "../pom/data/urls";
-import { PRODUCT_DETAILS, PRODUCT_CATEGORIES } from "../pom/data/products";
-import { SideBarComponent } from "../pom/component/sideBar.component";
-import { BrandProductPage } from "../pom/pages/brandProductPage";
+import { PRODUCTS, PRODUCT_CATEGORIES } from "../pom/data/products";
+import { SidebarComponent } from "../pom/component/sidebar.component";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
@@ -23,7 +22,7 @@ test.describe("Products Page Tests", () => {
 		const productsPage = new ProductsPage(page);
 
 		await test.step("Verify that home page is visible successfully", async () => {
-			await expect(await homePage.validateHomePage()).toBeTruthy();
+			await expect(homePage.homeSlider).toBeVisible();
 		});
 
 		await test.step("Click on 'Products' button", async () => {
@@ -35,7 +34,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Enter product name in search input and click search button", async () => {
-			await productsPage.fillSearchProduct(PRODUCT_DETAILS.default.name);
+			await productsPage.fillSearchProduct(PRODUCTS.blueTop.name);
 			await productsPage.clickSearchButton();
 		});
 
@@ -45,14 +44,14 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify all the products related to search are visible", async () => {
-			const searchWord = PRODUCT_DETAILS.default.name;
+			const searchWord = PRODUCTS.blueTop.name;
 			const resultCards =
 				await productsPage.getSearchResultProductCards(searchWord);
 
-			await expect(resultCards.length).toBeGreaterThan(0);
+			expect(resultCards.length).toBeGreaterThan(0);
 
 			for (const productCard of resultCards) {
-				await expect(productCard.rootCard).toBeVisible();
+				await expect(productCard.root).toBeVisible();
 				await expect(productCard.productName).toContainText(searchWord, {
 					ignoreCase: true,
 				});
@@ -61,40 +60,40 @@ test.describe("Products Page Tests", () => {
 	});
 
 	test("Test Case 18: View Category Products", async ({ page }) => {
-		const sideBarComponent = new SideBarComponent(page);
-		const categoryProductPage = new CategoryProductPage(page);
+		const sidebarComponent = new SidebarComponent(page);
+		const categoryProductPage = new FilteredProductsPage(page);
 
 		await test.step("Verify that categories are visible on left side bar", async () => {
-			await sideBarComponent.waitForCategorySideBar();
+			await sidebarComponent.waitForCategoriesReady();
 		});
 
 		await test.step("Click on 'Women' category", async () => {
-			await sideBarComponent.toggleCategory(PRODUCT_CATEGORIES.women.id);
+			await sidebarComponent.expandCategory(PRODUCT_CATEGORIES.women.id);
 		});
 
 		await test.step("Click on any category link under 'Women' category, for example: Tops", async () => {
-			await sideBarComponent.selectSubCategory(
+			await sidebarComponent.selectSubCategory(
 				PRODUCT_CATEGORIES.women.id,
 				PRODUCT_CATEGORIES.women.subCategories.tops.id
 			);
 		});
 
 		await test.step("Verify category page heading", async () => {
-			await expect(categoryProductPage.categoryHeading).toContainText(
+			await expect(categoryProductPage.heading).toContainText(
 				PRODUCT_CATEGORIES.women.id
 			);
 		});
 
 		await test.step("On left side bar, click on any sub-category link of 'Men' category", async () => {
-			await sideBarComponent.toggleCategory(PRODUCT_CATEGORIES.men.id);
-			await sideBarComponent.selectSubCategory(
+			await sidebarComponent.expandCategory(PRODUCT_CATEGORIES.men.id);
+			await sidebarComponent.selectSubCategory(
 				PRODUCT_CATEGORIES.men.id,
 				PRODUCT_CATEGORIES.men.subCategories.jeans.id
 			);
 		});
 
 		await test.step("Verify that user is navigated to that category page", async () => {
-			await expect(categoryProductPage.categoryHeading).toContainText(
+			await expect(categoryProductPage.heading).toContainText(
 				PRODUCT_CATEGORIES.men.id
 			);
 		});
@@ -102,44 +101,37 @@ test.describe("Products Page Tests", () => {
 
 	test("Test Case 19: View & Cart Brand Products", async ({ page }) => {
 		const headerComponent = new HeaderComponent(page);
-		const sideBarComponent = new SideBarComponent(page);
-		const brandProductPage = new BrandProductPage(page);
+		const sidebarComponent = new SidebarComponent(page);
+		const brandProductPage = new FilteredProductsPage(page);
+		const brand = PRODUCTS.blueTop.brand;
+		const otherBrand = "H&M";
 
 		await test.step("Click on 'Products' button", async () => {
 			await headerComponent.clickProductsLink();
 		});
 
 		await test.step("Verify that Brands are visible on left side bar", async () => {
-			await sideBarComponent.waitForBrandsSideBar();
+			await sidebarComponent.waitForBrandsReady();
 		});
 
 		await test.step("Click on any brand name", async () => {
-			const brand = PRODUCT_DETAILS.default.brand;
-			if (brand === undefined) {
-				throw new Error("A brand must be configured for this test");
-			}
-			await sideBarComponent.clickBrand(brand);
+			const brand = PRODUCTS.blueTop.brand;
+			await sidebarComponent.clickBrand(brand);
 		});
 
 		await test.step("Verify that user is navigated to brand page and brand products are displayed", async () => {
-			const brand = PRODUCT_DETAILS.default.brand;
-			if (brand === undefined) {
-				throw new Error("A brand must be configured for this test");
-			}
-			await brandProductPage.waitForBrandProductPage();
-			await expect(brandProductPage.brandHeading).toContainText(brand);
+			await brandProductPage.waitForHeading();
+			await expect(brandProductPage.heading).toContainText(brand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
 		});
 
 		await test.step("On left side bar, click on any other brand link", async () => {
-			const otherBrand = "H&M"; // Replace with another brand name
-			await sideBarComponent.clickBrand(otherBrand);
+			await sidebarComponent.clickBrand(otherBrand);
 		});
 
 		await test.step("Verify that user is navigated to that brand page and can see products", async () => {
-			const otherBrand = "H&M"; // Replace with another brand name
-			await brandProductPage.waitForBrandProductPage();
-			await expect(brandProductPage.brandHeading).toContainText(otherBrand);
+			await brandProductPage.waitForHeading();
+			await expect(brandProductPage.heading).toContainText(otherBrand);
 			await expect(brandProductPage.productCards.first()).toBeVisible();
 		});
 	});

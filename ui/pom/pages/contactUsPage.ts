@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
-import { ContactForm } from "../data/Interfaces";
+import { BasePage } from "./basePage";
+import { ContactForm } from "../data/interfaces";
 
-export class ContactUsPage extends PageFactory {
+export class ContactUsPage extends BasePage {
 	private readonly contactUsFormRoot: Locator;
 	private readonly nameInput: Locator;
 	private readonly emailInput: Locator;
@@ -26,6 +26,7 @@ export class ContactUsPage extends PageFactory {
 		this.homeButton = page.getByRole("link", { name: " Home" });
 	}
 
+	/** Fills the contact form. Only `email` is required; empty fields are skipped. Does not submit. */
 	async fillContactForm(formData: ContactForm) {
 		if (formData.name) {
 			await this.nameInput.fill(formData.name);
@@ -42,15 +43,21 @@ export class ContactUsPage extends PageFactory {
 		}
 	}
 
+	/**
+	 * Clicks "Submit". The site shows a confirm dialog, so register a
+	 * `page.on("dialog")` handler before calling it.
+	 */
 	async submitForm() {
 		await this.submitButton.click();
 	}
 
+	/** Clicks the "Home" button shown after a successful submission. */
 	async clickHome() {
 		await this.homeButton.click();
 	}
 
 	async waitForRoot() {
 		await this.contactUsFormRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 }

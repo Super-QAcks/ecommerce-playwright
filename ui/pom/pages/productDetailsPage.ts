@@ -1,10 +1,9 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ReviewForm } from "../data/interfaces";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
-export class ProductDetailsPage extends PageFactory {
-	readonly page: Page;
+export class ProductDetailsPage extends BasePage {
 	readonly productDetailsRoot: Locator;
 	readonly productName: Locator;
 	readonly productPrice: Locator;
@@ -25,7 +24,6 @@ export class ProductDetailsPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.productDetailsRoot = page.locator(".product-details");
 		this.productName = page.locator(".product-information h2");
 		this.productPrice = page.getByText("Rs.");
@@ -50,26 +48,33 @@ export class ProductDetailsPage extends PageFactory {
 		this.reviewSuccessMessage = page.getByText("Thank you for your review.");
 	}
 
+	/** Waits for the product details block and for the page scripts. */
 	async waitForRoot() {
-		await this.productDetailsRoot.isVisible();
+		await this.productDetailsRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
+	/** Clicks "Add to cart" with the quantity currently in the field. */
 	async addToCart() {
 		await this.addToCartButton.click();
 	}
 
+	/** Replaces the quantity field with `amount`. */
 	async changeQuantity(amount: number) {
 		await this.productQuantityInput.clear();
 		await this.productQuantityInput.fill(amount.toString());
 	}
 
+	/** Fills name, email and review text. Does not submit. */
 	async fillReviewForm(reviewData: ReviewForm) {
 		await this.reviewNameInput.fill(reviewData.name);
 		await this.reviewEmailInput.fill(reviewData.email);
 		await this.reviewTextInput.fill(reviewData.review);
 	}
 
+	/** Waits for the page scripts, then submits the review form. */
 	async submitReview() {
+		await this.waitForPageScripts();
 		await this.reviewSubmitButton.click();
 	}
 }

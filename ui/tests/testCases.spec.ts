@@ -1,32 +1,29 @@
 import { URL_BASE } from "../pom/data/urls";
-import { test } from "@playwright/test";
-import { TestCases } from "../pom/pages/testCasesPage";
-import { HomePage } from "../pom/pages/homePage";
+import { test, expect } from "@playwright/test";
+import { TestCasesPage } from "../pom/pages/testCasesPage";
 import { HeaderComponent } from "../pom/component/header.component";
+import { setupAdHandling } from "../pom/utils/ads";
 
-test.describe("Login tests", () => {
-	let testCases: TestCases;
-	let homePage: HomePage;
+test.describe("Test Cases page", () => {
+	let testCases: TestCasesPage;
 	let headerComponent: HeaderComponent;
 
 	test.beforeEach(async ({ page }) => {
-		testCases = new TestCases(page);
-		homePage = new HomePage(page);
-		headerComponent = new HeaderComponent(homePage.page);
-		await homePage.addBlocker(); // Block images to speed up tests
+		testCases = new TestCasesPage(page);
+		headerComponent = new HeaderComponent(page);
+		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {
 			await page.goto(URL_BASE);
 		});
 	});
 
-	//flaky test, needs to be fixed, skipping for now
-	test.skip("TC7 - Verify Test Cases page", async () => {
+	test("TC7 - Verify Test Cases page", async () => {
 		await test.step("Click on Test cases page Link", async () => {
 			await headerComponent.clickTestCasesLink();
 		});
 
 		await test.step("Validate the Test Cases page", async () => {
-			await testCases.validateTestCasesPage();
+			await expect(testCases.testCasesHeading).toBeVisible();
 		});
 	});
 });

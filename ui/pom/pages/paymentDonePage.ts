@@ -1,8 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class PaymentDonePage extends PageFactory {
-	readonly page: Page;
+export class PaymentDonePage extends BasePage {
 	readonly paymentDoneRoot: Locator;
 	readonly orderPlacedMessage: Locator;
 	readonly successMessage: Locator;
@@ -11,7 +10,6 @@ export class PaymentDonePage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.paymentDoneRoot = page.locator("#form");
 		this.orderPlacedMessage = page.getByRole("heading", {
 			name: "Order Placed!",
@@ -25,14 +23,17 @@ export class PaymentDonePage extends PageFactory {
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the order-confirmation block. */
 	async waitForRoot() {
 		await this.paymentDoneRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the order is confirmed. */
 	async clickContinue() {
 		await this.continueButton.click();
 	}
 
+	/** Clicks "Download Invoice". */
 	async clickDownloadInvoice() {
 		await this.downloadInvoiceButton.click();
 	}

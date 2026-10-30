@@ -1,24 +1,24 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class AccountCreatedPage extends PageFactory {
-	readonly page: Page;
+export class AccountCreatedPage extends BasePage {
 	readonly accountCreatedRoot: Locator;
 	readonly successMessage: Locator;
 	readonly continueButton: Locator;
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.accountCreatedRoot = page.locator("#form");
 		this.successMessage = page.getByTestId("account-created");
 		this.continueButton = page.getByTestId("continue-button");
 	}
 
+	/** Waits for the "Account Created!" block. */
 	async waitForRoot() {
 		await this.accountCreatedRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "Continue" after the account is created. */
 	async clickContinueButton() {
 		await this.continueButton.click();
 	}
