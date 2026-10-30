@@ -51,7 +51,7 @@ test.describe("Products Page Tests", () => {
 			expect(resultCards.length).toBeGreaterThan(0);
 
 			for (const productCard of resultCards) {
-				await expect(productCard.rootCard).toBeVisible();
+				await expect(productCard.root).toBeVisible();
 				await expect(productCard.productName).toContainText(searchWord, {
 					ignoreCase: true,
 				});

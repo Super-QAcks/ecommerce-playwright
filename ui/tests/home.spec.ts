@@ -77,7 +77,7 @@ test.describe("Home Page Tests", () => {
 			const cartItem = await cartPage.getCartItemByName(
 				recommendedProduct.name
 			);
-			await expect(cartItem.rootCard).toBeVisible();
+			await expect(cartItem.root).toBeVisible();
 		});
 	});
 

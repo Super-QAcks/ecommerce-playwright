@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
+import { BaseComponent } from "./base.component";
 
-export class FooterComponent {
-	readonly footerRoot: Locator;
+export class FooterComponent extends BaseComponent {
 	readonly titleWidget: Locator;
 	readonly subscriptionTitle: Locator;
 	readonly subscriptionInput: Locator;
@@ -9,16 +9,16 @@ export class FooterComponent {
 	readonly successSubscribeMessage: Locator;
 
 	constructor(page: Page) {
-		this.footerRoot = page.locator("#footer");
-		this.titleWidget = page.locator(".single-widget");
-		this.subscriptionTitle = page.getByRole("heading", {
+		super(page.locator("#footer"));
+		this.titleWidget = this.root.locator(".single-widget");
+		this.subscriptionTitle = this.root.getByRole("heading", {
 			name: "Subscription",
 		});
-		this.subscriptionInput = page.getByRole("textbox", {
+		this.subscriptionInput = this.root.getByRole("textbox", {
 			name: "Your email address",
 		});
-		this.subscriptionButton = page.locator("#subscribe");
-		this.successSubscribeMessage = page.locator("#success-subscribe");
+		this.subscriptionButton = this.root.locator("#subscribe");
+		this.successSubscribeMessage = this.root.locator("#success-subscribe");
 	}
 
 	/** Types the email into the subscription field. Does not submit it. */
