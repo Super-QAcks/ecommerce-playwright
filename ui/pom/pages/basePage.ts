@@ -29,7 +29,7 @@ export class BasePage {
 	 * AJAX forms, accordions, delete buttons). Returns immediately if already loaded.
 	 */
 	async waitForPageScripts() {
-		await this.page.waitForLoadState("load");
+		await this.page.waitForLoadState("domcontentloaded");
 	}
 
 	/** Clicks the "scroll up" button and waits until it disappears. */
