@@ -10,7 +10,7 @@ export const LOGIN_CREDENTIALS = {
 
 export const USER_SIGNUP: SignupForm = {
 	name: "Test dummy",
-	email: "420test69@gmail.com",
+	email: `test.${Date.now()}.${Math.floor(Math.random() * 10000)}@example.com`,
 	password: LOGIN_CREDENTIALS.PASSWORD,
 	dayOfBirth: "1",
 	monthOfBirth: "1",
