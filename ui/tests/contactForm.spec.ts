@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { ContactUsPage } from "../pom/pages/contactUs";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
+import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Contact Us form tests", () => {
 	let contactUsPage: ContactUsPage;
@@ -10,6 +11,7 @@ test.describe("Contact Us form tests", () => {
 	test.beforeEach(async ({ page }) => {
 		contactUsPage = new ContactUsPage(page);
 		headerComponent = new HeaderComponent(page);
+		await setupAdHandling(page);
 		await page.goto(URL_BASE);
 		await headerComponent.clickContactUs();
 		await contactUsPage.waitForRoot();

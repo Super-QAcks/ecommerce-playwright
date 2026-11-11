@@ -9,7 +9,7 @@
 		"prettier": "prettier --check .",
 		"prettier:fix": "prettier --write .",
 		"flaky": "npx playwright test --reporter=html --repeat-each 100",
-		"lint": "eslint .",
+		"lint": "eslint ui",
 		"prepare": "husky"
 	},
 	"keywords": [],
@@ -18,14 +18,15 @@
 	"description": "",
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@playwright/test": "^1.60.0",
+		"@playwright/test": "^1.65.0",
 		"@types/node": "^25.5.0",
 		"allure-playwright": "^3.6.0",
 		"dotenv": "^17.3.1",
 		"eslint": "^10.0.3",
+		"eslint-plugin-playwright": "^2.12.1",
 		"husky": "^9.1.7",
 		"prettier": "3.8.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.57.1"
+		"typescript-eslint": "^8.72.2"
 	}
 }

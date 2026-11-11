@@ -10,7 +10,7 @@ import { USER_SIGNUP } from "../pom/data/credentials";
 import { ProductsPage } from "../pom/pages/productsPage";
 import { Product } from "../pom/data/interfaces";
 
-test.describe("Cart Test Cases", async () => {
+test.describe("Cart Test Cases", () => {
 	test("Test Case 11: Verify Subscription in Cart page", async ({ page }) => {
 		const homePage = new HomePage(page);
 		const cartPage = new CartPage(page);
@@ -96,7 +96,7 @@ test.describe("Cart Test Cases", async () => {
 
 		await test.step("Verify both products are added to Cart", async () => {
 			const rowCount = await cartPage.getRowCount();
-			expect(await rowCount).toBe(expectedProducts.length);
+			expect(rowCount).toBe(expectedProducts.length);
 
 			for (const expected of expectedProducts) {
 				const row = await cartPage.getCartItemByName(expected.name);

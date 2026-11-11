@@ -44,7 +44,7 @@ export const PRODUCT_CATEGORIES = {
 				heading: "TOPS",
 			},
 			saree: {
-				id: "SAREE",
+				id: "Saree",
 				heading: "SAREE",
 			},
 		},
@@ -54,11 +54,11 @@ export const PRODUCT_CATEGORIES = {
 		heading: "MEN",
 		subCategories: {
 			tshirts: {
-				id: "TSHIRTS",
+				id: "Tshirts",
 				heading: "TSHIRTS",
 			},
 			jeans: {
-				id: "JEANS",
+				id: "Jeans",
 				heading: "JEANS",
 			},
 		},
@@ -68,16 +68,16 @@ export const PRODUCT_CATEGORIES = {
 		heading: "KIDS",
 		subCategories: {
 			dress: {
-				id: "DRESS",
+				id: "Dress",
 				heading: "DRESS",
 			},
 			topsAndShirts: {
-				id: "TOPS & SHIRTS",
+				id: "Tops & Shirts",
 				heading: "TOPS & SHIRTS",
 			},
 		},
 	},
-};
+} as const;
 
 export const RECOMMENDED_PRODUCTS = {
 	default: {
