@@ -3,7 +3,7 @@ import { HomePage } from "../pom/pages/homePage";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
 import { AddedProductModal } from "../pom/component/addedProductModal.component";
 import { HeaderComponent } from "../pom/component/header.component";
-import { CartPage } from "../pom/pages/CartPage";
+import { CartPage } from "../pom/pages/cartPage";
 import { URL_BASE } from "../pom/data/urls";
 import { VALID_PRODUCTS } from "../pom/data/products";
 import { LoginPage } from "../pom/pages/loginPage";
@@ -15,7 +15,7 @@ import { PaymentPage } from "../pom/pages/paymentPage";
 import { PaymentDonePage } from "../pom/pages/paymentDonePage";
 import { DeletedAccountPage } from "../pom/pages/deletedAccountPage";
 
-test.describe("E2E Tests", () => {
+test.describe("E2E Suite", () => {
 	let homePage: HomePage;
 	let productDetailsPage: ProductDetailsPage;
 	let addedProductModal: AddedProductModal;
@@ -53,7 +53,7 @@ test.describe("E2E Tests", () => {
 			await headerComponent.clickSignUpLogin();
 		});
 
-		await test.step(" Verify 'New User Signup!' is visible", async () => {
+		await test.step("Verify 'New User Signup!' is visible", async () => {
 			await loginPage.waitForSignUpRoot();
 			await expect(loginPage.signUpFormTitle).toBeVisible();
 		});
@@ -288,7 +288,6 @@ test.describe("E2E Tests", () => {
 
 		await test.step("Click 'Cart' button", async () => {
 			await homePage.clickScrollUp();
-			//await homePage.closeAdds();
 			await header.clickCart();
 		});
 

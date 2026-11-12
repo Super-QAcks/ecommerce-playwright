@@ -1,16 +1,16 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
-import { SideBarComponent } from "../component/sideBar.component";
+import { BasePage } from "./basePage";
+import { SidebarComponent } from "../component/sidebar.component";
 
-export class BrandProductPage extends PageFactory {
+export class BrandProductPage extends BasePage {
 	readonly brandHeading: Locator;
 	readonly productsList: Locator;
 	readonly productCards: Locator;
-	readonly sideBar: SideBarComponent;
+	readonly sidebar: SidebarComponent;
 
 	constructor(page: Page) {
 		super(page);
-		this.sideBar = new SideBarComponent(page);
+		this.sidebar = new SidebarComponent(page);
 		this.brandHeading = page.locator("h2.title.text-center");
 		this.productsList = page.locator(".features_items");
 		this.productCards = page.locator(".product-image-wrapper");

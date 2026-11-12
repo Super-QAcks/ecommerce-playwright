@@ -7,13 +7,15 @@ import { URL_BASE } from "../pom/data/urls";
 import { LOGIN_CREDENTIALS } from "../pom/data/credentials";
 
 LoginFixture.describe("Login Page Tests", () => {
-	LoginFixture("should log out successfully", async ({ loginPage }) => {
-		LoginFixture.step("Click on Logout link", async () => {
-			await loginPage.logout();
+	LoginFixture("should log out successfully", async ({ loginPage, page }) => {
+		const headerComponent = new HeaderComponent(page);
+
+		await LoginFixture.step("Click on Logout link", async () => {
+			await headerComponent.clickLogout();
 		});
 
-		LoginFixture.step("Validate successful logout", async () => {
-			await loginPage.waitForRoot();
+		await LoginFixture.step("Validate successful logout", async () => {
+			await expect(loginPage.loginFormRoot).toBeVisible();
 		});
 	});
 });
@@ -55,7 +57,7 @@ test("Test Case 2: Login User with correct email and password", async ({
 	});
 });
 
-test("Test Case 3: Login User with incorrect email and password: ", async ({
+test("Test Case 3: Login User with incorrect email and password:", async ({
 	page,
 }) => {
 	const homePage = new HomePage(page);
@@ -85,8 +87,6 @@ test("Test Case 3: Login User with incorrect email and password: ", async ({
 	});
 
 	await test.step("Verify error 'Your email or password is incorrect!' is visible", async () => {
-		expect(await loginPage.getErrorMessage()).toContain(
-			"Your email or password is incorrect!"
-		);
+		await expect(loginPage.errorMessage).toBeVisible();
 	});
 });

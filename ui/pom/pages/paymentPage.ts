@@ -1,9 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { CardDetails } from "../data/interfaces";
 
-export class PaymentPage extends PageFactory {
-	readonly page: Page;
+export class PaymentPage extends BasePage {
 	readonly paymentRoot: Locator;
 	readonly nameOnCardInput: Locator;
 	readonly cardNumberInput: Locator;
@@ -14,7 +13,6 @@ export class PaymentPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.paymentRoot = page.locator("#cart_items");
 		this.nameOnCardInput = page.getByTestId("name-on-card");
 		this.cardNumberInput = page.getByTestId("card-number");

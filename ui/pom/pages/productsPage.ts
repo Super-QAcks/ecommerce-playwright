@@ -1,22 +1,22 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ProductCard } from "../component/productCard.component";
-import { SideBarComponent } from "../component/sideBar.component";
+import { SidebarComponent } from "../component/sidebar.component";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
-export class ProductsPage extends PageFactory {
+export class ProductsPage extends BasePage {
 	readonly productsHeading: Locator;
 	readonly productsList: Locator;
 	readonly searchedProductsHeading: Locator;
 	readonly searchInput: Locator;
 	readonly searchButton: Locator;
 	readonly productCards: Locator;
-	readonly sideBar: SideBarComponent;
+	readonly sidebar: SidebarComponent;
 	readonly addedProductModal: AddedProductModal;
 
 	constructor(page: Page) {
 		super(page);
-		this.sideBar = new SideBarComponent(page);
+		this.sidebar = new SidebarComponent(page);
 		this.productsHeading = page.getByRole("heading", { name: "All Products" });
 		this.productsList = page.locator(".features_items");
 		this.searchedProductsHeading = page.getByRole("heading", {
@@ -30,6 +30,7 @@ export class ProductsPage extends PageFactory {
 
 	async waitForProductsPage() {
 		await this.productsHeading.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async waitForSearchedProductsHeading() {
@@ -54,10 +55,6 @@ export class ProductsPage extends PageFactory {
 		}
 
 		return resultCards;
-	}
-
-	async validateProductsList() {
-		await this.productsList.isVisible();
 	}
 
 	async getProductbyName(name: string) {

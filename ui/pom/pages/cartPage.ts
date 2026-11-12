@@ -1,9 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { CartItemCard } from "../component/cartItemCard.component";
 
-export class CartPage extends PageFactory {
-	readonly page: Page;
+export class CartPage extends BasePage {
 	readonly cartRoot: Locator;
 	readonly checkoutButton: Locator;
 	readonly cartRowsCountLocator: Locator;
@@ -13,7 +12,6 @@ export class CartPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.cartRoot = page.locator("#cart_info");
 		this.checkoutButton = page.getByText("Proceed To Checkout");
 		this.cartRowsCountLocator = page.locator("#cart_info tbody tr");
@@ -28,6 +26,7 @@ export class CartPage extends PageFactory {
 
 	async waitForCart() {
 		await this.cartRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async getCartItemByName(name: string) {
@@ -37,6 +36,7 @@ export class CartPage extends PageFactory {
 	}
 
 	async clickCheckout() {
+		await this.waitForPageScripts();
 		await this.checkoutButton.click();
 	}
 
