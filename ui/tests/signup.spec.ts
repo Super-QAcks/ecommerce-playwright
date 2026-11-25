@@ -3,7 +3,7 @@ import { HomePage } from "../pom/pages/homePage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { LoginPage } from "../pom/pages/loginPage";
 import { URL_BASE } from "../pom/data/urls";
-import { LOGIN_CREDENTIALS } from "../pom/data/credentials";
+import { USER_SIGNUP, LOGIN_CREDENTIALS } from "../pom/data/credentials";
 
 test("Test Case 5: Register User with existing email:", async ({ page }) => {
 	const homePage = new HomePage(page);
@@ -26,10 +26,7 @@ test("Test Case 5: Register User with existing email:", async ({ page }) => {
 	});
 
 	await test.step("Enter name and already registered email address and SignUpButton", async () => {
-		await loginPage.signUp(
-			LOGIN_CREDENTIALS.NAME_USER,
-			LOGIN_CREDENTIALS.STANDARD_USER
-		);
+		await loginPage.signUp(USER_SIGNUP.name, LOGIN_CREDENTIALS.STANDARD_USER);
 	});
 
 	await test.step("Verify error 'Email Address already exist!' is visible", async () => {
