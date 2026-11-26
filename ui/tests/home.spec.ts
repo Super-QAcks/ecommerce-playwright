@@ -6,7 +6,7 @@ import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
 import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
 
-test.describe("Home Page Tests.", () => {
+test.describe("Home Page Tests", () => {
 	let homePage: HomePage;
 	let footerComponent: FooterComponent;
 

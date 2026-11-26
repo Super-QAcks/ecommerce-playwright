@@ -52,5 +52,6 @@ export class ContactUsPage extends BasePage {
 
 	async waitForRoot() {
 		await this.contactUsFormRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 }
