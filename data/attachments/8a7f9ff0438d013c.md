@@ -1,0 +1,105 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ui/tests/products.spec.ts >> Products Page Tests >> Test Case 21: Add review on product
+- Location: ui/tests/products.spec.ts:77:2
+
+# Error details
+
+```
+TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator('#header').getByRole('link', { name: /Products/i }) to be visible
+
+```
+
+# Test source
+
+```ts
+  1  | import { Page, Locator } from "@playwright/test";
+  2  | import { URL_PRODUCTS } from "../data/urls";
+  3  | 
+  4  | export class HeaderComponent {
+  5  | 	readonly headerRoot: Locator;
+  6  | 	readonly contactUs: Locator;
+  7  | 	readonly cart: Locator;
+  8  | 	readonly signUpLogin: Locator;
+  9  | 	readonly productsLink: Locator;
+  10 | 	readonly testCasesLink: Locator;
+  11 | 	readonly page: Page;
+  12 | 	readonly logout: Locator;
+  13 | 	readonly deleteAccount: Locator;
+  14 | 	readonly loggedUserName: Locator;
+  15 | 
+  16 | 	constructor(page: Page) {
+  17 | 		this.page = page;
+  18 | 		this.headerRoot = page.locator("#header");
+  19 | 		this.contactUs = this.headerRoot.getByRole("link", { name: "Contact Us" });
+  20 | 		this.logout = this.headerRoot.getByRole("link", { name: "Logout" });
+  21 | 		this.deleteAccount = this.headerRoot.getByRole("link", {
+  22 | 			name: "Delete Account",
+  23 | 		});
+  24 | 		this.cart = this.headerRoot.getByRole("link", { name: "Cart" });
+  25 | 		this.signUpLogin = this.headerRoot.getByRole("link", {
+  26 | 			name: "Signup / Login",
+  27 | 		});
+  28 | 		this.productsLink = this.headerRoot.getByRole("link", {
+  29 | 			name: /Products/i,
+  30 | 		});
+  31 | 		this.testCasesLink = this.headerRoot.getByRole("link", {
+  32 | 			name: "Test Cases",
+  33 | 		});
+  34 | 		this.loggedUserName = this.headerRoot
+  35 | 			.getByText("Logged in as")
+  36 | 			.locator("b");
+  37 | 	}
+  38 | 
+  39 | 	async waitForRoot() {
+  40 | 		await this.headerRoot.waitFor({ state: "visible" });
+  41 | 	}
+  42 | 
+  43 | 	async clickContactUs() {
+  44 | 		await this.waitForRoot();
+  45 | 		await this.contactUs.click();
+  46 | 	}
+  47 | 
+  48 | 	async clickSignUpLogin() {
+  49 | 		await this.waitForRoot();
+  50 | 		await this.signUpLogin.click();
+  51 | 	}
+  52 | 
+  53 | 	async clickProductsLink() {
+> 54 | 		await this.productsLink.waitFor({ state: "visible", timeout: 10000 });
+     |                           ^ TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+  55 | 		await this.productsLink.click({ force: true });
+  56 | 		if (this.page.url().includes("#google_vignette")) {
+  57 | 			await this.page.goto(URL_PRODUCTS);
+  58 | 		}
+  59 | 	}
+  60 | 
+  61 | 	async clickTestCasesLink() {
+  62 | 		await this.testCasesLink.click({ force: true });
+  63 | 	}
+  64 | 
+  65 | 	async clickCart() {
+  66 | 		await this.waitForRoot();
+  67 | 		await this.cart.click();
+  68 | 	}
+  69 | 
+  70 | 	async clickLogout() {
+  71 | 		await this.waitForRoot();
+  72 | 		await this.logout.click();
+  73 | 	}
+  74 | 
+  75 | 	async clickDeleteAccount() {
+  76 | 		await this.waitForRoot();
+  77 | 		await this.deleteAccount.click();
+  78 | 	}
+  79 | }
+  80 | 
+```
