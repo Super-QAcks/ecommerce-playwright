@@ -1,11 +1,13 @@
-export interface Product {
+export interface ProductSummary {
 	name: string;
-	quantity?: number;
-	price?: number;
-	category?: string;
-	availability?: string;
-	condition?: string;
-	brand?: string;
+	price: number;
+}
+
+export interface ProductDetails extends ProductSummary {
+	category: string;
+	availability: string;
+	condition: string;
+	brand: string;
 }
 export interface ContactForm {
 	name?: string;

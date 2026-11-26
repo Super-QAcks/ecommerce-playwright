@@ -4,7 +4,7 @@ import { HeaderComponent } from "../pom/component/header.component";
 import { ProductsPage } from "../pom/pages/productsPage";
 import { FilteredProductsPage } from "../pom/pages/filteredProductsPage";
 import { URL_BASE } from "../pom/data/urls";
-import { PRODUCT_DETAILS, PRODUCT_CATEGORIES } from "../pom/data/products";
+import { PRODUCTS, PRODUCT_CATEGORIES } from "../pom/data/products";
 import { SidebarComponent } from "../pom/component/sidebar.component";
 
 test.describe("Products Page Tests", () => {
@@ -34,7 +34,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Enter product name in search input and click search button", async () => {
-			await productsPage.fillSearchProduct(PRODUCT_DETAILS.default.name);
+			await productsPage.fillSearchProduct(PRODUCTS.blueTop.name);
 			await productsPage.clickSearchButton();
 		});
 
@@ -44,14 +44,14 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Verify all the products related to search are visible", async () => {
-			const searchWord = PRODUCT_DETAILS.default.name;
+			const searchWord = PRODUCTS.blueTop.name;
 			const resultCards =
 				await productsPage.getSearchResultProductCards(searchWord);
 
 			expect(resultCards.length).toBeGreaterThan(0);
 
 			for (const productCard of resultCards) {
-				await expect(productCard.rootCard).toBeVisible();
+				await expect(productCard.root).toBeVisible();
 				await expect(productCard.productName).toContainText(searchWord, {
 					ignoreCase: true,
 				});
@@ -103,7 +103,7 @@ test.describe("Products Page Tests", () => {
 		const headerComponent = new HeaderComponent(page);
 		const sidebarComponent = new SidebarComponent(page);
 		const brandProductPage = new FilteredProductsPage(page);
-		const brand = PRODUCT_DETAILS.default.brand;
+		const brand = PRODUCTS.blueTop.brand;
 		const otherBrand = "H&M";
 
 		await test.step("Click on 'Products' button", async () => {
@@ -115,7 +115,7 @@ test.describe("Products Page Tests", () => {
 		});
 
 		await test.step("Click on any brand name", async () => {
-			const brand = PRODUCT_DETAILS.default.brand;
+			const brand = PRODUCTS.blueTop.brand;
 			await sidebarComponent.clickBrand(brand);
 		});
 

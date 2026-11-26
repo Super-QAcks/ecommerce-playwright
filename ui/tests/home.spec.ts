@@ -4,7 +4,7 @@ import { CartPage } from "../pom/pages/cartPage";
 import { FooterComponent } from "../pom/component/footer.component";
 import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
-import { RECOMMENDED_PRODUCTS } from "../pom/data/products";
+import { PRODUCTS } from "../pom/data/products";
 
 test.describe("Home Page Tests", () => {
 	let homePage: HomePage;
@@ -31,7 +31,7 @@ test.describe("Home Page Tests", () => {
 		});
 
 		await test.step("Verify text 'SUBSCRIPTION'", async () => {
-			await expect(footerComponent.susbcriptionTitle).toBeVisible();
+			await expect(footerComponent.subscriptionTitle).toBeVisible();
 		});
 
 		await test.step("Enter email address in input and click arrow button", async () => {
@@ -46,7 +46,7 @@ test.describe("Home Page Tests", () => {
 
 	test("Test Case 22: Add to cart from Recommended items", async ({ page }) => {
 		const cartPage = new CartPage(page);
-		const recommendedProduct = RECOMMENDED_PRODUCTS.default;
+		const recommendedProduct = PRODUCTS.menTshirt;
 
 		await test.step("Launch browser and Navigate to url 'http://automationexercise.com'", async () => {
 			await homePage.goto(URL_BASE);
@@ -77,7 +77,7 @@ test.describe("Home Page Tests", () => {
 			const cartItem = await cartPage.getCartItemByName(
 				recommendedProduct.name
 			);
-			await expect(cartItem.rootCard).toBeVisible();
+			await expect(cartItem.root).toBeVisible();
 		});
 	});
 
