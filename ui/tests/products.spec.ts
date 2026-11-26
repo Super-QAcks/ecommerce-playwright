@@ -4,22 +4,26 @@ import { ProductsPage } from "../pom/pages/productsPage";
 import { HeaderComponent } from "../pom/component/header.component";
 import { URL_BASE } from "../pom/data/urls";
 import { ProductDetailsPage } from "../pom/pages/productDetailsPage";
-import { PRODUCT_DETAILS } from "../pom/data/products";
+import { PRODUCT_CATEGORIES, PRODUCT_DETAILS } from "../pom/data/products";
 import { VALID_PRODUCTS } from "../pom/data/products";
 import { ValidReview } from "../pom/data/reviews";
+import { SidebarComponent } from "../pom/component/sidebar.component";
+import { setupAdHandling } from "../pom/utils/ads";
 
 test.describe("Products Page Tests", () => {
 	let homePage: HomePage;
 	let productsPage: ProductsPage;
 	let productDetailsPage: ProductDetailsPage;
 	let headerComponent: HeaderComponent;
+	let sidebar: SidebarComponent;
 
 	test.beforeEach(async ({ page }) => {
 		homePage = new HomePage(page);
 		productsPage = new ProductsPage(page);
 		productDetailsPage = new ProductDetailsPage(page);
-		headerComponent = new HeaderComponent(homePage.page);
-		await homePage.addBlocker();
+		headerComponent = new HeaderComponent(page);
+		sidebar = new SidebarComponent(page);
+		await setupAdHandling(page);
 		await test.step("Navigate to the Home page", async () => {
 			await page.goto(URL_BASE);
 		});
@@ -30,7 +34,6 @@ test.describe("Products Page Tests", () => {
 		const productCard = await homePage.getProductbyName(product.name);
 		await test.step("Click on Products page header link", async () => {
 			await headerComponent.clickProductsLink();
-			await homePage.closeAdds();
 		});
 
 		await test.step("Verify that user navigated to Products page successfully", async () => {
@@ -109,5 +112,41 @@ test.describe("Products Page Tests", () => {
 		await test.step("Verify success message 'Thank you for your review.'", async () => {
 			await expect(productDetailsPage.reviewSuccessMessage).toBeVisible();
 		});
+	});
+
+	test("expandCategory and collapseCategory are idempotent", async () => {
+		const { men } = PRODUCT_CATEGORIES;
+
+		await sidebar.expandCategory(men.id);
+		await sidebar.expandCategory(men.id); // second call must NOT close it
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(true);
+
+		await sidebar.collapseCategory(men.id);
+		await sidebar.collapseCategory(men.id); // second call must NOT reopen it
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+	});
+
+	test("sidebar queries return the names in PRODUCT_CATEGORIES", async () => {
+		const categories = Object.values(PRODUCT_CATEGORIES);
+
+		expect(await sidebar.getCategoryNames()).toEqual(
+			categories.map((c) => c.id)
+		);
+
+		for (const category of categories) {
+			expect(await sidebar.getSubCategoryNames(category.id)).toEqual(
+				Object.values(category.subCategories).map((s) => s.id)
+			);
+		}
+	});
+
+	test("getSubCategoryNames reads a collapsed panel without opening it", async () => {
+		const { men } = PRODUCT_CATEGORIES;
+
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
+		expect(await sidebar.getSubCategoryNames(men.id)).toEqual(
+			Object.values(men.subCategories).map((s) => s.id)
+		);
+		expect(await sidebar.isCategoryExpanded(men.id)).toBe(false);
 	});
 });
