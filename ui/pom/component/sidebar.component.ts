@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { BaseComponent } from "./baseComponent";
+import { BaseComponent } from "./base.component";
 import { escapeAttr, nameWithOptionalCount } from "../utils/selectors";
 
 // Bootstrap marks an open accordion panel with the class "in"

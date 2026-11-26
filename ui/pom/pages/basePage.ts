@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import { setupAdHandling } from "../utils/ads";
 
-export class PageFactory {
+export class BasePage {
 	protected page: Page;
 	readonly scrollUpButton: Locator;
 
@@ -16,6 +16,15 @@ export class PageFactory {
 			waitUntil: "domcontentloaded",
 			timeout: 60000,
 		});
+	}
+
+	/**
+	 * Waits until the page has fully loaded, so its scripts have attached their
+	 * handlers. Call it before clicking anything driven by JavaScript (modals,
+	 * AJAX forms, accordions, delete buttons). Returns immediately if already loaded.
+	 */
+	async waitForPageScripts() {
+		await this.page.waitForLoadState("load");
 	}
 
 	async clickScrollUp() {

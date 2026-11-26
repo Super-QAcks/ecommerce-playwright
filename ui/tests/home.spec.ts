@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pom/pages/homePage";
-import { CartPage } from "../pom/pages/CartPage";
-import { FooterComponent } from "../pom/component/footeer.component";
+import { CartPage } from "../pom/pages/cartPage";
+import { FooterComponent } from "../pom/component/footer.component";
 import { URL_BASE } from "../pom/data/urls";
 import { USER_SIGNUP } from "../pom/data/credentials";
 import { RECOMMENDED_PRODUCTS } from "../pom/data/products";

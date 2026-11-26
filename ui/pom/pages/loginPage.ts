@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class LoginPage extends PageFactory {
+export class LoginPage extends BasePage {
 	readonly loginFormRoot: Locator;
 	readonly loginFormTitle: Locator;
 	private readonly emailInput: Locator;
@@ -75,10 +75,5 @@ export class LoginPage extends PageFactory {
 
 	async getErrorMessage() {
 		return this.errorMessage.textContent();
-	}
-
-	async logout() {
-		// this method doesnt belong here as it is from the header component, but for now it is here until we refactor the test cases that use this page object. The logout method already exists in the header component and should be used from there instead of this method.
-		await this.page.getByText(/logout/i).click({ force: true });
 	}
 }

@@ -1,8 +1,8 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { SidebarComponent } from "../component/sidebar.component";
 
-export class BrandProductPage extends PageFactory {
+export class BrandProductPage extends BasePage {
 	readonly brandHeading: Locator;
 	readonly productsList: Locator;
 	readonly productCards: Locator;

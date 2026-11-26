@@ -6,7 +6,7 @@ export class ProductCard {
 	readonly productName: Locator;
 	readonly productPrice: Locator;
 	readonly addToCartButton: Locator;
-	readonly addtoCartOverlayButton: Locator;
+	readonly addToCartOverlayButton: Locator;
 	readonly viewProductButton: Locator;
 
 	constructor(root: Locator) {
@@ -17,7 +17,7 @@ export class ProductCard {
 		this.viewProductButton = root.getByRole("link", {
 			name: /View Product/i,
 		});
-		this.addtoCartOverlayButton = root.locator(".productinfo .add-to-cart");
+		this.addToCartOverlayButton = root.locator(".overlay-content .add-to-cart");
 	}
 
 	async addToCart() {
@@ -26,16 +26,15 @@ export class ProductCard {
 
 	async addToCartOverlay() {
 		await this.hoverOverCard();
-		await this.addtoCartOverlayButton.click();
+		await this.addToCartOverlayButton.click();
 	}
 
 	async hoverOverCard() {
-		await this.rootCard.hover({ force: true });
+		await this.rootCard.hover();
 	}
 
 	async viewProduct() {
-		await this.viewProductButton.scrollIntoViewIfNeeded();
-		await this.viewProductButton.click({ force: true });
+		await this.viewProductButton.click();
 	}
 
 	async getProductByListNumber(listNumber: number) {

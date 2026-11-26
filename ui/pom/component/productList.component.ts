@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { BaseComponent } from "./baseComponent";
+import { BaseComponent } from "./base.component";
 import { ProductCard } from "../component/productCard.component";
 
 export class ProductListComponent extends BaseComponent {

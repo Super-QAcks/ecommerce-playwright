@@ -1,10 +1,9 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 import { ReviewForm } from "../data/interfaces";
 import { AddedProductModal } from "../component/addedProductModal.component";
 
-export class ProductDetailsPage extends PageFactory {
-	readonly page: Page;
+export class ProductDetailsPage extends BasePage {
 	readonly productDetailsRoot: Locator;
 	readonly productName: Locator;
 	readonly productPrice: Locator;
@@ -25,7 +24,6 @@ export class ProductDetailsPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.productDetailsRoot = page.locator(".product-details");
 		this.productName = page.locator(".product-information h2");
 		this.productPrice = page.getByText("Rs.");
@@ -51,7 +49,8 @@ export class ProductDetailsPage extends PageFactory {
 	}
 
 	async waitForRoot() {
-		await this.productDetailsRoot.isVisible();
+		await this.productDetailsRoot.waitFor({ state: "visible" });
+		await this.waitForPageScripts();
 	}
 
 	async addToCart() {
@@ -70,6 +69,7 @@ export class ProductDetailsPage extends PageFactory {
 	}
 
 	async submitReview() {
+		await this.waitForPageScripts();
 		await this.reviewSubmitButton.click();
 	}
 }

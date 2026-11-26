@@ -1,79 +1,74 @@
 import { Page, Locator } from "@playwright/test";
 import { URL_PRODUCTS } from "../data/urls";
+import { BaseComponent } from "./base.component";
 
-export class HeaderComponent {
-	readonly headerRoot: Locator;
+export class HeaderComponent extends BaseComponent {
 	readonly contactUs: Locator;
 	readonly cart: Locator;
 	readonly signUpLogin: Locator;
 	readonly productsLink: Locator;
 	readonly testCasesLink: Locator;
-	readonly page: Page;
 	readonly logout: Locator;
 	readonly deleteAccount: Locator;
 	readonly loggedUserName: Locator;
+	private readonly page: Page;
 
 	constructor(page: Page) {
+		super(page.locator("#header"));
 		this.page = page;
-		this.headerRoot = page.locator("#header");
-		this.contactUs = this.headerRoot.getByRole("link", { name: "Contact Us" });
-		this.logout = this.headerRoot.getByRole("link", { name: "Logout" });
-		this.deleteAccount = this.headerRoot.getByRole("link", {
+		this.contactUs = this.root.getByRole("link", { name: "Contact Us" });
+		this.logout = this.root.getByRole("link", { name: "Logout" });
+		this.deleteAccount = this.root.getByRole("link", {
 			name: "Delete Account",
 		});
-		this.cart = this.headerRoot.getByRole("link", { name: "Cart" });
-		this.signUpLogin = this.headerRoot.getByRole("link", {
+		this.cart = this.root.getByRole("link", { name: "Cart" });
+		this.signUpLogin = this.root.getByRole("link", {
 			name: "Signup / Login",
 		});
-		this.productsLink = this.headerRoot.getByRole("link", {
+		this.productsLink = this.root.getByRole("link", {
 			name: /Products/i,
 		});
-		this.testCasesLink = this.headerRoot.getByRole("link", {
+		this.testCasesLink = this.root.getByRole("link", {
 			name: "Test Cases",
 		});
-		this.loggedUserName = this.headerRoot
-			.getByText("Logged in as")
-			.locator("b");
-	}
-
-	async waitForRoot() {
-		await this.headerRoot.waitFor({ state: "visible" });
+		this.loggedUserName = this.root.getByText("Logged in as").locator("b");
 	}
 
 	async clickContactUs() {
-		await this.waitForRoot();
+		await this.waitForReady();
 		await this.contactUs.click();
 	}
 
 	async clickSignUpLogin() {
-		await this.waitForRoot();
+		await this.waitForReady();
 		await this.signUpLogin.click();
 	}
 
 	async clickProductsLink() {
-		await this.productsLink.waitFor({ state: "visible", timeout: 10000 });
-		await this.productsLink.click({ force: true });
+		await this.waitForReady();
+		await this.productsLink.click();
 		if (this.page.url().includes("#google_vignette")) {
 			await this.page.goto(URL_PRODUCTS);
 		}
 	}
 
 	async clickTestCasesLink() {
-		await this.testCasesLink.click({ force: true });
+		await this.waitForReady();
+		await this.testCasesLink.click();
 	}
 
 	async clickCart() {
-		await this.waitForRoot();
+		await this.waitForReady();
 		await this.cart.click();
 	}
 
 	async clickLogout() {
-		await this.waitForRoot();
+		await this.waitForReady();
 		await this.logout.click();
 	}
 
 	async clickDeleteAccount() {
-		await this.waitForRoot();
+		await this.waitForReady();
 		await this.deleteAccount.click();
 	}
 }

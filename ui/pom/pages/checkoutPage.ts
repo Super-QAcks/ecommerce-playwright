@@ -1,8 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { PageFactory } from "./pageFactory";
+import { BasePage } from "./basePage";
 
-export class CheckoutPage extends PageFactory {
-	readonly page: Page;
+export class CheckoutPage extends BasePage {
 	readonly checkoutRoot: Locator;
 	readonly deliveryAddressForm: Locator;
 	readonly billingAddressForm: Locator;
@@ -12,7 +11,6 @@ export class CheckoutPage extends PageFactory {
 
 	constructor(page: Page) {
 		super(page);
-		this.page = page;
 		this.checkoutRoot = page.locator("#cart_items > .container");
 		this.deliveryAddressForm = page.locator("#address_delivery");
 		this.billingAddressForm = page.locator("#address_invoice");
