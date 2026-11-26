@@ -48,26 +48,31 @@ export class ProductDetailsPage extends BasePage {
 		this.reviewSuccessMessage = page.getByText("Thank you for your review.");
 	}
 
+	/** Waits for the product details block and for the page scripts. */
 	async waitForRoot() {
 		await this.productDetailsRoot.waitFor({ state: "visible" });
 		await this.waitForPageScripts();
 	}
 
+	/** Clicks "Add to cart" with the quantity currently in the field. */
 	async addToCart() {
 		await this.addToCartButton.click();
 	}
 
+	/** Replaces the quantity field with `amount`. */
 	async changeQuantity(amount: number) {
 		await this.productQuantityInput.clear();
 		await this.productQuantityInput.fill(amount.toString());
 	}
 
+	/** Fills name, email and review text. Does not submit. */
 	async fillReviewForm(reviewData: ReviewForm) {
 		await this.reviewNameInput.fill(reviewData.name);
 		await this.reviewEmailInput.fill(reviewData.email);
 		await this.reviewTextInput.fill(reviewData.review);
 	}
 
+	/** Waits for the page scripts, then submits the review form. */
 	async submitReview() {
 		await this.waitForPageScripts();
 		await this.reviewSubmitButton.click();

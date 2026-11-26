@@ -17,14 +17,17 @@ export class AddedProductModal {
 		});
 	}
 
+	/** Waits until the "product added" modal is visible. Call it before clicking its buttons. */
 	async waitForModal() {
 		await this.modalRoot.waitFor({ state: "visible" });
 	}
 
+	/** Clicks "View Cart" and navigates to the cart page. */
 	async clickViewCart() {
 		await this.viewCartButton.click();
 	}
 
+	/** Clicks "Continue Shopping" and returns to the page behind the modal. */
 	async clickContinueShopping() {
 		await this.continueShoppingButton.click();
 	}
